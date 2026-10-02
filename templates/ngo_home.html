@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>NGO Dashboard | FoodResQ</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='ngo_home.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <div class="logo">
+
+        <img src="{{ url_for('static', filename='images/homepgs.png') }}"
+             alt="FoodResQ Logo">
+
+        <div>
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p class="tagline">
+                Turning <span>Surplus</span> into <span>Sustenance</span>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+    <a href="{{ url_for('ngo_home') }}"
+       class="active">
+        Home
+    </a>
+
+    <a href="{{ url_for('ngo_assigned_donations') }}">
+        Assigned Donations
+    </a>
+
+    <!-- NOTIFICATIONS -->
+
+    <a href="{{ url_for('notifications') }}"
+   class="notification-bell"
+   title="Notifications">
+
+    🔔
+
+    {% if unread_notifications > 0 %}
+        <span class="notification-badge">
+            {{ unread_notifications if unread_notifications < 10 else '9+' }}
+        </span>
+    {% endif %}
+
+</a>
+
+    <a href="{{ url_for('logout') }}">
+        Logout
+    </a>
+
+</nav>
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="ngo-dashboard">
+
+
+    <!-- ================= WELCOME ================= -->
+
+    <section class="welcome-section">
+
+        <div>
+
+            <p class="welcome-label">
+                NGO DASHBOARD
+            </p>
+
+            <h1>
+                Welcome back,
+                <span>{{ session["ngo_name"] }}</span> 👋
+            </h1>
+
+            <p class="welcome-description">
+                Manage your food rescue operations and make
+                every donation count.
+            </p>
+
+        </div>
+
+
+        <div class="partner-card">
+
+            <div class="partner-icon">
+                ♻
+            </div>
+
+            <div>
+
+                <strong>
+                    FoodResQ Partner
+                </strong>
+
+                <p>
+                    Helping reduce food waste
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= STAT CARDS ================= -->
+
+    <section class="stats-container">
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon green-icon">
+                📦
+            </div>
+
+            <div>
+
+                <p>
+                    Total Donations
+                </p>
+
+                <h2>
+                    {{ total_donations }}
+                </h2>
+
+                <small>
+                    Donations received
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon blue-icon">
+                🚚
+            </div>
+
+            <div>
+
+                <p>
+                    Active Assignments
+                </p>
+
+                <h2>
+                    {{ active_donations }}
+                </h2>
+
+                <small>
+                    Currently in progress
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon purple-icon">
+                ✓
+            </div>
+
+            <div>
+
+                <p>
+                    Completed
+                </p>
+
+                <h2>
+                    {{ completed_donations }}
+                </h2>
+
+                <small>
+                    Successfully completed
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon orange-icon">
+                🍱
+            </div>
+
+            <div>
+
+                <p>
+                    Food Rescued
+                </p>
+
+                <h2>
+                    {{ total_food }}
+                </h2>
+
+                <small>
+                    Food units rescued
+                </small>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= ACTIVITY + PROGRESS ================= -->
+
+    <section class="dashboard-row">
+
+
+        <!-- RECENT ACTIVITY -->
+
+        <div class="content-card activity-card">
+
+            <div class="card-heading">
+
+                <div>
+
+                    <h2>
+                        Recent Activity
+                    </h2>
+
+                    <p>
+                        Latest activity from your NGO
+                    </p>
+
+                </div>
+
+                <a href="{{ url_for('ngo_assigned_donations') }}">
+                    View All
+                </a>
+
+            </div>
+
+
+            <div class="activity-list">
+
+                {% if recent_activity %}
+
+                    {% for donation in recent_activity %}
+
+                    <div class="activity-item">
+
+                        <div class="activity-symbol">
+                            📦
+                        </div>
+
+
+                        <div class="activity-details">
+
+                            <h3>
+                                {{ donation.food_name }}
+                            </h3>
+
+                            <p>
+                                Donation #{{ donation.donation_id }}
+                            </p>
+
+                        </div>
+
+
+                        <span class="activity-status">
+
+                            {{ donation.status }}
+
+                        </span>
+
+                    </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="no-activity">
+
+                        <div>
+                            📋
+                        </div>
+
+                        <h3>
+                            No recent activity
+                        </h3>
+
+                        <p>
+                            Your recent donation activity will appear here.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- RESCUE PROGRESS -->
+
+        <div class="content-card progress-card">
+
+            <div class="card-heading">
+
+                <div>
+
+                    <h2>
+                        Rescue Progress
+                    </h2>
+
+                    <p>
+                        Your overall completion rate
+                    </p>
+
+                </div>
+
+                <div class="progress-symbol">
+                    ♻
+                </div>
+
+            </div>
+
+
+            <div class="progress-circle">
+
+                <div class="progress-inside">
+
+                    <strong>
+                        {{ completion_rate }}%
+                    </strong>
+
+                    <span>
+                        Completed
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="progress-bar-section">
+
+                <div class="progress-label">
+
+                    <span>
+                        Completion Rate
+                    </span>
+
+                    <strong>
+                        {{ completion_rate }}%
+                    </strong>
+
+                </div>
+
+
+                <div class="progress-bar">
+<div class="progress-fill"
+     data-progress="{{ completion_rate }}">
+</div>
+                </div>
+
+            </div>
+
+
+            <div class="progress-numbers">
+
+                <div>
+
+                    <strong>
+                        {{ completed_donations }}
+                    </strong>
+
+                    <span>
+                        Completed
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        {{ active_donations }}
+                    </strong>
+
+                    <span>
+                        Active
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        {{ total_donations }}
+                    </strong>
+
+                    <span>
+                        Total
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= CURRENT ASSIGNMENTS ================= -->
+
+    <section class="content-card assignments-card">
+
+        <div class="card-heading">
+
+            <div>
+
+                <h2>
+                    Current Assignments
+                </h2>
+
+                <p>
+                    Donations that currently require your attention
+                </p>
+
+            </div>
+
+            <a href="{{ url_for('ngo_assigned_donations') }}">
+                View All
+            </a>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Food
+                        </th>
+
+                        <th>
+                            Quantity
+                        </th>
+
+                        <th>
+                            Pickup Date
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% if current_assignments %}
+
+                        {% for donation in current_assignments %}
+
+                        <tr>
+
+                            <td>
+                                <strong>
+                                    #{{ donation.donation_id }}
+                                </strong>
+                            </td>
+
+                            <td>
+                                {{ donation.food_name }}
+                            </td>
+
+                            <td>
+                                {{ donation.quantity }}
+                                {{ donation.quantity_unit }}
+                            </td>
+
+                            <td>
+                                {{ donation.pickup_date }}
+                            </td>
+
+                            <td>
+
+                                <span class="table-status">
+                                    {{ donation.status }}
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <a href="{{ url_for('ngo_donations', donation_id=donation.donation_id) }}"
+                                   class="view-button">
+
+                                    View
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <tr>
+
+                            <td colspan="6"
+                                class="empty-table">
+
+                                No current assignments.
+
+                            </td>
+
+                        </tr>
+
+                    {% endif %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= QUICK ACTIONS ================= -->
+
+    <section class="quick-section">
+
+        <h2>
+            Quick Actions
+        </h2>
+
+        <p>
+            Manage your NGO operations
+        </p>
+
+
+        <div class="quick-grid">
+
+
+            <a href="/ngo_assigned_donations"
+               class="quick-card">
+
+                <div class="quick-icon">
+                    🚚
+                </div>
+
+                <div>
+
+                    <h3>
+                        Assigned Orders
+                    </h3>
+
+                    <p>
+                        Manage your assigned donations
+                    </p>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+            <a href="/nearby_donations"
+               class="quick-card">
+
+                <div class="quick-icon">
+                    📋
+                </div>
+
+                <div>
+
+                    <h3>
+                        Donation Requests
+                    </h3>
+
+                    <p>
+                        Browse available requests
+                    </p>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+            <a href="/ngo_analytics"
+               class="quick-card">
+
+                <div class="quick-icon">
+                    📊
+                </div>
+
+                <div>
+
+                    <h3>
+                        Analytics
+                    </h3>
+
+                    <p>
+                        View your rescue impact
+                    </p>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-container">
+
+        <div class="footer-about">
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p>
+                FoodResQ connects surplus food with people
+                in need through trusted NGOs.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <h3>
+                Quick Links
+            </h3>
+
+            <a href="/ngo_home">
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('ngo_assigned_donations') }}">
+                Assigned Orders
+            </a>
+
+            <a href="/ngo_assigned_donations">
+                Requests
+            </a>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <h3>
+                Services
+            </h3>
+
+            <a href="/ngo_analytics">
+                Analytics
+            </a>
+
+            <a href="/edit_profile">
+                Profile
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <hr>
+
+
+    <p class="copyright">
+        © 2026 FoodResQ. All Rights Reserved.
+    </p>
+
+</footer>
+
+<script>
+
+    const progressBar = document.querySelector(".progress-fill");
+
+    if (progressBar) {
+
+        let progress = parseInt(
+            progressBar.getAttribute("data-progress")
+        );
+
+        if (isNaN(progress)) {
+            progress = 0;
+        }
+
+        if (progress < 0) {
+            progress = 0;
+        }
+
+        if (progress > 100) {
+            progress = 100;
+        }
+
+        progressBar.style.width = progress + "%";
+    }
+
+</script>
+
+</body>
+</html>

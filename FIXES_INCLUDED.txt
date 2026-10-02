@@ -1,0 +1,13 @@
+FoodResQ fixed project
+
+Included fixes:
+- Admin Analytics: working month filter (?month=YYYY-MM) with Jan 2025 through current month and All Time.
+- NGO Analytics: working month filter; selected month recalculates all donation-based analytics.
+- Admin NGO View button uses the real ngo_id route.
+- Footer Food Requests links now open /need_food instead of /findngos.
+- Added working Contact and Request Food pages with matching routes/CSS.
+- Added .vscode/settings.json and extensions.json for Jinja HTML templates.
+- All 47 HTML templates pass a Jinja syntax parse check.
+- app1.py passes Python syntax compilation.
+
+Database-backed pages still require the project's MySQL database and credentials configured in app1.py.

@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FoodResQ</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='home.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+
+        <img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+        <div>
+
+            <h2>Food<span>ResQ</span></h2>
+
+            <p class="tagline">Turning <span>Surplus</span> into <span>Sustenance</span></p>
+
+        </div>
+
+    </div>
+
+    <nav>
+
+
+    <a href="/">Home</a>
+
+    <a href="/about">About</a>
+
+    
+
+    {% if session.get("role") == "donor" %}
+
+        <a href="/donate">Donate Food</a>
+
+        <a href="/my_donations">My Donations</a>
+
+        <span class="welcome">
+
+            Welcome, {{ session["user_name"] }}
+
+        </span>
+
+        <a href="/logout" class="nav-btn">Logout</a>
+
+    {% elif session.get("role") == "ngo" %}
+
+        <a href="/ngo_home">Dashboard</a>
+
+        <span class="welcome">
+
+            {{ session["ngo_name"] }}
+
+        </span>
+
+        <a href="/logout" class="nav-btn">Logout</a>
+
+    {% elif session.get("role") == "admin" %}
+
+        <a href="/admin_dashboard">Admin Dashboard</a>
+
+        <a href="/logout" class="nav-btn">Logout</a>
+
+    {% else %}
+
+        <!-- REGISTER -->
+
+        <div class="dropdown">
+
+            <button class="dropbtn">
+
+                Register ▼
+
+            </button>
+
+            <div class="dropdown-content">
+
+                <a href="/user_registration">
+
+                    Donor Registration
+
+                </a>
+
+                <a href="/ngo_registration">
+
+                    NGO Registration
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- LOGIN -->
+
+        <div class="dropdown">
+
+            <button class="dropbtn">
+
+                Login ▼
+
+            </button>
+
+            <div class="dropdown-content">
+
+                <a href="/user_login">
+
+                    Donor Login
+
+                </a>
+
+                <a href="/ngo_login">
+
+                    NGO Login
+
+                </a>
+
+                
+            </div>
+
+        </div>
+
+    {% endif %}
+
+</nav>
+
+</header>
+
+
+
+<section class="hero">
+
+    <div class="hero-left">
+
+        <span class="tag">
+
+            🌱 Fighting Hunger Together
+
+        </span>
+
+        <h1>
+
+            Reduce Food Waste.<br>
+
+            Feed More Lives.
+
+        </h1>
+
+        <p>
+
+            FoodResQ connects restaurants, events,
+            caterers and households with trusted NGOs
+            so that surplus food reaches those who need it
+            instead of going to waste.
+
+        </p>
+
+        <div class="hero-buttons">
+
+            
+                <a href="/user_registration" class="donate">Donate Food</a>
+
+                
+
+            
+
+            
+        </div>
+
+    </div>
+
+
+    <div class="hero-right">
+
+        <img src="{{ url_for('static', filename='images/homepage.png') }}">
+
+    </div>
+
+</section>
+
+<!-- ================= STATISTICS ================= -->
+
+<section class="stats">
+
+    <div class="stat-card">
+
+        <h1>{{total_donations}}</h1>
+
+        <h3>Donations Received</h3>
+
+        <p>Successfully donated food</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <h1>{{meals_saved}}</h1>
+
+        <h3>Meals Saved</h3>
+
+        <p>People served through NGOs</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <h1>{{total_ngos}}</h1>
+
+        <h3>Partner NGOs</h3>
+
+        <p>Trusted NGO network</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <h1>12+</h1>
+
+        <h3>Cities Covered</h3>
+
+        <p>Growing across India</p>
+
+    </div>
+
+</section>
+
+
+
+
+<!-- ================= RECENT DONATIONS ================= -->
+
+
+
+<section class="recent-donations">
+
+    <div class="section-title">
+
+        <h1>Recent Donations</h1>
+
+        
+
+    </div>
+
+    <div class="donation-container">
+
+        {% if recent_donations %}
+
+            {% for donation in recent_donations %}
+
+            <div class="donation-card">
+
+                <h2>{{ donation.food_name }}</h2>
+
+                <hr>
+
+                <p>
+                    <strong>Quantity :</strong>
+                    {{ donation.quantity }}
+                    {{ donation.quantity_unit }}
+                </p>
+
+                <p>
+                    <strong>Location :</strong>
+                    {{ donation.city }}
+                </p>
+
+                <p>
+                    <strong>Status :</strong>
+
+                    {% if donation.status == "Completed" %}
+
+                        <span class="completed">
+                            {{ donation.status }}
+                        </span>
+
+                    {% elif donation.status == "Assigned" %}
+
+                        <span class="assigned">
+                            {{ donation.status }}
+                        </span>
+
+                    {% else %}
+
+                        <span class="pending">
+                            {{ donation.status }}
+                        </span>
+
+                    {% endif %}
+
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>No donations available.</p>
+
+        {% endif %}
+
+    </div>
+
+</section>
+                
+
+       
+<section class="how-work">
+
+    <h1>How FoodResQ Works</h1>
+
+    <p class="sub-heading">
+        A simple process that connects surplus food with people in need.
+    </p>
+
+    <div class="work-container">
+
+        <div class="work-card">
+
+            <div class="number">1</div>
+
+            <h2>Donate Food</h2>
+
+            <p>
+                Restaurants, hotels, caterers and households submit details of surplus food.
+            </p>
+
+        </div>
+
+        <div class="arrow">➜</div>
+
+        <div class="work-card">
+
+            <div class="number">2</div>
+
+            <h2>Admin Reviews</h2>
+
+            <p>
+                The administrator verifies the request and assigns the nearest NGO.
+            </p>
+
+        </div>
+
+        <div class="arrow">➜</div>
+
+        <div class="work-card">
+
+            <div class="number">3</div>
+
+            <h2>NGO Collects</h2>
+
+            <p>
+                The assigned NGO collects the food from the donor.
+            </p>
+
+        </div>
+
+        <div class="arrow">➜</div>
+
+        <div class="work-card">
+
+            <div class="number">4</div>
+
+            <h2>Food Delivered</h2>
+
+            <p>
+                The food reaches people who need it before it goes to waste.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+
+<section class="why-foodresq">
+
+    <div class="why-heading">
+
+        <h1>Why Choose FoodResQ?</h1>
+
+        <p>
+            We're making food donation easier, faster and more transparent for everyone.
+        </p>
+
+    </div>
+
+    <div class="why-container">
+
+        <div class="why-card">
+
+            <h2>Verified Requests</h2>
+
+            <p>
+                Every food request is reviewed and approved by the administrator before it becomes visible.
+            </p>
+
+        </div>
+
+        <div class="why-card">
+
+            <h2>Trusted NGOs</h2>
+
+            <p>
+                Food donations are assigned only to registered NGOs to ensure safe collection and distribution.
+            </p>
+
+        </div>
+
+        <div class="why-card">
+
+            <h2>Live Tracking</h2>
+
+            <p>
+                Donors can track every stage of their donation from submission to successful delivery.
+            </p>
+
+        </div>
+
+        <div class="why-card">
+
+            <h2>Reduce Food Waste</h2>
+
+            <p>
+                Prevent perfectly edible food from ending up in landfills by donating it to people who need it.
+            </p>
+
+        </div>
+
+        <div class="why-card">
+
+            <h2>Secure Process</h2>
+
+            <p>
+                Every donation and request passes through an organized approval process managed by the administrator.
+            </p>
+
+        </div>
+
+        <div class="why-card">
+
+            <h2>Community Impact</h2>
+
+            <p>
+                Every donation contributes to feeding hungry people and building a stronger community.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="partners">
+
+<h1 align="center">Our Partner NGOs</h1>
+
+<div class="partner-container">
+
+{% if partner_ngos %}
+
+    {% for ngo in partner_ngos %}
+
+    <div class="partner-card">
+
+        <h2>{{ ngo.ngo_name }}</h2>
+
+        <p><strong>Partner ID:</strong> {{ ngo.partner_id }}</p>
+
+        <p><strong>Service Area:</strong> {{ ngo.service_area }}</p>
+
+    </div>
+
+    {% endfor %}
+
+{% else %}
+
+    <p>No Partner NGOs Available.</p>
+
+{% endif %}
+
+</div>
+
+</section>
+
+<footer>
+
+    <div class="footer-container">
+
+        <div class="footer-about">
+
+            <h2>Food<span>ResQ</span></h2>
+
+            <p>
+
+                FoodResQ connects surplus food with people in need by bringing together donors, NGOs and administrators on one trusted platform.
+
+            </p>
+
+        </div>
+
+        <div class="footer-links">
+
+            <h3>Quick Links</h3>
+
+            <a href="/">Home</a>
+
+            <a href="/about">About</a>
+
+
+        </div>
+
+        <div class="footer-links">
+
+            <h3>Services</h3>
+
+            <a href="/donate">Donate Food</a>
+
+            <a href="/my_donations">My Donations</a>
+
+            <a href="/need_food">Food Requests</a>
+
+        </div>
+
+        <div class="footer-links">
+
+            <h3>Contact</h3>
+
+            <p>Email</p>
+
+            <p>support@foodresq.in</p>
+
+            <p>+91 7738618583</p>
+
+            <p>Mumbai, India</p>
+
+        </div>
+
+    </div>
+
+    <hr>
+
+    <p class="copyright">
+
+        © 2026 FoodResQ. All Rights Reserved.
+
+    </p>
+
+</footer>
+
+
+
+</body>
+
+</html>

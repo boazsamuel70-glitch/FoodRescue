@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Verify Donation | FoodResQ</title>
+
+
+    <link rel="stylesheet"
+          href="{{ url_for(
+              'static',
+              filename='common.css'
+          ) }}">
+
+
+    <link rel="stylesheet"
+          href="{{ url_for(
+              'static',
+              filename='ngo.css'
+          ) }}">
+
+
+    <link rel="stylesheet"
+          href="{{ url_for(
+              'static',
+              filename='ngo_verify.css'
+          ) }}">
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+    <div class="logo">
+
+        <img src="{{ url_for(
+            'static',
+            filename='images/homepgs.png'
+        ) }}">
+
+
+        <div>
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p>
+                Rescue. Reuse. Restore.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="{{ url_for('ngo_home') }}">
+            Home
+        </a>
+
+
+        <a href="{{ url_for(
+            'ngo_assigned_donations'
+        ) }}">
+
+            Assigned Donations
+
+        </a>
+
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="verification-page">
+
+
+    <!-- BACK -->
+
+    <a href="{{ url_for(
+        'ngo_donations',
+        donation_id=donation.donation_id
+    ) }}"
+       class="back-link">
+
+        ← Back to Donation
+
+    </a>
+
+
+
+    <!-- =================================================
+         HEADER
+    ================================================= -->
+
+    <section class="verification-header">
+
+        <span>
+            NGO VERIFICATION
+        </span>
+
+
+        <h1>
+            Verify Donation
+        </h1>
+
+
+        <p>
+
+            Donation #{{ donation.donation_id }}
+
+            <span>
+                ·
+            </span>
+
+            {{ donation.food_name }}
+
+        </p>
+
+    </section>
+
+
+
+    <!-- =================================================
+         NOTICE
+    ================================================= -->
+
+    <div class="verification-notice">
+
+        <strong>
+            ⚠ Mandatory Verification
+        </strong>
+
+
+        <p>
+            Please physically verify every item below
+            before accepting the donation for pickup.
+            All checks must be completed before the
+            donation can be verified.
+        </p>
+
+    </div>
+
+
+
+    <!-- =================================================
+         VERIFICATION FORM
+    ================================================= -->
+
+    <form method="POST"
+          action="{{ url_for(
+              'submit_donation_verification',
+              donation_id=donation.donation_id
+          ) }}"
+          id="verificationForm">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+
+        <section class="verification-card">
+
+
+            <div class="verification-card-header">
+
+                <div>
+
+                    <h2>
+                        Verification Checklist
+                    </h2>
+
+                    <p class="checklist-description">
+                        Check every item after physically
+                        confirming it.
+                    </p>
+
+                </div>
+
+
+                <div class="check-count"
+                     id="checkCount">
+
+                    0 / 6
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 CHECK 1
+            ================================================= -->
+
+            <label class="check-item">
+
+                <input
+                    type="checkbox"
+                    name="food_match"
+                    value="yes"
+                    class="verification-check"
+                    required>
+
+
+                <span class="custom-check">
+                    ✓
+                </span>
+
+
+                <div>
+
+                    <strong>
+                        Food matches the donation
+                    </strong>
+
+
+                    <small>
+                        Confirm that the food being provided
+                        matches the food listed in the donation.
+                    </small>
+
+                </div>
+
+            </label>
+
+
+
+            <!-- =================================================
+                 CHECK 2
+            ================================================= -->
+
+            <label class="check-item">
+
+                <input
+                    type="checkbox"
+                    name="quantity_match"
+                    value="yes"
+                    class="verification-check"
+                    required>
+
+
+                <span class="custom-check">
+                    ✓
+                </span>
+
+
+                <div>
+
+                    <strong>
+                        Quantity is correct
+                    </strong>
+
+
+                    <small>
+                        Confirm that the available quantity
+                        matches the quantity specified by
+                        the donor.
+                    </small>
+
+                </div>
+
+            </label>
+
+
+
+            <!-- =================================================
+                 CHECK 3
+            ================================================= -->
+
+            <label class="check-item">
+
+                <input
+                    type="checkbox"
+                    name="address_checked"
+                    value="yes"
+                    class="verification-check"
+                    required>
+
+
+                <span class="custom-check">
+                    ✓
+                </span>
+
+
+                <div>
+
+                    <strong>
+                        Pickup address is correct
+                    </strong>
+
+
+                    <small>
+                        Confirm that the pickup location
+                        matches the address provided by
+                        the donor.
+                    </small>
+
+                </div>
+
+            </label>
+
+
+
+            <!-- =================================================
+                 CHECK 4
+            ================================================= -->
+
+            <label class="check-item">
+
+                <input
+                    type="checkbox"
+                    name="pickup_details"
+                    value="yes"
+                    class="verification-check"
+                    required>
+
+
+                <span class="custom-check">
+                    ✓
+                </span>
+
+
+                <div>
+
+                    <strong>
+                        Pickup date and time are confirmed
+                    </strong>
+
+
+                    <small>
+                        Confirm that the donation is available
+                        during the scheduled pickup time.
+                    </small>
+
+                </div>
+
+            </label>
+
+
+
+            <!-- =================================================
+                 CHECK 5
+            ================================================= -->
+
+            <label class="check-item">
+
+                <input
+                    type="checkbox"
+                    name="food_condition"
+                    value="yes"
+                    class="verification-check"
+                    required>
+
+
+                <span class="custom-check">
+                    ✓
+                </span>
+
+
+                <div>
+
+                    <strong>
+                        Food is suitable for distribution
+                    </strong>
+
+
+                    <small>
+                        Confirm that the food is in acceptable
+                        condition and suitable for distribution.
+                    </small>
+
+                </div>
+
+            </label>
+
+
+
+            <!-- =================================================
+                 CHECK 6
+            ================================================= -->
+
+            <label class="check-item">
+
+                <input
+                    type="checkbox"
+                    name="packing_checked"
+                    value="yes"
+                    class="verification-check"
+                    required>
+
+
+                <span class="custom-check">
+                    ✓
+                </span>
+
+
+                <div>
+
+                    <strong>
+                        Packaging is safe and secure
+                    </strong>
+
+
+                    <small>
+                        Confirm that the food is properly packed
+                        and safe to transport.
+                    </small>
+
+                </div>
+
+            </label>
+
+
+
+            <!-- =================================================
+                 ACTIONS
+            ================================================= -->
+
+            <div class="verification-actions">
+
+
+                <!-- REPORT ISSUE -->
+
+                <a href="{{ url_for(
+                    'ngo_report_issue',
+                    donation_id=donation.donation_id
+                ) }}"
+                   class="report-verification-btn">
+
+                    ⚠ Report an Issue
+
+                </a>
+
+
+
+                <!-- VERIFY -->
+
+                <button
+                    type="submit"
+                    id="verifyButton"
+                    class="verify-verification-btn"
+                    disabled>
+
+                    ✓ Verify Donation
+
+                </button>
+
+            </div>
+
+
+        </section>
+
+
+    </form>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+const checkboxes =
+    document.querySelectorAll(
+        ".verification-check"
+    );
+
+
+const verifyButton =
+    document.getElementById(
+        "verifyButton"
+    );
+
+
+const checkCount =
+    document.getElementById(
+        "checkCount"
+    );
+
+
+function updateVerification() {
+
+    let checkedCount = 0;
+
+
+    checkboxes.forEach(function(checkbox) {
+
+        if (checkbox.checked) {
+
+            checkedCount++;
+
+        }
+
+    });
+
+
+    checkCount.textContent =
+        checkedCount + " / " + checkboxes.length;
+
+
+    if (checkedCount === checkboxes.length) {
+
+        verifyButton.disabled = false;
+
+        verifyButton.classList.add(
+            "ready"
+        );
+
+    }
+
+    else {
+
+        verifyButton.disabled = true;
+
+        verifyButton.classList.remove(
+            "ready"
+        );
+
+    }
+
+}
+
+
+checkboxes.forEach(function(checkbox) {
+
+    checkbox.addEventListener(
+        "change",
+        updateVerification
+    );
+
+});
+
+
+updateVerification();
+
+</script>
+
+
+
+</body>
+
+</html>

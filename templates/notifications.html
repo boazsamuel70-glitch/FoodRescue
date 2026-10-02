@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Notifications | FoodResQ</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='notifications.css') }}">
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+
+        <img src="{{ url_for('static',
+                             filename='images/homepgs.png') }}">
+
+        <div>
+            <h2>Food<span>ResQ</span></h2>
+            <p>Rescue. Reuse. Restore.</p>
+        </div>
+
+    </div>
+
+    <nav>
+
+        {% if session.get('role') == 'ngo' %}
+
+            <a href="{{ url_for('ngo_home') }}">
+                Home
+            </a>
+
+            <a href="{{ url_for('ngo_assigned_donations') }}">
+                Assigned Donations
+            </a>
+
+        {% else %}
+
+            <a href="{{ url_for('user_dashboard') }}">
+                Home
+            </a>
+
+            <a href="{{ url_for('my_donations') }}">
+                My Donations
+            </a>
+
+        {% endif %}
+
+        <a href="{{ url_for('notifications') }}"
+           class="active">
+            🔔 Notifications
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main class="notifications-page">
+
+    <section class="notifications-header">
+
+    <div class="notifications-heading">
+
+        <div class="notifications-title">
+
+            <span>FOODRESQ</span>
+
+            <h1>Notifications</h1>
+
+            <p>
+                Stay updated about your FoodResQ activities.
+            </p>
+
+        </div>
+
+
+        {% if notifications %}
+
+        <form
+            action="{{ url_for('clear_notifications') }}"
+            method="POST">
+
+            <!-- CSRF TOKEN -->
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}">
+
+            <button
+                type="submit"
+                class="clear-notifications-btn">
+
+                🗑 Clear Notifications
+
+            </button>
+
+        </form>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+    <section class="notification-list">
+
+        {% if notifications %}
+
+            {% for notification in notifications %}
+
+                <div class="notification-card
+                    {% if notification.is_read == 0 %}
+                        unread
+                    {% endif %}">
+
+                    <div class="notification-icon">
+                        🔔
+                    </div>
+
+                    <div class="notification-content">
+
+                        <p>
+                            {{ notification.message }}
+                        </p>
+
+                        <small>
+                            {{ notification.created_at }}
+                        </small>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-notifications">
+
+                <div>🔔</div>
+
+                <h2>No notifications yet</h2>
+
+                <p>
+                    Your FoodResQ updates will appear here.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+</main>
+
+
+</body>
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1B4332">
+
+
+    <title>About FoodResQ</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='common.css') }}">
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='about.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+<body>
+  
+<header>
+
+    <div class="logo">
+
+        <img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+        <div>
+
+            <h2>Food<span>ResQ</span></h2>
+
+            <p class="tagline">Turning <span>Surplus</span> into <span>Sustenance</span></p>
+
+        </div>
+
+    </div>
+
+    <nav>
+
+
+    <a href="/">Home</a>
+
+    <a href="/about">About</a>
+
+    
+
+    {% if session.get("role") == "donor" %}
+
+        <a href="/donate">Donate Food</a>
+
+        <a href="/my_donations">My Donations</a>
+
+        <span class="welcome">
+
+            Welcome, {{ session["user_name"] }}
+
+        </span>
+
+        <a href="/logout" class="nav-btn">Logout</a>
+
+    {% elif session.get("role") == "ngo" %}
+
+        <a href="/ngo_home">Dashboard</a>
+
+        <span class="welcome">
+
+            {{ session["ngo_name"] }}
+
+        </span>
+
+        <a href="/logout" class="nav-btn">Logout</a>
+
+    {% elif session.get("role") == "admin" %}
+
+        <a href="/admin_dashboard">Admin Dashboard</a>
+
+        <a href="/logout" class="nav-btn">Logout</a>
+
+    {% else %}
+
+        <!-- REGISTER -->
+
+        <div class="dropdown">
+
+            <button class="dropbtn">
+
+                Register ▼
+
+            </button>
+
+            <div class="dropdown-content">
+
+                <a href="/user_registration">
+
+                    Donor Registration
+
+                </a>
+
+                <a href="/ngo_registration">
+
+                    NGO Registration
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- LOGIN -->
+
+        <div class="dropdown">
+
+            <button class="dropbtn">
+
+                Login ▼
+
+            </button>
+
+            <div class="dropdown-content">
+
+                <a href="/user_login">
+
+                    Donor Login
+
+                </a>
+
+                <a href="/ngo_login">
+
+                    NGO Login
+
+                </a>
+
+                <a href="/FRSq_adm_log">
+
+                    Admin Login
+
+                </a>
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+</nav>
+
+</header>
+
+
+<!-- ABOUT -->
+
+<section class="about-page">
+
+    <div class="about-title">
+
+        <h1>About FoodResQ</h1>
+
+        <p>
+
+            Turning Surplus into Sustenance through a transparent,
+            reliable and community-driven food donation platform.
+
+        </p>
+
+    </div>
+
+</section>
+<section class="our-story">
+
+    <div class="story-image">
+
+        <img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+    </div>
+
+    <div class="story-content">
+
+        <h2>Our Story</h2>
+
+        <p>
+
+            Every day, large quantities of perfectly edible food are wasted
+            while many individuals and families struggle to access a proper
+            meal.
+
+        </p>
+
+        <p>
+
+            FoodResQ was created with a simple goal — to bridge the gap
+            between surplus food and people in need. By connecting donors,
+            NGOs and administrators on one platform, FoodResQ ensures
+            that food reaches the right people through an organized,
+            transparent and accountable process.
+
+        </p>
+
+        <p>
+
+            Together, we believe every meal saved is another life touched.
+
+        </p>
+
+    </div>
+
+</section>
+<section class="mission-vision">
+
+    <div class="mv-card">
+
+        <h2>Our Mission</h2>
+
+        <p>
+
+            To minimize food waste by creating an efficient platform
+            where individuals, restaurants, hotels, caterers and NGOs
+            can donate surplus food quickly and responsibly.
+
+        </p>
+
+    </div>
+
+    <div class="mv-card">
+
+        <h2>Our Vision</h2>
+
+        <p>
+
+            To build a future where no edible food goes to waste and
+            every person has access to nutritious meals through
+            community participation and technology.
+
+        </p>
+
+    </div>
+
+</section>
+<section class="about-work">
+
+    <h1>How FoodResQ Works</h1>
+
+    <div class="work-step">
+
+        <span>1</span>
+
+        <div>
+
+            <h3>Donation Submitted</h3>
+
+            <p>
+                Donors submit details of surplus food through the platform.
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="work-step">
+
+        <span>2</span>
+
+        <div>
+
+            <h3>Admin Verification</h3>
+
+            <p>
+                Every donation is reviewed before being assigned.
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="work-step">
+
+        <span>3</span>
+
+        <div>
+
+            <h3>NGO Assignment</h3>
+
+            <p>
+                The administrator assigns the nearest suitable NGO.
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="work-step">
+
+        <span>4</span>
+
+        <div>
+
+            <h3>Food Collection</h3>
+
+            <p>
+                The assigned NGO collects the donated food.
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="work-step">
+
+        <span>5</span>
+
+        <div>
+
+            <h3>Distribution</h3>
+
+            <p>
+                Food is distributed to people or organizations in need.
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="work-step">
+
+        <span>6</span>
+
+        <div>
+
+            <h3>Double Confirmation</h3>
+
+            <p>
+
+                The donor confirms the food was handed over.
+
+                <br><br>
+
+                The receiver confirms the food was received.
+
+                <br><br>
+
+                Only then does the administrator mark the donation as completed.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+<section class="faq">
+
+<h1>Frequently Asked Questions</h1>
+
+<div class="faq-box">
+
+<h3>Who can donate food?</h3>
+
+<p>
+
+Individuals, restaurants, hotels, caterers and NGOs can donate surplus food.
+
+</p>
+
+</div>
+
+<div class="faq-box">
+
+<h3>Can NGOs donate food?</h3>
+
+<p>
+
+Yes. NGOs can both donate surplus food and receive food from other donors.
+
+</p>
+
+</div>
+
+<div class="faq-box">
+
+<h3>Who verifies donations?</h3>
+
+<p>
+
+Every donation is verified by the administrator before being assigned to an NGO.
+
+</p>
+
+</div>
+
+<div class="faq-box">
+
+<h3>How is delivery confirmed?</h3>
+
+<p>
+
+Both the donor and the receiver must confirm the successful delivery before the administrator marks it as completed.
+
+</p>
+
+</div>
+
+<div class="faq-box">
+
+<h3>Is FoodResQ free?</h3>
+
+<p>
+
+Yes. FoodResQ is completely free for donors, NGOs and food requesters.
+
+</p>
+
+</div>
+
+</section>
+<section class="contact-info">
+
+    <h1>Get In Touch</h1>
+
+    <p class="contact-subtitle">
+
+        Have questions or want to collaborate?
+        We'd love to hear from you.
+
+    </p>
+
+    <div class="contact-card">
+
+        <div class="contact-item">
+
+            <h3>📧 Email</h3>
+
+            <p>support@foodresq.in</p>
+
+        </div>
+
+        <div class="contact-item">
+
+            <h3>📞 Phone</h3>
+
+            <p>+91 98765 43210</p>
+
+        </div>
+
+        <div class="contact-item">
+
+            <h3>📍 Address</h3>
+
+            <p>Mumbai, Maharashtra, India</p>
+
+        </div>
+
+        <div class="contact-item">
+
+            <h3>🕒 Working Hours</h3>
+
+            <p>Monday - Saturday<br>9:00 AM - 6:00 PM</p>
+
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+
+</html>

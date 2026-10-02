@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1B4332">
+
+
+    <title>Edit Profile - FoodResQ</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='user.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+
+        <img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+        <div>
+
+            <h2>Food<span>ResQ</span></h2>
+
+            <p class="tagline">
+                Turning <span>Surplus</span> into <span>Sustenance</span>
+            </p>
+
+        </div>
+
+    </div>
+
+    <nav>
+
+        <a href="/user_dashboard">Dashboard</a>
+
+        
+
+        <a href="{{ url_for('logout') }}"
+       class="logout">
+
+        Logout
+
+    </a>
+
+    </nav>
+
+</header>
+
+
+<section class="edit-profile-container">
+
+    <div class="edit-profile-card">
+
+        <h1>Edit Profile</h1>
+
+        <p class="profile-subtitle">
+            Update your FoodResQ account information.
+        </p>
+
+
+        <form action="/update_profile" method="POST">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+
+            <div class="form-group">
+
+                <label>Full Name</label>
+
+                <input
+                    type="text"
+                    name="name"
+                    value="{{ user.name }}"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Email Address</label>
+
+                <input
+                    type="email"
+                    name="email"
+                    value="{{ user.email }}"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Phone Number</label>
+
+                <input
+                    type="tel"
+                    name="phone"
+                    value="{{ user.phone }}"
+                    required>
+
+            </div>
+
+
+            <button type="submit" class="save-profile-btn">
+
+                Save Changes
+
+            </button>
+
+
+        </form>
+
+
+        
+
+
+        <a href="/user_dashboard"
+           class="back-profile-btn">
+
+             Back 
+
+        </a>
+
+    </div>
+
+</section>
+
+
+</body>
+
+</html>

@@ -1,0 +1,501 @@
+/* =========================================================
+   FOODRESQ - ADMIN ANALYTICS
+   Charts are plain CSS and inline SVG, so the page needs no
+   external chart library and works offline.
+========================================================= */
+
+.analytics-page {
+    padding: 34px 40px 60px;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+
+/* ---------------- PAGE HEAD ---------------- */
+
+.analytics-page .page-head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 26px;
+}
+
+.analytics-page .page-head h1 {
+    font-size: 1.85rem;
+    color: #1B4332;
+    margin-bottom: 6px;
+}
+
+.analytics-page .page-head p {
+    color: #5A6B62;
+    font-size: .97rem;
+    line-height: 1.6;
+    max-width: 620px;
+}
+
+.analytics-page .print-btn {
+    padding: 10px 18px;
+    border-radius: 10px;
+    background: #FFFFFF;
+    border: 1px solid #CFDAD3;
+    color: #2E7D32;
+    font-weight: 600;
+    font-size: .92rem;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background .15s ease, border-color .15s ease;
+}
+
+.analytics-page .print-btn:hover {
+    background: #F1F7F3;
+    border-color: #2E7D32;
+}
+
+
+/* ---------------- KPI CARDS ---------------- */
+
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.kpi {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px 22px;
+    background: #FFFFFF;
+    border: 1px solid #E4EBE6;
+    border-left: 4px solid #2E7D32;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(27, 67, 50, .05);
+}
+
+.kpi-good {
+    border-left-color: #A9D96D;
+}
+
+.kpi-label {
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    color: #8AA396;
+}
+
+.kpi-value {
+    font-size: 2.05rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #1B4332;
+}
+
+.kpi-foot {
+    font-size: .85rem;
+    color: #6B7C73;
+}
+
+
+/* ---------------- ATTENTION STRIP ---------------- */
+
+.attention {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 26px;
+}
+
+.attention-item {
+    flex: 1 1 260px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    background: #EAF3EC;
+    border: 1px solid #CFE3D5;
+    color: #245F4B;
+    font-size: .94rem;
+    text-decoration: none;
+    transition: transform .12s ease, box-shadow .15s ease;
+}
+
+.attention-item strong {
+    font-size: 1.1rem;
+    margin-right: 4px;
+}
+
+.attention-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(27, 67, 50, .12);
+}
+
+.attention-item.warn {
+    background: #FFF4E0;
+    border-color: #F0DCB8;
+    color: #8A5200;
+}
+
+
+/* ---------------- CARDS ---------------- */
+
+.card {
+    background: #FFFFFF;
+    border: 1px solid #E4EBE6;
+    border-radius: 14px;
+    padding: 24px 26px;
+    box-shadow: 0 2px 10px rgba(27, 67, 50, .05);
+}
+
+.card h2 {
+    font-size: 1.12rem;
+    color: #1B4332;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #EDF2EE;
+}
+
+.card.wide {
+    margin-bottom: 22px;
+}
+
+.chart-row {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+.chart-row.three {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.card .empty {
+    padding: 22px 0;
+    text-align: center;
+    color: #8AA396;
+    font-size: .93rem;
+}
+
+
+/* ---------------- HORIZONTAL BARS ---------------- */
+
+.bar-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.bar-list li {
+    display: grid;
+    grid-template-columns: 145px 1fr 46px;
+    align-items: center;
+    gap: 12px;
+}
+
+.bar-list.compact li {
+    grid-template-columns: 110px 1fr 40px;
+}
+
+.bar-label {
+    font-size: .89rem;
+    color: #3D4F46;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.bar-track {
+    height: 11px;
+    background: #EDF2EE;
+    border-radius: 99px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    display: block;
+    height: 100%;
+    border-radius: 99px;
+    background: #2E7D32;
+    min-width: 3px;
+    transition: width .5s ease;
+}
+
+.bar-value {
+    font-size: .89rem;
+    font-weight: 700;
+    color: #1B4332;
+    text-align: right;
+}
+
+/* status-specific colours */
+.bar-fill.status-completed        { background: #2E7D32; }
+.bar-fill.status-pending          { background: #B26A00; }
+.bar-fill.status-cancelled        { background: #C62828; }
+.bar-fill.status-assigned         { background: #1565C0; }
+.bar-fill.status-ngo-accepted     { background: #3D8749; }
+.bar-fill.status-on-the-way       { background: #4CAF50; }
+.bar-fill.status-picked-up        { background: #7CB342; }
+.bar-fill.status-awaiting-donor-confirmation { background: #A9D96D; }
+
+
+/* ---------------- DONUT ---------------- */
+
+.donut-wrap {
+    position: relative;
+    width: 200px;
+    margin: 4px auto 18px;
+}
+
+.donut {
+    width: 100%;
+    transform: rotate(-90deg);
+}
+
+.donut-hole {
+    fill: transparent;
+    stroke: #EDF2EE;
+    stroke-width: 6;
+}
+
+.donut-centre {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.donut-centre strong {
+    font-size: 1.6rem;
+    color: #1B4332;
+    line-height: 1;
+}
+
+.donut-centre span {
+    font-size: .76rem;
+    color: #8AA396;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    margin-top: 3px;
+}
+
+
+/* ---------------- LEGEND ---------------- */
+
+.legend {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.legend.inline {
+    flex-direction: row;
+    gap: 22px;
+    justify-content: center;
+    margin-top: 16px;
+    font-size: .86rem;
+    color: #5A6B62;
+}
+
+.legend li {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: .89rem;
+    color: #3D4F46;
+}
+
+.swatch {
+    width: 11px;
+    height: 11px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.legend-name {
+    flex: 1;
+}
+
+.legend-value {
+    font-weight: 600;
+    color: #1B4332;
+}
+
+
+/* ---------------- MONTHLY TREND ---------------- */
+
+.trend {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    gap: 14px;
+    height: 230px;
+    padding-top: 10px;
+}
+
+.trend-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.trend-bars {
+    flex: 1;
+    width: 100%;
+    max-width: 62px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.trend-total {
+    position: relative;
+    width: 100%;
+    background: #A9D96D;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    align-items: flex-end;
+    min-height: 4px;
+    transition: height .5s ease;
+}
+
+.trend-done {
+    width: 100%;
+    background: #2E7D32;
+    border-radius: 8px 8px 0 0;
+    transition: height .5s ease;
+}
+
+.trend-count {
+    margin-top: 8px;
+    font-size: .88rem;
+    font-weight: 700;
+    color: #1B4332;
+}
+
+.trend-label {
+    margin-top: 2px;
+    font-size: .8rem;
+    color: #8AA396;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+}
+
+
+/* ---------------- RANK TABLES ---------------- */
+
+table.rank {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.rank th {
+    text-align: left;
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .9px;
+    text-transform: uppercase;
+    color: #8AA396;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #EDF2EE;
+}
+
+table.rank th:not(:first-child),
+table.rank td:not(:first-child) {
+    text-align: right;
+}
+
+table.rank td {
+    padding: 11px 0;
+    font-size: .91rem;
+    color: #3D4F46;
+    border-bottom: 1px solid #F3F7F4;
+}
+
+table.rank tr:last-child td {
+    border-bottom: none;
+}
+
+table.rank td strong {
+    color: #2E7D32;
+}
+
+
+/* ---------------- RESPONSIVE ---------------- */
+
+@media (max-width: 1080px) {
+
+    .chart-row,
+    .chart-row.three {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 640px) {
+
+    .analytics-page {
+        padding: 22px 16px 44px;
+    }
+
+    .card {
+        padding: 20px 18px;
+    }
+
+    .bar-list li,
+    .bar-list.compact li {
+        grid-template-columns: 96px 1fr 38px;
+        gap: 9px;
+    }
+
+    .trend {
+        height: 190px;
+        gap: 7px;
+    }
+
+    .kpi-value {
+        font-size: 1.75rem;
+    }
+
+}
+
+
+/* ---------------- PRINT ---------------- */
+
+@media print {
+
+    header,
+    .print-btn {
+        display: none;
+    }
+
+    .analytics-page {
+        padding: 0;
+    }
+
+    .card,
+    .kpi {
+        box-shadow: none;
+        break-inside: avoid;
+    }
+
+}
+
+
+/* Clickable monthly analytics filter */
+.month-filter-card{display:flex;justify-content:space-between;align-items:center;gap:24px;margin:24px 0;padding:20px 24px;border:1px solid rgba(0,0,0,.10);border-radius:16px;background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.05)}
+.month-filter-label{display:block;font-size:12px;font-weight:800;letter-spacing:1.5px;opacity:.65;margin-bottom:4px}
+.month-filter-card h2{margin:0;font-size:24px}
+.month-filter-form{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.month-filter-form label{font-weight:600;font-size:14px}
+.month-filter-form select{min-width:190px;padding:11px 38px 11px 13px;border:1px solid rgba(0,0,0,.18);border-radius:10px;background:#fff;font:inherit;cursor:pointer}
+.clear-month{font-weight:700;text-decoration:none}
+@media(max-width:700px){.month-filter-card{flex-direction:column;align-items:flex-start}.month-filter-form{width:100%}.month-filter-form select{width:100%}}

@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Donations | FoodResQ</title>
+
+
+    <!-- USER CSS -->
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='user.css') }}">
+
+
+    <!-- COMMON CSS -->
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+
+    <!-- MY DONATIONS CSS -->
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='my_donations.css') }}">
+
+
+    <!-- GOOGLE FONT -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+    <div class="logo">
+
+        <img
+            src="{{ url_for('static', filename='images/homepgs.png') }}"
+            alt="FoodResQ Logo"
+        >
+
+        <div>
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p class="tagline">
+                Turning
+                <span>Surplus</span>
+                into
+                <span>Sustenance</span>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="user-section">
+
+        <span>
+            Hello, {{ session["user_name"] }} 👋
+        </span>
+
+        <a href="/logout"
+           class="logout">
+
+            Logout
+
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     DASHBOARD LAYOUT
+===================================================== -->
+
+<div class="dashboard-layout">
+
+
+    <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
+    <aside class="sidebar">
+
+        <h2>
+            Quick Actions
+        </h2>
+
+
+        <a href="/user_dashboard">
+            🏠 Dashboard
+        </a>
+
+
+        <a href="/donate">
+            🍱 Donate Food
+        </a>
+
+
+
+
+
+        <a href="/my_donations">
+            🔄 Track Donation
+        </a>
+
+
+        <a href="/edit_profile">
+            👤 Edit Profile
+        </a>
+
+    </aside>
+
+
+
+    <!-- =================================================
+         MAIN CONTENT
+    ================================================== -->
+
+    <main class="main-content">
+
+
+        <h1>
+            My Donations
+        </h1>
+
+
+        <p class="subtitle">
+            Track the progress of every donation you've made.
+        </p>
+
+
+
+        <!-- =================================================
+             PICKUP CODE INFORMATION
+        ================================================== -->
+
+        <div class="pickup-info-box">
+
+            <div class="pickup-info-icon">
+                🔐
+            </div>
+
+            <div class="pickup-info-text">
+
+                <h3>
+                    FoodResQ Pickup Verification
+                </h3>
+
+                <p>
+                    Once an NGO is assigned to your donation,
+                    your unique FoodResQ pickup code will be
+                    available in the donation details.
+                </p>
+
+                <p>
+                    Give the code to the NGO representative
+                    only when they arrive to collect your food.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             DONATION TABLE
+        ================================================== -->
+
+        <div class="table-container">
+
+            <table class="donation-table">
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Food Name
+                        </th>
+
+                        <th>
+                            Quantity
+                        </th>
+
+                        <th>
+                            Pickup Date
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Pickup Code
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+
+                <tbody>
+
+
+                    {% if donations %}
+
+
+                        {% for donation in donations %}
+
+
+                        <tr>
+
+
+                            <!-- =================================
+                                 DONATION ID
+                            ================================== -->
+
+                            <td>
+
+                                {{ donation.donation_id }}
+
+                            </td>
+
+
+
+                            <!-- =================================
+                                 FOOD NAME
+                            ================================== -->
+
+                            <td>
+
+                                {{ donation.food_name }}
+
+                            </td>
+
+
+
+                            <!-- =================================
+                                 QUANTITY
+                            ================================== -->
+
+                            <td>
+
+                                {{ donation.quantity }}
+                                {{ donation.quantity_unit }}
+
+                            </td>
+
+
+
+                            <!-- =================================
+                                 PICKUP DATE
+                            ================================== -->
+
+                            <td>
+
+                                {{ donation.pickup_date }}
+
+                            </td>
+
+
+
+                            <!-- =================================
+                                 STATUS
+                            ================================== -->
+
+                            <td>
+
+
+                                {% if donation.status == "Pending" %}
+
+                                    <span class="status pending">
+                                        Pending
+                                    </span>
+
+
+                                {% elif donation.status == "Admin Verified" %}
+
+                                    <span class="status verified">
+                                        Admin Verified
+                                    </span>
+
+
+                                {% elif donation.status == "Assigned" %}
+
+                                    <span class="status assigned">
+                                        NGO Assigned
+                                    </span>
+
+
+                                {% elif donation.status == "NGO Accepted" %}
+
+                                    <span class="status accepted">
+                                        NGO Accepted
+                                    </span>
+
+
+                                {% elif donation.status == "At Donor" %}
+
+                                    <span class="status at-donor">
+                                        NGO At Donor
+                                    </span>
+
+
+                                {% elif donation.status == "Donation Verified" %}
+
+                                    <span class="status verified">
+                                        Donation Verified
+                                    </span>
+
+
+                                {% elif donation.status == "Awaiting Pickup OTP" %}
+
+                                    <span class="status awaiting">
+                                        Awaiting Pickup
+                                    </span>
+
+
+                                {% elif donation.status == "Pickup Confirmed" %}
+
+                                    <span class="status confirmed">
+                                        Pickup Confirmed
+                                    </span>
+
+
+                                {% elif donation.status == "On The Way" %}
+
+                                    <span class="status on-way">
+                                        On The Way
+                                    </span>
+
+
+                                {% elif donation.status == "Reached Distribution" %}
+
+                                    <span class="status reached">
+                                        Reached Distribution
+                                    </span>
+
+
+                                {% elif donation.status == "Distributed" %}
+
+                                    <span class="status distributed">
+                                        Distributed
+                                    </span>
+
+
+                                {% elif donation.status == "Proof Submitted" %}
+
+                                    <span class="status proof">
+                                        Proof Submitted
+                                    </span>
+
+
+                                {% elif donation.status == "Completed" %}
+
+                                    <span class="status completed">
+                                        Completed
+                                    </span>
+
+
+                                {% elif donation.status == "Rejected" %}
+
+                                    <span class="status rejected">
+                                        Rejected
+                                    </span>
+
+
+                                {% elif donation.status == "NGO Confirmed Pickup" %}
+
+                                    <span class="status confirmed">
+                                        NGO Confirmed Pickup
+                                    </span>
+
+
+                                {% elif donation.status == "Awaiting Donor Confirmation" %}
+
+                                    <span class="status awaiting">
+                                        Awaiting Donor Confirmation
+                                    </span>
+
+
+                                {% elif donation.status == "Picked Up" %}
+
+                                    <span class="status confirmed">
+                                        Picked Up
+                                    </span>
+
+
+                                {% else %}
+
+                                    <span class="status">
+                                        {{ donation.status }}
+                                    </span>
+
+                                {% endif %}
+
+
+                            </td>
+
+
+
+                            <!-- =================================
+                                 PICKUP CODE
+                            ================================== -->
+
+                            <td>
+
+                                {% if donation.status == "Assigned"
+                                      and donation.pickup_code
+                                      and donation.pickup_code_verified == 0 %}
+
+                                    <span class="pickup-code-available">
+                                        🔐 Available
+                                    </span>
+
+                                    <small class="pickup-code-note">
+                                        View details
+                                    </small>
+
+
+                                {% elif donation.pickup_code_verified == 1 %}
+
+                                    <span class="pickup-code-used">
+                                        ✓ Verified
+                                    </span>
+
+
+                                {% elif donation.status == "Picked Up" %}
+
+                                    <span class="pickup-code-used">
+                                        ✓ Used
+                                    </span>
+
+
+                                {% else %}
+
+                                    <span class="pickup-code-none">
+                                        —
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+
+                            <!-- =================================
+                                 ACTION
+                            ================================== -->
+
+                            <td>
+
+                                <a href="{{ url_for(
+                                    'my_donation_details',
+                                    donation_id=donation.donation_id
+                                ) }}"
+                                   class="view-link">
+
+                                    <button
+                                        type="button"
+                                        class="view-btn">
+
+                                        View
+
+                                    </button>
+
+                                </a>
+
+                            </td>
+
+
+                        </tr>
+
+
+                        {% endfor %}
+
+
+                    {% else %}
+
+
+                        <!-- =================================
+                             NO DONATIONS
+                        ================================== -->
+
+                        <tr>
+
+                            <td colspan="7"
+                                class="no-donations">
+
+                                <div>
+
+                                    <div class="empty-icon">
+                                        🍱
+                                    </div>
+
+                                    <h3>
+                                        No Donations Yet
+                                    </h3>
+
+                                    <p>
+                                        You haven't made any food
+                                        donations yet.
+                                    </p>
+
+                                    <a href="/donate"
+                                       class="donate-now-btn">
+
+                                        Donate Food
+
+                                    </a>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                    {% endif %}
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+    </main>
+
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div class="footer-container">
+
+
+        <div class="footer-about">
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p>
+                FoodResQ connects surplus food with people
+                in need through trusted NGOs.
+            </p>
+
+        </div>
+
+
+
+        <div class="footer-links">
+
+            <h3>
+                Quick Links
+            </h3>
+
+
+            <a href="/">
+                Home
+            </a>
+
+
+            <a href="/about">
+                About
+            </a>
+
+
+            <a href="/contact">
+                Contact
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+    <hr>
+
+
+    <p class="copyright">
+
+        © 2026 FoodResQ. All Rights Reserved.
+
+    </p>
+
+</footer>
+
+
+
+</body>
+
+</html>

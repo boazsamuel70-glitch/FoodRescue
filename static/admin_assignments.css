@@ -1,0 +1,392 @@
+/* =====================================================
+   ADMIN ASSIGNMENTS PAGE
+===================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f5f7fa;
+    color: #263238;
+}
+
+
+/* =====================================================
+   MAIN CONTAINER
+===================================================== */
+
+.container {
+    width: 94%;
+    max-width: 1500px;
+    margin: 40px auto;
+    min-height: 650px;
+}
+
+
+/* =====================================================
+   PAGE TITLE
+===================================================== */
+
+.page-title {
+    margin-bottom: 25px;
+}
+
+.page-title h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.page-title p {
+    margin-top: 8px;
+    color: #6b7280;
+    font-size: 15px;
+}
+
+
+/* =====================================================
+   TABS
+===================================================== */
+
+.assignment-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+}
+
+.assignment-tabs a {
+    text-decoration: none;
+    padding: 13px 22px;
+    border-radius: 10px;
+    background: white;
+    color: #374151;
+    font-weight: 600;
+    border: 1px solid #e5e7eb;
+    transition: 0.25s ease;
+}
+
+.assignment-tabs a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.assignment-tabs .active-tab {
+    background: #f4b400;
+    color: white;
+    border-color: #f4b400;
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+.search-card {
+    background: white;
+    padding: 18px;
+    border-radius: 14px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
+}
+
+.search-card form {
+    display: flex;
+    gap: 10px;
+}
+
+.search-card input {
+    flex: 1;
+    padding: 13px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    outline: none;
+}
+
+.search-card input:focus {
+    border-color: #f4b400;
+    box-shadow: 0 0 0 3px rgba(244, 180, 0, 0.12);
+}
+
+.search-card button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 9px;
+    background: #263238;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.search-card button:hover {
+    background: #37474f;
+}
+
+
+/* =====================================================
+   TABLE CARD
+===================================================== */
+
+.table-card {
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.07);
+    overflow-x: auto;
+}
+
+.table-card h2 {
+    margin: 0 0 20px;
+    font-size: 21px;
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.table-card table {
+    width: 100%;
+    min-width: 950px;
+    border-collapse: collapse;
+}
+
+.table-card th {
+    background: #f8fafc;
+    color: #374151;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 15px 12px;
+    text-align: left;
+    border-bottom: 2px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+.table-card td {
+    padding: 16px 12px;
+    font-size: 14px;
+    border-bottom: 1px solid #edf0f2;
+    vertical-align: middle;
+}
+
+.table-card tbody tr {
+    transition: 0.2s ease;
+}
+
+.table-card tbody tr:hover {
+    background: #fafafa;
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status {
+    display: inline-block;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+
+/* Pending */
+
+.status.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+
+/* Admin Verified */
+
+.status.verified {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+
+/* Assigned */
+
+.status.assigned {
+    background: #e0e7ff;
+    color: #4338ca;
+}
+
+
+/* NGO Accepted */
+
+.status.accepted {
+    background: #dcfce7;
+    color: #166534;
+}
+
+
+/* NGO Rejected */
+
+.status.rejected {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+
+/* Completed */
+
+.status.completed {
+    background: #dcfce7;
+    color: #166534;
+}
+
+
+/* =====================================================
+   NGO SELECT
+===================================================== */
+
+table select {
+    min-width: 190px;
+    padding: 9px 11px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    outline: none;
+}
+
+table select:focus {
+    border-color: #f4b400;
+}
+
+
+/* =====================================================
+   ASSIGN FORM
+===================================================== */
+
+.assign-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.view-btn,
+.assign-btn {
+    display: inline-block;
+    border: none;
+    text-decoration: none;
+    padding: 9px 14px;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+
+/* Verify / View */
+
+.view-btn {
+    background: #263238;
+    color: white;
+}
+
+.view-btn:hover {
+    background: #455a64;
+    transform: translateY(-1px);
+}
+
+
+/* Assign */
+
+.assign-btn {
+    background: #f4b400;
+    color: white;
+}
+
+.assign-btn:hover {
+    background: #d99e00;
+    transform: translateY(-1px);
+}
+
+
+/* =====================================================
+   EMPTY TABLE
+===================================================== */
+
+.table-card td[colspan] {
+    padding: 35px;
+    text-align: center;
+    color: #7b8490;
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+    margin-top: 50px;
+    padding: 25px;
+    text-align: center;
+    background: #263238;
+    color: white;
+}
+
+footer p {
+    margin: 0;
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .container {
+        width: 96%;
+        margin-top: 25px;
+    }
+
+    .page-title h1 {
+        font-size: 25px;
+    }
+
+    .assignment-tabs {
+        flex-direction: column;
+    }
+
+    .assignment-tabs a {
+        text-align: center;
+    }
+
+    .search-card form {
+        flex-direction: column;
+    }
+
+    .search-card button {
+        width: 100%;
+    }
+
+    .table-card {
+        padding: 15px;
+    }
+
+}

@@ -1,0 +1,606 @@
+/* =========================================
+   PAGE
+========================================= */
+
+body {
+    background: #f4f7f6;
+    
+    color: #333;
+}
+
+
+.applications-container {
+    width: 94%;
+    max-width: 1450px;
+    margin: 30px auto;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+
+.page-header h1 {
+    margin: 0;
+
+    color: #1f3d32;
+
+    font-size: 28px;
+}
+
+
+.page-header p {
+    margin: 6px 0 0;
+
+    color: #777;
+
+    font-size: 14px;
+}
+
+
+.application-count {
+    background: #fff3cd;
+
+    color: #856404;
+
+    padding: 10px 18px;
+
+    border-radius: 20px;
+
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+
+.application-count span {
+    font-size: 12px;
+
+    margin-left: 4px;
+}
+
+
+/* =========================================
+   NGO CARD
+========================================= */
+
+.ngo-card {
+    background: white;
+
+    border-radius: 12px;
+
+    margin-bottom: 12px;
+
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.06);
+
+    overflow: hidden;
+
+    border: 1px solid #e5e9e7;
+}
+
+
+/* =========================================
+   SUMMARY
+========================================= */
+
+.ngo-summary {
+    min-height: 90px;
+
+    display: grid;
+
+    grid-template-columns:
+        250px
+        1fr
+        150px;
+
+    align-items: center;
+
+    gap: 25px;
+
+    padding: 15px 20px;
+}
+
+
+/* =========================================
+   NGO NAME
+========================================= */
+
+.ngo-main-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+}
+
+
+.ngo-icon {
+    width: 45px;
+    height: 45px;
+
+    min-width: 45px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e8f1ed;
+
+    color: #1f3d32;
+
+    font-size: 19px;
+
+    font-weight: bold;
+}
+
+
+.ngo-name h2 {
+    margin: 0;
+
+    color: #1f3d32;
+
+    font-size: 17px;
+}
+
+
+.ngo-name p {
+    margin: 4px 0 0;
+
+    color: #888;
+
+    font-size: 12px;
+}
+
+
+/* =========================================
+   SUMMARY DETAILS
+========================================= */
+
+.summary-details {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+}
+
+
+.summary-item span {
+    display: block;
+
+    color: #999;
+
+    font-size: 10px;
+
+    text-transform: uppercase;
+
+    font-weight: bold;
+
+    margin-bottom: 4px;
+}
+
+
+.summary-item strong {
+    display: block;
+
+    color: #333;
+
+    font-size: 13px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================
+   RIGHT SIDE
+========================================= */
+
+.summary-right {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-end;
+
+    gap: 7px;
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.status {
+    padding: 5px 11px;
+
+    border-radius: 15px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+
+.status.pending {
+    background: #fff3cd;
+
+    color: #856404;
+}
+
+
+/* =========================================
+   VIEW DETAILS BUTTON
+========================================= */
+
+.view-btn {
+    border: none;
+
+    background: transparent;
+
+    color: #1f3d32;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    padding: 3px;
+}
+
+
+.view-btn:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   EXPANDED DETAILS
+========================================= */
+
+.ngo-details {
+    display: none;
+
+    border-top: 1px solid #e5e5e5;
+
+    padding: 22px 25px 25px;
+
+    background: #fbfcfc;
+}
+
+
+.ngo-details.show {
+    display: block;
+}
+
+
+/* =========================================
+   DETAILS SECTION
+========================================= */
+
+.details-section {
+    margin-bottom: 25px;
+}
+
+
+.details-section h3 {
+    color: #1f3d32;
+
+    font-size: 16px;
+
+    margin: 0 0 12px;
+
+    padding-bottom: 7px;
+
+    border-bottom: 2px solid #f2b705;
+}
+
+
+/* =========================================
+   DETAILS GRID
+========================================= */
+
+.details-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 10px;
+}
+
+
+.detail-box {
+    background: white;
+
+    border: 1px solid #e2e7e5;
+
+    border-radius: 7px;
+
+    padding: 11px;
+}
+
+
+.detail-box.wide {
+    grid-column: span 2;
+}
+
+
+.detail-box span {
+    display: block;
+
+    color: #999;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+
+    margin-bottom: 5px;
+}
+
+
+.detail-box strong {
+    display: block;
+
+    color: #333;
+
+    font-size: 13px;
+
+    word-break: break-word;
+}
+
+
+/* =========================================
+   DOCUMENTS
+========================================= */
+
+.documents {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+.document {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    background: white;
+
+    border: 1px solid #e2e7e5;
+
+    border-radius: 7px;
+
+    padding: 11px 14px;
+}
+
+
+.document-info span {
+    display: block;
+
+    color: #777;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    margin-bottom: 4px;
+}
+
+
+.document-info strong {
+    font-size: 13px;
+
+    color: #333;
+}
+
+
+.document-btn {
+    border: none;
+
+    background: #1f3d32;
+
+    color: white;
+
+    padding: 7px 14px;
+
+    border-radius: 5px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid #ddd;
+}
+
+
+.actions form {
+    margin: 0;
+}
+
+
+.approve-btn,
+.reject-btn {
+    border: none;
+
+    padding: 10px 20px;
+
+    border-radius: 6px;
+
+    color: white;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.approve-btn {
+    background: #198754;
+}
+
+
+.approve-btn:hover {
+    background: #146c43;
+}
+
+
+.reject-btn {
+    background: #dc3545;
+}
+
+
+.reject-btn:hover {
+    background: #b02a37;
+}
+
+
+/* =========================================
+   EMPTY
+========================================= */
+
+.empty-box {
+    background: white;
+
+    padding: 50px;
+
+    text-align: center;
+
+    border-radius: 12px;
+}
+
+
+.empty-box h2 {
+    color: #1f3d32;
+
+    margin-bottom: 7px;
+}
+
+
+.empty-box p {
+    color: #777;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1150px) {
+
+    .ngo-summary {
+        grid-template-columns:
+            220px
+            1fr
+            130px;
+    }
+
+    .summary-details {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .details-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 750px) {
+
+    .ngo-summary {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+    }
+
+
+    .summary-right {
+        align-items: flex-start;
+
+        flex-direction: row;
+
+        justify-content: space-between;
+    }
+
+
+    .summary-details {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .detail-box.wide {
+        grid-column: span 1;
+    }
+
+}
+.logout{
+
+    text-decoration:none;
+
+    background:white;
+
+    color:#1b7f5a;
+
+    padding:10px 22px;
+
+    border-radius:25px;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    transition:0.3s;
+}

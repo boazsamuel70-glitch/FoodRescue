@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1B4332">
+
+
+<title>Donation Details | FoodResQ Admin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="{{url_for('static',filename='common.css')}}">
+
+<link rel="stylesheet"
+href="{{url_for('static',filename='admin_dashboard.css')}}">
+
+<link rel="stylesheet"
+href="{{url_for('static',filename='admin_donation.css')}}">
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+
+<img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+<div>
+
+<h2>
+Food<span>ResQ</span>
+</h2>
+
+<p>
+Turning Surplus into Sustenance
+</p>
+
+</div>
+
+</div>
+
+
+<nav>
+
+<a href="/admin_dashboard">Dashboard</a>
+
+
+<a href="/logout" class="logout">
+            Logout
+        </a>
+
+</nav>
+
+</header>
+
+
+
+
+<div class="container">
+
+
+
+<section class="title-card">
+
+<h1>
+🍱 Donation Details
+</h1>
+
+<p>
+Donation ID : {{donation.donation_id}}
+</p>
+
+</section>
+
+
+
+
+
+<section class="details-grid">
+
+
+<div class="card">
+
+
+<h2>
+🍲 Food Information
+</h2>
+
+
+<p>
+<b>Food Name:</b>
+{{donation.food_name}}
+</p>
+
+
+<p>
+<b>Category:</b>
+{{donation.food_type}}
+</p>
+
+
+<p>
+<b>Quantity:</b>
+{{donation.quantity}} {{donation.quantity_unit}}
+</p>
+
+
+<p>
+<b>Pickup Date:</b>
+{{donation.pickup_date}}
+</p>
+
+
+<p>
+<b>Status:</b>
+
+<span class="status">
+{{donation.status}}
+</span>
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+👤 Donor Information
+</h2>
+
+
+<p>
+<b>Name:</b>
+{{donation.donor_name}}
+</p>
+
+
+<p>
+<b>Email:</b>
+{{donation.donor_email}}
+</p>
+
+
+<p>
+<b>Phone:</b>
+{{donation.donor_phone}}
+</p>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+<section class="card pickup">
+
+
+<h2>
+📍 Pickup Information
+</h2>
+
+
+<p>
+<b>Address:</b>
+{{donation.address}}
+</p>
+
+
+</section>
+
+
+
+
+
+
+<section class="actions">
+
+
+<h2>
+Admin Actions
+</h2>
+
+
+{% set locked = donation.status in ['Cancelled', 'Completed'] %}
+
+
+{% if donation.status == 'Pending' %}
+
+    <!-- VERIFY / REJECT: a new donation needs admin review first -->
+
+    <p class="action-note">
+        Review the details above, then verify this donation so it
+        can be assigned to an NGO.
+    </p>
+
+    <div class="review-actions">
+
+        <form method="POST"
+              action="{{ url_for(
+                  'admin_verify_donation',
+                  donation_id=donation.donation_id
+              ) }}"
+              onsubmit="return confirm(
+                  'Verify donation #{{ donation.donation_id }}?'
+              );">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="assign">
+                ✔ Verify Donation
+            </button>
+        </form>
+
+        <form method="POST"
+              action="{{ url_for(
+                  'admin_reject_donation',
+                  donation_id=donation.donation_id
+              ) }}"
+              onsubmit="return confirm(
+                  'Reject donation #{{ donation.donation_id }}? The donor will see it as rejected.'
+              );">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="cancel">
+                ❌ Reject Donation
+            </button>
+        </form>
+
+    </div>
+
+{% elif locked %}
+
+    <p class="action-note">
+        This donation is {{ donation.status|lower }}, so no further
+        admin action is available.
+    </p>
+
+{% else %}
+
+
+    <!-- ASSIGN / REASSIGN NGO -->
+
+    <a class="assign"
+       href="{{ url_for('find_ngos', donation_id=donation.donation_id) }}">
+
+        {% if donation.ngo_id %}
+            🤝 Reassign NGO
+        {% else %}
+            🤝 Assign NGO
+        {% endif %}
+
+    </a>
+
+
+    <!-- UPDATE STATUS -->
+
+    <form class="status-form"
+          method="POST"
+          action="{{ url_for(
+              'admin_update_donation_status',
+              donation_id=donation.donation_id
+          ) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <label for="new_status">
+            🔄 Update Status
+        </label>
+
+        <div class="status-row">
+
+            <select name="new_status" id="new_status" required>
+
+                {% for option in [
+                    'Pending',
+                    'Assigned',
+                    'NGO Accepted',
+                    'On the Way',
+                    'Picked Up',
+                    'Awaiting Donor Confirmation',
+                    'Completed'
+                ] %}
+
+                    <option value="{{ option }}"
+                        {% if donation.status == option %}selected{% endif %}>
+                        {{ option }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+            <button type="submit" class="update">
+                Save
+            </button>
+
+        </div>
+
+    </form>
+
+
+    <!-- CANCEL -->
+
+    <form method="POST"
+          action="{{ url_for(
+              'admin_cancel_donation',
+              donation_id=donation.donation_id
+          ) }}"
+          onsubmit="return confirm(
+              'Cancel donation #{{ donation.donation_id }}? This releases any assigned NGO and cannot be undone.'
+          );">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <button type="submit" class="cancel">
+            ❌ Cancel Donation
+        </button>
+
+    </form>
+
+
+{% endif %}
+
+
+</section>
+
+
+
+
+
+
+<a href="/admin_donations" class="back-btn">
+⬅ Back to Donations
+</a>
+
+
+
+</div>
+
+
+
+
+
+<footer>
+
+FoodResQ Admin Panel © 2026
+
+</footer>
+
+
+</body>
+
+</html>

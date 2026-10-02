@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FoodResQ Dashboard</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- COMMON CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+    <!-- USER CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='user.css') }}">
+
+    <!-- RESPONSIVE CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='responsive.css') }}">
+
+    <!-- FONT -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- WEBSITE ALERT -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+
+    {% with _frq = get_flashed_messages(with_categories=true) %}
+        {% if _frq %}
+            <script>
+                window.FOODRESQ_FLASH = {{ _frq|tojson }};
+            </script>
+        {% endif %}
+    {% endwith %}
+
+    <!-- MOBILE NAV -->
+    <script
+        src="{{ url_for('static', filename='nav-toggle.js') }}"
+        defer>
+    </script>
+
+</head>
+
+
+<body>
+
+
+<!-- ========================================================= -->
+<!-- HEADER -->
+<!-- ========================================================= -->
+
+<header>
+
+    <!-- LOGO -->
+
+    <div class="logo">
+
+        <img
+            src="{{ url_for('static', filename='images/homepgs.png') }}"
+            alt="FoodResQ Logo">
+
+        <div>
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p class="tagline">
+                Turning <span>Surplus</span> into <span>Sustenance</span>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- USER SECTION -->
+
+    <div class="user-section">
+
+
+        <!-- ================================================= -->
+        <!-- NOTIFICATIONS -->
+        <!-- ================================================= -->
+
+        <a
+            href="{{ url_for('notifications') }}"
+            class="notification-link {% if unread_notifications > 0 %}has-unread{% endif %}"
+            title="Notifications">
+
+            <span class="notification-bell">
+
+                🔔
+
+                {% if unread_notifications > 0 %}
+
+                    <span class="notification-badge">
+
+                        {% if unread_notifications > 99 %}
+                            99+
+                        {% else %}
+                            {{ unread_notifications }}
+                        {% endif %}
+
+                    </span>
+
+                {% endif %}
+
+            </span>
+
+            <span class="notification-text">
+                Notifications
+            </span>
+
+        </a>
+
+
+        <!-- ================================================= -->
+        <!-- PROFILE -->
+        <!-- ================================================= -->
+
+        <div class="dashboard-profile">
+
+
+            <!-- PROFILE TRIGGER -->
+
+            <button
+                type="button"
+                class="dashboard-profile-trigger"
+                id="profileTrigger">
+
+                <!-- PROFILE IMAGE -->
+
+                <span class="dashboard-profile-image">
+
+                    {% if session.get("profile_photo") %}
+
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename='uploads/profile_photos/' + session["profile_photo"]
+                            ) }}"
+                            alt="Profile">
+
+                    {% else %}
+
+                        <span class="dashboard-profile-initials">
+                            {{ session["user_name"][:2]|upper }}
+                        </span>
+
+                    {% endif %}
+
+                </span>
+
+
+                <!-- USER NAME -->
+
+                <span class="dashboard-profile-name">
+                    {{ session["user_name"] }}
+                </span>
+
+
+                <!-- ARROW -->
+
+                <span class="dashboard-profile-arrow">
+                    ▾
+                </span>
+
+            </button>
+
+
+            <!-- PROFILE POPUP -->
+
+            <div
+                class="dashboard-profile-popup"
+                id="profilePopup">
+
+
+                <!-- POPUP HEADER -->
+
+                <div class="profile-popup-header">
+
+                    <div class="profile-popup-photo">
+
+                        {% if session.get("profile_photo") %}
+
+                            <img
+                                src="{{ url_for(
+                                    'static',
+                                    filename='uploads/profile_photos/' + session["profile_photo"]
+                                ) }}"
+                                alt="Profile">
+
+                        {% else %}
+
+                            <span>
+                                {{ session["user_name"][:2]|upper }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="profile-popup-name">
+
+                        <h3>
+                            {{ session["user_name"] }}
+                        </h3>
+
+                        <p>
+                            FoodResQ Donor
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- POPUP DETAILS -->
+
+                <div class="profile-popup-details">
+
+
+                    <!-- DONOR ID -->
+
+                    <div class="profile-popup-detail">
+
+                        <span>
+                            Donor ID
+                        </span>
+
+                        <strong>
+                            {{ session["donor_code"] }}
+                        </strong>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    {% if session.get("user_email") %}
+
+                        <div class="profile-popup-detail">
+
+                            <span>
+                                Email
+                            </span>
+
+                            <strong>
+                                {{ session["user_email"] }}
+                            </strong>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- VIEW PROFILE -->
+
+                <a
+                    href="{{ url_for('profile') }}"
+                    class="profile-popup-button">
+
+                    View Profile
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- LOGOUT -->
+        <!-- ================================================= -->
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout">
+
+            Logout
+
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- ========================================================= -->
+<!-- DASHBOARD LAYOUT -->
+<!-- ========================================================= -->
+
+<div class="dashboard-layout">
+
+
+    <!-- ===================================================== -->
+    <!-- SIDEBAR -->
+    <!-- ===================================================== -->
+
+    <aside class="sidebar">
+
+        <h2>
+            Quick Actions
+        </h2>
+
+
+        <a href="{{ url_for('user_dashboard') }}">
+            🏠 Dashboard
+        </a>
+
+
+        <!-- FIXED: donate_food -->
+
+        <a href="{{ url_for('donate_food') }}">
+            🍱 Donate Food
+        </a>
+
+
+        <a href="{{ url_for('my_donations') }}">
+            🔄 Track Donation
+        </a>
+
+
+        <a href="{{ url_for('profile') }}">
+            👤 My Profile
+        </a>
+
+    </aside>
+
+
+    <!-- ===================================================== -->
+    <!-- MAIN CONTENT -->
+    <!-- ===================================================== -->
+
+    <main class="container">
+
+
+        <!-- ================================================= -->
+        <!-- WELCOME SECTION -->
+        <!-- ================================================= -->
+
+        <section class="welcome-card">
+
+            <div>
+
+                <h1>
+                    Welcome {{ session["user_name"] }}!
+                </h1>
+
+                <p>
+
+                    Every meal you donate brings hope to someone in need.
+
+                    <br>
+
+                    Continue making a difference today.
+
+                </p>
+
+            </div>
+
+
+            <!-- FIXED: donate_food -->
+
+            <a
+                href="{{ url_for('donate_food') }}"
+                class="donate-btn">
+
+                🍱 Donate Food
+
+            </a>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- STATISTICS -->
+        <!-- ================================================= -->
+
+        <section class="stats">
+
+
+            <!-- DONATIONS -->
+
+            <div class="stat-card">
+
+                <h3>
+                    Donations
+                </h3>
+
+                <h2>
+                    {{ donations_count }}
+                </h2>
+
+            </div>
+
+
+            <!-- PENDING -->
+
+            <div class="stat-card">
+
+                <h3>
+                    Pending
+                </h3>
+
+                <h2>
+                    {{ pending_count }}
+                </h2>
+
+            </div>
+
+
+            <!-- COMPLETED -->
+
+            <div class="stat-card">
+
+                <h3>
+                    Completed
+                </h3>
+
+                <h2>
+                    {{ completed_count }}
+                </h2>
+
+            </div>
+
+
+            <!-- MEALS SAVED -->
+
+            <div class="stat-card">
+
+                <h3>
+                    Meals Saved
+                </h3>
+
+                <h2>
+                    {{ meals_saved }}
+                </h2>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- MIDDLE SECTION -->
+        <!-- ================================================= -->
+
+        <section class="middle">
+
+
+            <!-- DONATION GOAL -->
+
+            <div class="donation-goal-card">
+
+                <h2>
+                    Donation Goal
+                </h2>
+
+
+                <div class="donation-progress-container">
+
+                    <div
+                        class="donation-progress-fill"
+                        style="width: {{ progress|int }}%;">
+                    </div>
+
+                </div>
+
+
+                <p class="donation-goal-text">
+
+                    Goal: Feed {{ donation_goal }} Meals
+
+                </p>
+
+
+                <p class="donation-progress-text">
+
+                    {{ meals_completed }}
+                    /
+                    {{ donation_goal }}
+                    meals
+
+                    ({{ progress|int }}%)
+
+                </p>
+
+            </div>
+
+
+            <!-- RECENT ACTIVITY -->
+
+            <div class="activity-card">
+
+                <h2>
+                    Recent Activity
+                </h2>
+
+                <ul>
+
+                    <li>
+                        ✔ Welcome to FoodResQ
+                    </li>
+
+                    <li>
+                        ✔ Account Created
+                    </li>
+
+                    <li>
+                        ✔ Ready for first donation
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- RECENT DONATIONS -->
+        <!-- ================================================= -->
+
+        <section class="donations">
+
+            <h2>
+                Recent Donations
+            </h2>
+
+
+            <table>
+
+                <tr>
+
+                    <th>
+                        Food
+                    </th>
+
+                    <th>
+                        Quantity
+                    </th>
+
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                </tr>
+
+
+                {% if donations %}
+
+                    {% for donation in donations %}
+
+                        <tr>
+
+                            <td>
+                                {{ donation.food_name }}
+                            </td>
+
+
+                            <td>
+
+                                {{ donation.quantity }}
+                                {{ donation.quantity_unit }}
+
+                            </td>
+
+
+                            <td>
+                                {{ donation.pickup_date }}
+                            </td>
+
+
+                            <td>
+                                {{ donation.status }}
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <tr>
+
+                        <td colspan="4">
+                            No donations yet.
+                        </td>
+
+                    </tr>
+
+                {% endif %}
+
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ========================================================= -->
+<!-- FOOTER -->
+<!-- ========================================================= -->
+
+<footer>
+
+    <div class="footer-container">
+
+
+        <!-- ABOUT -->
+
+        <div class="footer-about">
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p>
+
+                FoodResQ connects surplus food with people in need
+                by bringing together donors, NGOs and administrators
+                on one trusted platform.
+
+            </p>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+
+        <div class="footer-links">
+
+            <h3>
+                Quick Links
+            </h3>
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="/about">
+                About
+            </a>
+
+            <a href="/findngos">
+                NGOs
+            </a>
+
+            <a href="/contact">
+                Contact
+            </a>
+
+        </div>
+
+
+        <!-- SERVICES -->
+
+        <div class="footer-links">
+
+            <h3>
+                Services
+            </h3>
+
+
+            <!-- FIXED: donate_food -->
+
+            <a href="{{ url_for('donate_food') }}">
+                Donate Food
+            </a>
+
+
+            <a href="{{ url_for('my_donations') }}">
+                My Donations
+            </a>
+
+
+            <a href="/need_food">
+                Food Requests
+            </a>
+
+        </div>
+
+
+        <!-- CONTACT -->
+
+        <div class="footer-links">
+
+            <h3>
+                Contact
+            </h3>
+
+            <p>
+                Email
+            </p>
+
+            <p>
+                support@foodresq.in
+            </p>
+
+            <p>
+                +91 7738618583
+            </p>
+
+            <p>
+                Mumbai, India
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <hr>
+
+
+    <p class="copyright">
+
+        © 2026 FoodResQ. All Rights Reserved.
+
+    </p>
+
+</footer>
+
+
+<!-- ========================================================= -->
+<!-- PROFILE POPUP JAVASCRIPT -->
+<!-- ========================================================= -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const profileTrigger =
+        document.getElementById("profileTrigger");
+
+    const profileContainer =
+        document.querySelector(".dashboard-profile");
+
+    const profilePopup =
+        document.getElementById("profilePopup");
+
+
+    if (
+        !profileTrigger ||
+        !profileContainer ||
+        !profilePopup
+    ) {
+        return;
+    }
+
+
+    /* ============================================
+       OPEN / CLOSE PROFILE
+       ============================================ */
+
+    profileTrigger.addEventListener(
+        "click",
+        function (event) {
+
+            event.stopPropagation();
+
+            profileContainer.classList.toggle("open");
+
+        }
+    );
+
+
+    /* ============================================
+       DON'T CLOSE WHEN CLICKING INSIDE POPUP
+       ============================================ */
+
+    profilePopup.addEventListener(
+        "click",
+        function (event) {
+
+            event.stopPropagation();
+
+        }
+    );
+
+
+    /* ============================================
+       CLOSE WHEN CLICKING OUTSIDE
+       ============================================ */
+
+    document.addEventListener(
+        "click",
+        function () {
+
+            profileContainer.classList.remove("open");
+
+        }
+    );
+
+});
+
+</script>
+
+
+</body>
+
+</html>

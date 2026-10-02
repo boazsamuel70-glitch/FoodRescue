@@ -1,0 +1,40 @@
+/* FoodResQ waiting room - mobile first */
+:root{--g1:#0f7a3d;--g2:#1fae5e;--ink:#16302a;--muted:#5c7a6e;--line:#dcefe3;--bg:#f2fbf5}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{min-height:100vh;min-height:100dvh;font-family:"Poppins",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);
+  background:radial-gradient(1200px 600px at 10% -10%,#d9f7e4 0,transparent 60%),radial-gradient(900px 500px at 110% 110%,#fff1d6 0,transparent 55%),var(--bg)}
+.queue-page{min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;
+  padding:max(20px,env(safe-area-inset-top)) 16px max(20px,env(safe-area-inset-bottom))}
+.queue-card{width:100%;max-width:560px;background:#fff;border:1px solid var(--line);border-radius:28px;padding:36px 28px;text-align:center;
+  box-shadow:0 30px 70px rgba(15,122,61,.14),0 2px 0 rgba(255,255,255,.8) inset;animation:rise .6s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.queue-logo{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:22px;text-align:left}
+.queue-logo-img{width:48px;height:48px;border-radius:14px;object-fit:cover}
+.queue-logo h1{margin:0;font-size:24px;font-weight:800}.queue-logo h1 span{color:var(--g1)}
+.queue-logo p{margin:2px 0 0;font-size:12px;color:var(--muted)}
+.queue-icon{position:relative;width:84px;height:84px;margin:6px auto 14px;display:grid;place-items:center;font-size:38px;border-radius:50%;
+  background:linear-gradient(145deg,#e6f9ed,#c9f1d8)}
+.queue-icon .pulse{position:absolute;inset:0;border-radius:50%;border:2px solid var(--g2);animation:pulse 2s ease-out infinite}
+@keyframes pulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.6);opacity:0}}
+.queue-title{margin:0 0 8px;font-size:clamp(20px,5vw,26px);font-weight:700}
+.queue-message{margin:0 auto 24px;max-width:44ch;font-size:14.5px;line-height:1.65;color:var(--muted)}
+.queue-message strong{color:var(--g1)}
+.queue-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
+.stat{background:linear-gradient(180deg,#f7fdf9,#eef9f2);border:1px solid var(--line);border-radius:18px;padding:14px 6px}
+.stat-label{display:block;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.stat-number{font-size:clamp(22px,6vw,30px);font-weight:800;color:var(--g1);line-height:1}
+.stat-number small{font-size:12px;font-weight:600;color:var(--muted)}
+.progress-bar{height:12px;background:#e6f3ea;border-radius:99px;overflow:hidden;margin-bottom:14px}
+.progress-fill{height:100%;width:5%;border-radius:99px;background:linear-gradient(90deg,var(--g1),var(--g2),#8de3ad);background-size:200% 100%;
+  animation:flow 2.4s linear infinite;transition:width .8s ease}
+@keyframes flow{to{background-position:-200% 0}}
+.live-status{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 22px;font-size:13px;color:var(--muted)}
+.live-dot{width:9px;height:9px;border-radius:50%;background:var(--g2);box-shadow:0 0 0 0 rgba(31,174,94,.6);animation:ping 1.6s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 9px rgba(31,174,94,0)}100%{box-shadow:0 0 0 0 rgba(31,174,94,0)}}
+.queue-leave{margin:0}
+.queue-logout{font:inherit;font-size:14px;font-weight:600;color:#b3372c;background:#fff;border:1.5px solid #f0c9c4;border-radius:12px;padding:11px 22px;cursor:pointer;min-height:44px;transition:.2s}
+.queue-logout:hover{background:#fff4f2;border-color:#e59a92}
+.queue-card.granted .queue-icon{background:linear-gradient(145deg,#d3f7e0,#9be8b9)}
+@media (max-width:520px){.queue-card{padding:28px 16px;border-radius:22px}.queue-stats{gap:8px}.stat{padding:12px 4px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        View Report | FoodResQ
+    </title>
+
+
+    <link rel="stylesheet"
+          href="{{ url_for(
+              'static',
+              filename='common.css'
+          ) }}">
+
+
+    <link rel="stylesheet"
+          href="{{ url_for(
+              'static',
+              filename='admin.css'
+          ) }}">
+
+
+    <link rel="stylesheet"
+          href="{{ url_for(
+              'static',
+              filename='admin_view_report.css'
+          ) }}">
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+    <div class="logo">
+
+        <img src="{{ url_for(
+            'static',
+            filename='images/homepgs.png'
+        ) }}">
+
+
+        <div>
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p>
+                Rescue. Reuse. Restore.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="{{ url_for('admin_dashboard') }}">
+            Dashboard
+        </a>
+
+
+<a href="{{ url_for('admin_analytics') }}">
+Analytics
+</a>
+<a href="/admin_sampling">Sampling</a>
+
+        <a href="{{ url_for('admin_reports') }}"
+           class="active">
+
+            Reports
+
+        </a>
+
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="admin-report-page">
+
+
+    <!-- BACK -->
+
+    <a href="{{ url_for('admin_reports') }}"
+       class="back-link">
+
+        ← Back to Reports
+
+    </a>
+
+
+
+    <!-- =================================================
+         REPORT HEADER
+    ================================================= -->
+
+    <section class="report-page-header">
+
+
+        <div>
+
+            <span class="page-label">
+                {{ report.reporter_type }} REPORT
+            </span>
+
+
+            <h1>
+                Report #{{ report.report_id }}
+            </h1>
+
+
+            <p>
+                Review the issue reported about
+                Donation #{{ report.donation_id }}.
+            </p>
+
+        </div>
+
+
+        <div class="report-status">
+
+            <span>
+                Status
+            </span>
+
+
+            <strong>
+                {{ report.status }}
+            </strong>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         REPORT INFORMATION
+    ================================================= -->
+
+    <section class="admin-card">
+
+
+        <div class="card-heading">
+
+            <div class="card-icon">
+                ⚠
+            </div>
+
+
+            <div>
+
+                <h2>
+                    Report Information
+                </h2>
+
+                <p>
+                    Information submitted by the reporter.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="details-grid">
+
+
+            <div class="detail-item">
+
+                <span>
+                    Report ID
+                </span>
+
+                <strong>
+                    #{{ report.report_id }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>
+                    Reporter
+                </span>
+
+                <strong>
+                    {{ report.reporter_type }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>
+                    Donation ID
+                </span>
+
+                <strong>
+                    #{{ report.donation_id }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>
+                    User ID
+                </span>
+
+                <strong>
+                    {{ report.user_id or 'N/A' }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>
+                    Reason
+                </span>
+
+                <strong>
+                    {{ report.reason }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>
+                    Reported On
+                </span>
+
+                <strong>
+                    {{ report.reported_on }}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- DESCRIPTION -->
+
+        <div class="description-box">
+
+            <h3>
+                Issue Description
+            </h3>
+
+
+            <p>
+                {{ report.description }}
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         DONATION INFORMATION
+    ================================================= -->
+
+    {% if donation %}
+
+    <section class="admin-card">
+
+
+        <div class="card-heading">
+
+            <div class="card-icon">
+                🍱
+            </div>
+
+
+            <div>
+
+                <h2>
+                    Donation Information
+                </h2>
+
+                <p>
+                    Details of the donation related to
+                    this report.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="details-grid">
+
+
+            <div class="detail-item">
+
+                <span>
+                    Donation ID
+                </span>
+
+                <strong>
+                    #{{ donation.donation_id }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>
+                    Food Name
+                </span>
+
+                <strong>
+                    {{ donation.food_name }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>
+                    Food Type
+                </span>
+
+                <strong>
+                    {{ donation.food_type or 'N/A' }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>
+                    Quantity
+                </span>
+
+                <strong>
+                    {{ donation.quantity }}
+                    {{ donation.quantity_unit }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>
+                    City
+                </span>
+
+                <strong>
+                    {{ donation.city or 'N/A' }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>
+                    Pickup Date
+                </span>
+
+                <strong>
+                    {{ donation.pickup_date or 'N/A' }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>
+                    Pickup Time
+                </span>
+
+                <strong>
+                    {{ donation.pickup_time or 'N/A' }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>
+                    Status
+                </span>
+
+                <strong>
+                    {{ donation.status }}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ADDRESS -->
+
+        <div class="address-box">
+
+            <span>
+                Pickup Address
+            </span>
+
+
+            <p>
+                📍 {{ donation.address }}
+            </p>
+
+        </div>
+
+
+    </section>
+
+    {% else %}
+
+    <section class="admin-card">
+
+        <div class="missing-donation">
+
+            <h3>
+                Donation Not Found
+            </h3>
+
+            <p>
+                The donation associated with this report
+                could not be found.
+            </p>
+
+        </div>
+
+    </section>
+
+    {% endif %}
+
+
+
+    <!-- =================================================
+         ADMIN ACTIONS
+    ================================================= -->
+
+    <section class="admin-actions-card">
+
+
+        <h2>
+            Admin Actions
+        </h2>
+
+
+        <p>
+            Review the report and take the appropriate
+            action.
+        </p>
+
+
+        <div class="action-buttons">
+
+
+            <!-- BACK -->
+
+            <a href="{{ url_for(
+                'admin_reports'
+            ) }}"
+               class="back-button">
+
+                ← Back to Reports
+
+            </a>
+
+
+            <!-- CANCEL DONATION -->
+
+            {% if donation
+               and donation.status != 'Cancelled'
+               and donation.status != 'Completed' %}
+
+            <form method="POST"
+                  action="{{ url_for(
+                      'admin_cancel_donation',
+                      donation_id=donation.donation_id
+                  ) }}"
+                  onsubmit="
+                    return confirm(
+                        'Are you sure you want to cancel this donation? This action cannot be undone.'
+                    );
+                  ">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <button
+                    type="submit"
+                    class="cancel-button">
+
+                    ✕ Cancel Donation
+
+                </button>
+
+            </form>
+
+            {% endif %}
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+</body>
+
+</html>

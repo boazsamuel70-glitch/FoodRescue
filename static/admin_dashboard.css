@@ -1,0 +1,785 @@
+/* =========================================================
+   FOODRESQ ADMIN DASHBOARD
+   Dashboard Content Only
+   Header / Navbar / Logo handled by common.css
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: #f3f7f4;
+    color: #173d2d;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.admin-container {
+    width: 92%;
+    max-width: 1420px;
+    margin: 38px auto 65px;
+}
+
+
+/* =========================================================
+   WELCOME HERO
+   ========================================================= */
+
+.welcome-card {
+    position: relative;
+    overflow: hidden;
+
+    min-height: 205px;
+    padding: 42px 46px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    border-radius: 24px;
+
+    background:
+        radial-gradient(
+            circle at 88% 15%,
+            rgba(185, 232, 109, 0.22),
+            transparent 28%
+        ),
+        linear-gradient(
+            135deg,
+            #073b2a,
+            #0b5138 65%,
+            #146044
+        );
+
+    color: white;
+
+    box-shadow:
+        0 18px 45px rgba(7, 59, 42, 0.18);
+}
+
+.welcome-card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 320px;
+    height: 320px;
+
+    right: -140px;
+    bottom: -200px;
+
+    border-radius: 50%;
+
+    border: 48px solid rgba(185, 232, 109, 0.10);
+}
+
+.welcome-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 110px;
+    height: 110px;
+
+    right: 80px;
+    top: 38px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.welcome-card h1 {
+    position: relative;
+    z-index: 2;
+
+    font-size: 32px;
+    line-height: 1.3;
+
+    font-weight: 700;
+
+    margin-bottom: 12px;
+}
+
+.welcome-card p {
+    position: relative;
+    z-index: 2;
+
+    max-width: 850px;
+
+    color: #d7e8de;
+
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   SECTION HEADINGS
+   ========================================================= */
+
+.pending-section,
+.quick-section,
+.top-ngos,
+.activity-card,
+.table-card {
+    margin-top: 38px;
+}
+
+.pending-section h2,
+.quick-section h2,
+.top-ngos h2,
+.activity-card h2,
+.table-card h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 21px;
+
+    color: #103e2c;
+
+    font-size: 23px;
+    line-height: 1.4;
+
+    font-weight: 700;
+}
+
+.pending-section h2::before,
+.quick-section h2::before,
+.top-ngos h2::before,
+.activity-card h2::before,
+.table-card h2::before {
+    content: "";
+
+    width: 6px;
+    height: 26px;
+
+    border-radius: 8px;
+
+    background: #a9db61;
+}
+
+
+/* =========================================================
+   PENDING ACTION CARDS
+   ========================================================= */
+
+.pending-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 23px;
+}
+
+.pending-card {
+    position: relative;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #dfeae3;
+
+    border-radius: 19px;
+
+    padding: 29px;
+
+    box-shadow:
+        0 7px 25px rgba(16, 62, 44, 0.06);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.pending-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 5px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #6fae3e,
+            #bde77b
+        );
+}
+
+.pending-card:hover {
+    transform: translateY(-6px);
+
+    border-color: #c3dfaa;
+
+    box-shadow:
+        0 17px 36px rgba(16, 62, 44, 0.12);
+}
+
+.pending-card h3 {
+    color: #154832;
+
+    font-size: 19px;
+    line-height: 1.4;
+
+    font-weight: 650;
+
+    margin-bottom: 10px;
+}
+
+.pending-card p {
+    color: #66786e;
+
+    font-size: 14px;
+    line-height: 1.7;
+
+    margin-bottom: 20px;
+}
+
+.pending-card a {
+    display: inline-block;
+
+    padding: 10px 19px;
+
+    border-radius: 9px;
+
+    background: #083d2b;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition: all 0.25s ease;
+}
+
+.pending-card a:hover {
+    background: #126044;
+
+    transform: translateX(2px);
+}
+
+
+/* =========================================================
+   QUICK ACTIONS
+   ========================================================= */
+
+.action-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+.action-grid a {
+    min-height: 140px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #dfeae3;
+
+    border-radius: 18px;
+
+    color: #174630;
+
+    text-decoration: none;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    line-height: 1.6;
+
+    box-shadow:
+        0 6px 20px rgba(16, 62, 44, 0.05);
+
+    transition: all 0.25s ease;
+}
+
+.action-grid a:hover {
+    transform: translateY(-6px);
+
+    background: #fbfef9;
+
+    border-color: #b8dc8c;
+
+    color: #0a412d;
+
+    box-shadow:
+        0 16px 32px rgba(16, 62, 44, 0.11);
+}
+
+
+/* =========================================================
+   TOP NGOs
+   ========================================================= */
+
+.top-ngos {
+    background: #ffffff;
+
+    border: 1px solid #dfeae3;
+
+    border-radius: 21px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 7px 25px rgba(16, 62, 44, 0.05);
+}
+
+
+/* =========================================================
+   TABLES
+   ========================================================= */
+
+.top-ngos table,
+.table-card table {
+    width: 100%;
+
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.top-ngos th,
+.table-card th {
+    background: #0a412f;
+
+    color: #ffffff;
+
+    padding: 16px 18px;
+
+    text-align: left;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.2px;
+}
+
+.top-ngos th:first-child,
+.table-card th:first-child {
+    border-radius: 10px 0 0 10px;
+}
+
+.top-ngos th:last-child,
+.table-card th:last-child {
+    border-radius: 0 10px 10px 0;
+}
+
+.top-ngos td,
+.table-card td {
+    padding: 17px 18px;
+
+    border-bottom: 1px solid #e9f0eb;
+
+    color: #4e6257;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    background: #ffffff;
+}
+
+.top-ngos tbody tr:hover td,
+.table-card tbody tr:hover td {
+    background: #f7fbf8;
+}
+
+.top-ngos tr:last-child td,
+.table-card tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   RANK
+   ========================================================= */
+
+.top-ngos td:first-child {
+    width: 75px;
+
+    color: #3f7d27;
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   RECENT ACTIVITY
+   ========================================================= */
+
+.activity-card {
+    background: #ffffff;
+
+    border: 1px solid #dfeae3;
+
+    border-radius: 21px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 7px 25px rgba(16, 62, 44, 0.05);
+}
+
+.activity-card ul {
+    list-style: none;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+}
+
+.activity-card li {
+    position: relative;
+
+    min-height: 65px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 14px 16px 14px 45px;
+
+    background: #f5f9f6;
+
+    border: 1px solid #e2ece5;
+
+    border-radius: 12px;
+
+    color: #496156;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+.activity-card li::before {
+    content: "✓";
+
+    position: absolute;
+
+    left: 14px;
+
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #dff2c9;
+
+    color: #397723;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   LATEST DONATIONS
+   ========================================================= */
+
+.table-card {
+    background: #ffffff;
+
+    border: 1px solid #dfeae3;
+
+    border-radius: 21px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 7px 25px rgba(16, 62, 44, 0.05);
+
+    overflow-x: auto;
+}
+
+
+/* =========================================================
+   STATUS BADGE
+   ========================================================= */
+
+.status {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 7px 13px;
+
+    border-radius: 30px;
+
+    background: #e8f6d9;
+
+    color: #397522;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.status::before {
+    content: "";
+
+    width: 7px;
+    height: 7px;
+
+    margin-right: 7px;
+
+    border-radius: 50%;
+
+    background: #68a63e;
+}
+
+
+/* =========================================================
+   EMPTY TABLE MESSAGE
+   ========================================================= */
+
+.top-ngos td[colspan],
+.table-card td[colspan] {
+    text-align: center;
+
+    color: #87968d;
+
+    padding: 28px;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #edf3ef;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #8ebc61;
+
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #639442;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .pending-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .action-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .activity-card ul {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .welcome-card h1 {
+        font-size: 29px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .admin-container {
+        width: 92%;
+
+        margin-top: 25px;
+    }
+
+    .welcome-card {
+        padding: 30px 25px;
+
+        min-height: 175px;
+    }
+
+    .welcome-card h1 {
+        font-size: 24px;
+    }
+
+    .welcome-card p {
+        font-size: 13px;
+    }
+
+    .pending-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .action-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .action-grid a {
+        font-size: 14px;
+    }
+
+    .activity-card ul {
+        grid-template-columns: 1fr;
+    }
+
+    .pending-section h2,
+    .quick-section h2,
+    .top-ngos h2,
+    .activity-card h2,
+    .table-card h2 {
+        font-size: 20px;
+    }
+
+    .top-ngos,
+    .activity-card,
+    .table-card {
+        padding: 21px;
+    }
+
+    .top-ngos table,
+    .table-card table {
+        min-width: 650px;
+    }
+}
+/* =========================================================
+   ADMIN NAVBAR NOTIFICATION BADGES
+========================================================= */
+
+.admin-nav-notification-link {
+
+    display: inline-flex !important;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    white-space: nowrap;
+
+}
+
+
+/* =========================================================
+   BADGE
+========================================================= */
+
+.admin-nav-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 19px;
+
+    height: 19px;
+
+    padding: 0 5px;
+
+    box-sizing: border-box;
+
+    border-radius: 50px;
+
+    background: #238b57;
+
+    color: #ffffff;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    line-height: 1;
+
+    font-family: "Poppins", sans-serif;
+
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.admin-nav-notification-link:hover
+.admin-nav-badge {
+
+    background: #1d7449;
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .admin-nav-notification-link {
+
+        justify-content: flex-start !important;
+
+    }
+
+}

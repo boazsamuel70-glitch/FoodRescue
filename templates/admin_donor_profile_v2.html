@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Donor Profile | FoodResQ</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='admin_donor_profile_v2.css') }}">
+
+</head>
+
+<body>
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="top-header">
+
+        <div class="brand">
+
+            <img
+                src="{{ url_for('static', filename='images/homepgs.png') }}"
+                alt="FoodResQ">
+
+            <div>
+
+                <h2>
+                    Food<span>ResQ</span>
+                </h2>
+
+                <p>
+                    Turning Surplus into Sustenance
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <nav>
+
+            <a href="/admin_dashboard">
+                Dashboard
+            </a>
+
+            <a href="/admin_donors">
+                Donors
+            </a>
+
+            <a href="/admin_ngos">
+                NGOs
+            </a>
+
+            <a href="/admin_donations">
+                Donations
+            </a>
+
+            <a href="/admin_assignments">
+                Assignments
+            </a>
+
+            <a href="/admin_analytics">
+                Analytics
+            </a>
+
+            <a href="/admin_sampling">
+                Sampling
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =====================================================
+         PAGE
+    ====================================================== -->
+
+    <main class="profile-page">
+
+
+        <!-- =================================================
+             PROFILE HEADER
+        ================================================== -->
+
+        <section class="profile-hero">
+
+
+            <div class="profile-picture">
+
+                {% if donor.profile_photo %}
+
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename='uploads/profile_photos/' ~ donor.profile_photo
+                        ) }}"
+                        alt="{{ donor.name }}">
+
+                {% else %}
+
+                    <span>
+                        {{ donor.initials }}
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="profile-main-info">
+
+                <div class="profile-role">
+                    FOODRESQ DONOR
+                </div>
+
+                <h1>
+                    {{ donor.name }}
+                </h1>
+
+                <p>
+                    Registered FoodResQ donor
+                </p>
+
+
+                <div class="donor-id">
+
+                    <span>
+                        Donor ID
+                    </span>
+
+                    <strong>
+                        {{ donor.donor_code }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PERSONAL INFORMATION
+        ================================================== -->
+
+        <section class="card">
+
+            <h2>
+                Personal Information
+            </h2>
+
+
+            <div class="info-grid">
+
+
+                <div class="info-box">
+
+                    <span>
+                        Donor ID
+                    </span>
+
+                    <strong>
+                        {{ donor.donor_code }}
+                    </strong>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <span>
+                        Name
+                    </span>
+
+                    <strong>
+                        {{ donor.name }}
+                    </strong>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <span>
+                        Email
+                    </span>
+
+                    <strong>
+                        {{ donor.email }}
+                    </strong>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <span>
+                        Phone
+                    </span>
+
+                    <strong>
+                        {{ donor.phone or 'Not provided' }}
+                    </strong>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <span>
+                        Account Status
+                    </span>
+
+                    <strong>
+                        {{ donor.status or 'Active' }}
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             IMPACT
+        ================================================== -->
+
+        <section>
+
+            <h2 class="section-title">
+                Donor Impact
+            </h2>
+
+
+            <div class="impact-grid">
+
+
+                <div class="impact-card">
+
+                    <div class="impact-icon">
+                        🍱
+                    </div>
+
+                    <strong>
+                        {{ impact.total_donations }}
+                    </strong>
+
+                    <span>
+                        Total Donations
+                    </span>
+
+                </div>
+
+
+                <div class="impact-card">
+
+                    <div class="impact-icon">
+                        🥘
+                    </div>
+
+                    <strong>
+                        {{ impact.meals_saved }}
+                    </strong>
+
+                    <span>
+                        Meals Contributed
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             DONATION HISTORY
+        ================================================== -->
+
+        <section class="card">
+
+            <h2>
+                Donation History
+            </h2>
+
+
+            {% if donations %}
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Donation ID
+                            </th>
+
+                            <th>
+                                Food
+                            </th>
+
+                            <th>
+                                Quantity
+                            </th>
+
+                            <th>
+                                Pickup Date
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for donation in donations %}
+
+                        <tr>
+
+                            <td>
+                                #{{ donation.donation_id }}
+                            </td>
+
+                            <td>
+                                {{ donation.food_name }}
+                            </td>
+
+                            <td>
+                                {{ donation.quantity }}
+                                {{ donation.quantity_unit }}
+                            </td>
+
+                            <td>
+                                {{ donation.pickup_date }}
+                            </td>
+
+                            <td>
+
+                                <span class="status">
+                                    {{ donation.status }}
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <div class="empty">
+                No donations found for this donor.
+            </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- =================================================
+             ACTIONS
+        ================================================== -->
+
+        <div class="actions">
+
+
+            <form
+                method="POST"
+                action="{{ url_for(
+                    'admin_deactivate_donor',
+                    id=donor.id
+                ) }}">
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}">
+
+                <button
+                    type="submit"
+                    class="deactivate">
+
+                    🚫 Deactivate Account
+
+                </button>
+
+            </form>
+
+
+            <a
+                href="{{ url_for('admin_donors') }}"
+                class="back">
+
+                ← Back to Donors
+
+            </a>
+
+
+        </div>
+
+
+    </main>
+
+
+    <footer>
+
+        FoodResQ Admin Panel © 2026
+
+    </footer>
+
+
+</body>
+
+</html>

@@ -1,0 +1,577 @@
+/* =====================================================
+   NGO REPORT ISSUE PAGE
+===================================================== */
+
+.ngo-report-page {
+
+    width: 90%;
+
+    max-width: 900px;
+
+    margin: 40px auto 70px;
+}
+
+
+/* =====================================================
+   BACK LINK
+===================================================== */
+
+.back-link {
+
+    display: inline-block;
+
+    margin-bottom: 25px;
+
+    color: #555;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+
+.back-link:hover {
+
+    color: #15803d;
+
+    transform: translateX(-2px);
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.report-header {
+
+    margin-bottom: 28px;
+}
+
+
+.report-header span {
+
+    color: #15803d;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+}
+
+
+.report-header h1 {
+
+    margin: 8px 0;
+
+    color: #1f2937;
+
+    font-size: 35px;
+}
+
+
+.report-header p {
+
+    margin: 0;
+
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   DONATION SUMMARY
+===================================================== */
+
+.report-summary {
+
+    padding: 25px;
+
+    margin-bottom: 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 6px 20px rgba(0,0,0,0.05);
+}
+
+
+.report-summary h2 {
+
+    margin: 0 0 20px;
+
+    color: #1f2937;
+
+    font-size: 18px;
+}
+
+
+.summary-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 18px;
+}
+
+
+.summary-grid div {
+
+    padding: 14px;
+
+    background: #f9fafb;
+
+    border-radius: 10px;
+}
+
+
+.summary-grid span {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #9ca3af;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+}
+
+
+.summary-grid strong {
+
+    color: #374151;
+
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   REPORT CARD
+===================================================== */
+
+.report-card {
+
+    padding: 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 17px;
+
+    box-shadow:
+        0 7px 25px rgba(0,0,0,0.06);
+}
+
+
+/* =====================================================
+   CARD TITLE
+===================================================== */
+
+.card-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding-bottom: 22px;
+
+    margin-bottom: 25px;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+
+.warning-icon {
+
+    width: 48px;
+
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #fef3c7;
+
+    border-radius: 12px;
+
+    font-size: 22px;
+}
+
+
+.card-title h2 {
+
+    margin: 0 0 5px;
+
+    color: #1f2937;
+
+    font-size: 21px;
+}
+
+
+.card-title p {
+
+    margin: 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   FORM GROUP
+===================================================== */
+
+.form-group {
+
+    margin-bottom: 23px;
+}
+
+
+.form-group label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #374151;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+.form-group label span {
+
+    color: #dc2626;
+}
+
+
+/* =====================================================
+   SELECT
+===================================================== */
+
+.form-group select {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 13px 14px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #374151;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    outline: none;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.form-group select:focus {
+
+    border-color: #15803d;
+
+    box-shadow:
+        0 0 0 3px rgba(21,128,61,0.09);
+}
+
+
+/* =====================================================
+   TEXTAREA
+===================================================== */
+
+.form-group textarea {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 14px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #374151;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    resize: vertical;
+
+    min-height: 160px;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+
+.form-group textarea:focus {
+
+    border-color: #15803d;
+
+    box-shadow:
+        0 0 0 3px rgba(21,128,61,0.09);
+}
+
+
+.form-group small {
+
+    display: block;
+
+    margin-top: 7px;
+
+    color: #9ca3af;
+
+    font-size: 11px;
+}
+
+
+/* =====================================================
+   WARNING
+===================================================== */
+
+.report-warning {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    padding: 17px;
+
+    margin: 25px 0;
+
+    background: #fff7ed;
+
+    border: 1px solid #fed7aa;
+
+    border-radius: 10px;
+}
+
+
+.warning-symbol {
+
+    font-size: 19px;
+}
+
+
+.report-warning strong {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #9a3412;
+
+    font-size: 13px;
+}
+
+
+.report-warning p {
+
+    margin: 0;
+
+    color: #7c2d12;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.report-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #eeeeee;
+}
+
+
+.cancel-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 12px 22px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #4b5563;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    transition: 0.2s;
+}
+
+
+.cancel-btn:hover {
+
+    background: #f9fafb;
+
+    border-color: #9ca3af;
+}
+
+
+.submit-report-btn {
+
+    padding: 12px 22px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #dc2626;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.submit-report-btn:hover {
+
+    background: #b91c1c;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 5px 12px rgba(220,38,38,0.2);
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 700px) {
+
+    .ngo-report-page {
+
+        width: 94%;
+
+        margin-top: 25px;
+    }
+
+
+    .report-header h1 {
+
+        font-size: 28px;
+    }
+
+
+    .summary-grid {
+
+        grid-template-columns: 1fr 1fr;
+    }
+
+
+    .report-card {
+
+        padding: 22px;
+    }
+
+
+    .report-actions {
+
+        flex-direction: column-reverse;
+
+        align-items: stretch;
+    }
+
+
+    .cancel-btn,
+    .submit-report-btn {
+
+        width: 100%;
+
+        box-sizing: border-box;
+
+        text-align: center;
+    }
+
+}
+
+
+@media (max-width: 450px) {
+
+    .summary-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+}

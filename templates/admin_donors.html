@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color"
+          content="#1B4332">
+
+    <title>Donors | FoodResQ Admin</title>
+
+
+    <!-- Existing common CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+
+    <!-- Existing website alert -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+
+
+    <!-- Existing input guard -->
+    <script
+        src="{{ url_for('static', filename='input-guard.js') }}"
+        defer>
+    </script>
+
+
+    <!-- Existing navigation -->
+    <script
+        src="{{ url_for('static', filename='nav-toggle.js') }}"
+        defer>
+    </script>
+
+
+    <!-- =====================================================
+         PAGE CSS
+    ====================================================== -->
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            background: #f5faf6;
+            color: #294d38;
+            font-family: "Poppins", Arial, sans-serif;
+        }
+
+
+        /* =================================================
+           HEADER
+        ================================================= */
+
+        .donors-header {
+            min-height: 68px;
+
+            padding: 8px 32px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 25px;
+
+            background: #1b5e3b;
+
+            color: #ffffff;
+        }
+
+
+        .donors-brand {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            flex-shrink: 0;
+        }
+
+
+        .donors-brand img {
+            width: 50px;
+            height: 50px;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+
+            background: #ffffff;
+        }
+
+
+        .donors-brand-text h2 {
+            margin: 0;
+
+            color: #ffffff;
+
+            font-size: 25px;
+            line-height: 1;
+        }
+
+
+        .donors-brand-text h2 span {
+            color: #8bdc55;
+        }
+
+
+        .donors-brand-text p {
+            margin: 5px 0 0;
+
+            color: #d9f0df;
+
+            font-size: 10px;
+        }
+
+
+        .donors-nav {
+            display: flex;
+            align-items: center;
+
+            gap: 6px;
+
+            flex-wrap: wrap;
+
+            justify-content: flex-end;
+        }
+
+
+        .donors-nav a {
+            padding: 9px 12px;
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-size: 12px;
+            font-weight: 500;
+
+            border-radius: 8px;
+
+            transition: 0.2s ease;
+        }
+
+
+        .donors-nav a:hover {
+            background: rgba(255,255,255,0.12);
+        }
+
+
+        .donors-nav .logout-link {
+            border: 1px solid rgba(255,255,255,0.18);
+        }
+
+
+        /* =================================================
+           PAGE
+        ================================================= */
+
+        .donors-page {
+            width: 92%;
+            max-width: 1250px;
+
+            margin: 35px auto 60px;
+        }
+
+
+        /* =================================================
+           TITLE
+        ================================================= */
+
+        .donors-page-title {
+            margin-bottom: 25px;
+        }
+
+
+        .donors-page-title h1 {
+            margin: 0;
+
+            color: #183c2b;
+
+            font-size: 29px;
+            font-weight: 700;
+        }
+
+
+        .donors-page-title p {
+            margin: 6px 0 0;
+
+            color: #7c8c83;
+
+            font-size: 13px;
+        }
+
+
+        /* =================================================
+           SEARCH
+        ================================================= */
+
+        .donors-search {
+            padding: 18px;
+
+            margin-bottom: 25px;
+
+            background: #ffffff;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 8px 25px rgba(27,67,50,0.07);
+        }
+
+
+        .donors-search form {
+            display: flex;
+
+            gap: 10px;
+        }
+
+
+        .donors-search input {
+            flex: 1;
+
+            min-width: 0;
+
+            height: 44px;
+
+            padding: 0 14px;
+
+            background: #f8fbf9;
+
+            border: 1px solid #dce9df;
+
+            border-radius: 9px;
+
+            color: #294d38;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            outline: none;
+        }
+
+
+        .donors-search input:focus {
+            border-color: #4caf50;
+
+            background: #ffffff;
+        }
+
+
+        .donors-search button {
+            height: 44px;
+
+            padding: 0 20px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background: #238b57;
+
+            color: #ffffff;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+
+        .donors-search button:hover {
+            background: #1d7449;
+        }
+
+
+        /* =================================================
+           TABLE CARD
+        ================================================= */
+
+        .donors-card {
+            background: #ffffff;
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            box-shadow:
+                0 8px 25px rgba(27,67,50,0.07);
+        }
+
+
+        .donors-card-title {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .donors-card-title h2 {
+            margin: 0;
+
+            color: #28632d;
+
+            font-size: 21px;
+            font-weight: 600;
+        }
+
+
+        .donors-count {
+            padding: 6px 11px;
+
+            background: #edf8f1;
+
+            color: #238b57;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+
+        /* =================================================
+           TABLE
+        ================================================= */
+
+        .donors-table-wrapper {
+            width: 100%;
+
+            overflow-x: auto;
+        }
+
+
+        .donors-table {
+            width: 100%;
+
+            min-width: 850px;
+
+            border-collapse: collapse;
+        }
+
+
+        .donors-table thead th {
+            padding: 14px 15px;
+
+            background: #f1f8f2;
+
+            color: #28632d;
+
+            text-align: left;
+
+            font-size: 11px;
+            font-weight: 600;
+
+            white-space: nowrap;
+
+            border-bottom: 1px solid #dce9df;
+        }
+
+
+        .donors-table tbody td {
+            padding: 15px;
+
+            color: #4f5d55;
+
+            font-size: 13px;
+
+            border-bottom: 1px solid #edf2ee;
+
+            vertical-align: middle;
+        }
+
+
+        .donors-table tbody tr:hover td {
+            background: #fafdfb;
+        }
+
+
+        /* =================================================
+           DONOR ID
+        ================================================= */
+
+        .donor-id-cell {
+            display: inline-flex;
+
+            align-items: center;
+
+            padding: 6px 10px;
+
+            background: #edf8f1;
+
+            border: 1px solid #d7eadc;
+
+            border-radius: 7px;
+
+            color: #238b57;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+
+        /* =================================================
+           NAME
+        ================================================= */
+
+        .donor-name {
+            color: #244936;
+
+            font-weight: 600;
+        }
+
+
+        /* =================================================
+           DONATION COUNT
+        ================================================= */
+
+        .donation-count {
+            display: inline-flex;
+
+            min-width: 34px;
+            height: 30px;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 0 9px;
+
+            background: #f1f8f2;
+
+            color: #238b57;
+
+            border-radius: 7px;
+
+            font-weight: 700;
+        }
+
+
+        /* =================================================
+           VIEW BUTTON
+        ================================================= */
+
+        .donor-view-btn {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-width: 65px;
+
+            padding: 8px 13px;
+
+            background: #238b57;
+
+            color: #ffffff;
+
+            border-radius: 7px;
+
+            text-decoration: none;
+
+            font-size: 11px;
+            font-weight: 600;
+
+            transition: 0.2s ease;
+        }
+
+
+        .donor-view-btn:hover {
+            background: #1d7449;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =================================================
+           EMPTY
+        ================================================= */
+
+        .donors-empty {
+            padding: 55px 20px;
+
+            text-align: center;
+
+            color: #829088;
+        }
+
+
+        .donors-empty-icon {
+            margin-bottom: 10px;
+
+            font-size: 35px;
+        }
+
+
+        .donors-empty h3 {
+            margin: 0;
+
+            color: #42564b;
+
+            font-size: 17px;
+        }
+
+
+        .donors-empty p {
+            margin: 5px 0 0;
+
+            font-size: 12px;
+        }
+
+
+        /* =================================================
+           FOOTER
+        ================================================= */
+
+        .donors-footer {
+            padding: 25px;
+
+            color: #829088;
+
+            text-align: center;
+
+            font-size: 12px;
+        }
+
+
+        /* =================================================
+           TABLET
+        ================================================= */
+
+        @media (max-width: 900px) {
+
+            .donors-header {
+                flex-direction: column;
+
+                align-items: stretch;
+
+                padding: 12px 18px;
+            }
+
+
+            .donors-brand {
+                justify-content: center;
+            }
+
+
+            .donors-nav {
+                justify-content: center;
+            }
+
+        }
+
+
+        /* =================================================
+           MOBILE
+        ================================================= */
+
+        @media (max-width: 600px) {
+
+            .donors-page {
+                width: 94%;
+
+                margin-top: 25px;
+            }
+
+
+            .donors-page-title h1 {
+                font-size: 24px;
+            }
+
+
+            .donors-search form {
+                flex-direction: column;
+            }
+
+
+            .donors-search button {
+                width: 100%;
+            }
+
+
+            .donors-card {
+                padding: 20px 15px;
+            }
+
+
+            .donors-card-title {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+
+            .donors-brand-text h2 {
+                font-size: 22px;
+            }
+
+
+            .donors-nav {
+                gap: 3px;
+            }
+
+
+            .donors-nav a {
+                padding: 7px 8px;
+
+                font-size: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="donors-header">
+
+        <div class="donors-brand">
+
+            <img
+                src="{{ url_for(
+                    'static',
+                    filename='images/homepgs.png'
+                ) }}"
+                alt="FoodResQ">
+
+
+            <div class="donors-brand-text">
+
+                <h2>
+                    Food<span>ResQ</span>
+                </h2>
+
+                <p>
+                    Turning Surplus into Sustenance
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <nav class="donors-nav">
+
+            <a href="{{ url_for('admin_dashboard') }}">
+                Dashboard
+            </a>
+
+           
+            <a
+                href="{{ url_for('logout') }}"
+                class="logout-link">
+                Logout
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="donors-page">
+
+
+        <section class="donors-page-title">
+
+            <h1>
+                Donor Management
+            </h1>
+
+            <p>
+                View and manage registered FoodResQ donors
+            </p>
+
+        </section>
+
+
+        <!-- SEARCH -->
+
+        <section class="donors-search">
+
+            <form
+                method="GET"
+                action="{{ url_for('admin_donors') }}">
+
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ request.args.get('search', '') }}"
+                    placeholder="Search donor name, email or donor ID...">
+
+                <button type="submit">
+                    Search
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- DONORS -->
+
+        <section class="donors-card">
+
+
+            <div class="donors-card-title">
+
+                <h2>
+                    Registered Donors
+                </h2>
+
+                <span class="donors-count">
+                    {{ donors|length }} Donors
+                </span>
+
+            </div>
+
+
+            {% if donors %}
+
+            <div class="donors-table-wrapper">
+
+                <table class="donors-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Donor ID
+                            </th>
+
+                            <th>
+                                Name
+                            </th>
+
+                            <th>
+                                Email
+                            </th>
+
+                            <th>
+                                Phone
+                            </th>
+
+                            <th>
+                                Total Donations
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for donor in donors %}
+
+                        <tr>
+
+
+                            <td>
+
+                                <span class="donor-id-cell">
+
+                                    {{ donor.donor_code }}
+
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="donor-name">
+
+                                    {{ donor.name }}
+
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                {{ donor.email }}
+
+                            </td>
+
+
+                            <td>
+
+                                {{ donor.phone or 'Not provided' }}
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="donation-count">
+
+                                    {{ donor.donations_count }}
+
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <a
+                                    class="donor-view-btn"
+                                    href="{{ url_for(
+                                        'admin_donor_profile',
+                                        id=donor.id
+                                    ) }}">
+
+                                    View
+
+                                </a>
+
+                            </td>
+
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            {% else %}
+
+            <div class="donors-empty">
+
+                <div class="donors-empty-icon">
+                    👥
+                </div>
+
+                <h3>
+                    No donors found
+                </h3>
+
+                <p>
+                    No registered donors match your search.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+
+        </section>
+
+    </main>
+
+
+    <footer class="donors-footer">
+
+        FoodResQ Admin Panel © 2026
+
+    </footer>
+
+
+</body>
+
+</html>

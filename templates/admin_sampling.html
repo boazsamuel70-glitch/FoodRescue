@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1B4332">
+<title>Sampling | FoodResQ Admin</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='common.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='admin_dashboard.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='admin_analytics.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='admin_sampling.css') }}">
+<script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+<script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+</head>
+
+<body>
+
+<header>
+<div class="logo">
+<img src="{{ url_for('static', filename='images/homepgs.png') }}" alt="">
+<div>
+<h2>Food<span>ResQ</span></h2>
+<p class="tagline">Turning <span>Surplus</span> into <span>Sustenance</span></p>
+</div>
+</div>
+
+<nav>
+<a href="/admin_dashboard">Dashboard</a>
+<a href="{{ url_for('ngo_applications') }}">NGO Applications</a>
+<a href="/admin_donors">Donors</a>
+<a href="{{ url_for('admin_ngo_requests') }}">NGO Requests</a>
+<a href="/admin_ngos">NGOs</a>
+<a href="/admin_assignments">Assignments</a>
+<a href="{{ url_for('admin_analytics') }}">Analytics</a>
+<a href="/admin_sampling" class="active">Sampling</a>
+<a href="{{ url_for('admin_reports') }}">Reports</a>
+<a href="/logout" class="logout">Logout</a>
+</nav>
+</header>
+
+<main class="analytics-page sampling-page">
+
+<div class="page-head">
+<div>
+<h1>Sampling</h1>
+<p>Draw a fair, explainable sample of donations, donors or NGOs for audits, feedback calls and quality checks.</p>
+</div>
+</div>
+
+<form method="get" action="{{ url_for('admin_sampling') }}" class="sp-card" id="sp-form" novalidate>
+<input type="hidden" name="run" value="1">
+
+<div class="sp-step">
+<span class="sp-num">1</span>
+<div class="sp-body">
+<h2>Who do you want to sample?</h2>
+<div class="sp-pills">
+{% for key, p in populations.items() %}
+<label class="sp-pill"><input type="radio" name="population" value="{{ key }}" {% if form.population == key %}checked{% endif %}><span>{{ p.label }}</span></label>
+{% endfor %}
+</div>
+</div>
+</div>
+
+<div class="sp-step">
+<span class="sp-num">2</span>
+<div class="sp-body">
+<h2>Choose a method</h2>
+
+<p class="sp-family fam-prob">Probability methods <small>every record has a known chance of being chosen</small></p>
+<div class="sp-methods">
+{% for key, m in methods.items() if m[1] == 'Probability' %}
+<label class="sp-method"><input type="radio" name="method" value="{{ key }}" {% if form.method == key %}checked{% endif %}>
+<span><b>{{ m[0] }}</b><em>{{ m[2] }}</em></span></label>
+{% endfor %}
+</div>
+
+<p class="sp-family fam-non">Non-probability methods <small>quicker and cheaper, but can be biased</small></p>
+<div class="sp-methods">
+{% for key, m in methods.items() if m[1] != 'Probability' %}
+<label class="sp-method"><input type="radio" name="method" value="{{ key }}" {% if form.method == key %}checked{% endif %}>
+<span><b>{{ m[0] }}</b><em>{{ m[2] }}</em></span></label>
+{% endfor %}
+</div>
+</div>
+</div>
+
+<div class="sp-step">
+<span class="sp-num">3</span>
+<div class="sp-body">
+<h2>Set the details</h2>
+<div class="sp-fields">
+
+<label class="sp-field" data-for="simple_random systematic stratified convenience snowball">
+<span>Sample size</span>
+<input type="text" name="n" value="{{ form.n }}" inputmode="numeric" maxlength="4" pattern="[0-9]{1,4}" placeholder="e.g. 20">
+</label>
+
+<label class="sp-field" data-for="stratified quota">
+<span>Split / match by</span>
+<select name="group_key">
+<option value="">Choose&hellip;</option>
+{% for k, label in cfg.group_keys %}<option value="{{ k }}" {% if form.group_key == k %}selected{% endif %}>{{ label }}</option>{% endfor %}
+</select>
+</label>
+
+<label class="sp-field" data-for="cluster">
+<span>Clusters are groups of</span>
+<select name="cluster_key">
+<option value="">Choose&hellip;</option>
+{% for k, label in cfg.cluster_keys %}<option value="{{ k }}" {% if form.cluster_key == k %}selected{% endif %}>{{ label }}</option>{% endfor %}
+</select>
+</label>
+
+<label class="sp-field" data-for="cluster">
+<span>How many clusters to pick</span>
+<input type="text" name="clusters" value="{{ form.clusters }}" inputmode="numeric" maxlength="3" pattern="[0-9]{1,3}" placeholder="e.g. 2">
+</label>
+
+<label class="sp-field wide" data-for="quota">
+<span>Quotas (category = how many)</span>
+<input type="text" name="quotas" value="{{ form.quotas }}" maxlength="300" placeholder="Completed=5, Pending=3">
+</label>
+
+<label class="sp-field wide" data-for="snowball">
+<span>Starting IDs <small>(optional, comma separated)</small></span>
+<input type="text" name="seeds" value="{{ form.seeds }}" maxlength="100" inputmode="numeric" placeholder="Leave blank to start from the most connected record">
+</label>
+
+<label class="sp-field" data-for="simple_random systematic stratified cluster">
+<span>Random seed <small>(optional, to repeat a draw)</small></span>
+<input type="text" name="seed" value="{{ form.seed }}" inputmode="numeric" maxlength="9" pattern="[0-9]{1,9}" placeholder="blank = new draw">
+</label>
+
+</div>
+</div>
+</div>
+
+<div class="sp-actions">
+<button type="submit" class="sp-run">Draw sample</button>
+</div>
+</form>
+
+{% if error %}
+<div class="sp-error" role="alert"><span>&#9888;</span> {{ error }}</div>
+{% endif %}
+
+{% if result %}
+<section class="sp-result">
+
+<div class="sp-kpis">
+<div class="sp-kpi"><span>Method</span><strong>{{ result.label }}</strong>
+<i class="sp-badge {{ 'fam-prob' if result.family == 'Probability' else 'fam-non' }}">{{ result.family }}</i></div>
+<div class="sp-kpi"><span>Population</span><strong>{{ result.population_size }}</strong></div>
+<div class="sp-kpi"><span>Sample</span><strong>{{ result.sample_size }}</strong></div>
+<div class="sp-kpi"><span>Sampling fraction</span><strong>{{ result.fraction }}%</strong></div>
+</div>
+
+<div class="sp-explain">
+<h3>How this sample was drawn</h3>
+<ul>
+{% for line in result.details %}<li>{{ line }}</li>{% endfor %}
+{% if used_seed is not none and result.method not in ('convenience','quota','snowball') %}
+<li>Random seed <code>{{ used_seed }}</code> &mdash; enter it above to get exactly the same sample again.</li>
+{% endif %}
+</ul>
+<p class="sp-note"><b>Keep in mind:</b> {{ result.note }}</p>
+</div>
+
+{% if result.groups %}
+<div class="sp-groups">
+<h3>Breakdown</h3>
+{% set gmax = [result.groups|map(attribute='population')|select('number')|max|default(1), result.groups|map(attribute='sampled')|max, 1]|max %}
+{% for g in result.groups %}
+<div class="sp-grow">
+<span class="sp-gname">{{ g.name }}</span>
+<div class="sp-gbar"><div class="sp-gpop" style="width: {{ ((g.population if g.population != '' else g.sampled) / gmax * 100)|round(1) }}%"><div class="sp-gsam" style="width: {{ (g.sampled / ((g.population if g.population != '' else g.sampled) or 1) * 100)|round(1) }}%"></div></div></div>
+<span class="sp-gnum">{{ g.sampled }}{% if g.population != '' %} / {{ g.population }}{% endif %}{% if g.target is defined %} <small>(target {{ g.target }})</small>{% endif %}</span>
+</div>
+{% endfor %}
+</div>
+{% endif %}
+
+<div class="sp-table-head">
+<h3>Sampled records</h3>
+<a class="sp-dl" href="{{ url_for('admin_sampling') }}?{{ download_query }}&amp;download=1">&#11015; Download CSV</a>
+</div>
+
+<div class="sp-table-wrap">
+<table class="sp-table">
+<thead><tr>
+{% for k, h in cfg.columns %}<th>{{ h }}</th>{% endfor %}
+{% if result.method == 'snowball' %}<th>Wave</th>{% endif %}
+</tr></thead>
+<tbody>
+{% for r in rows %}
+<tr>
+{% for k, h in cfg.columns %}<td>{{ r.get(k, '') }}</td>{% endfor %}
+{% if result.method == 'snowball' %}<td>{{ r.get('_wave', '') }}</td>{% endif %}
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% if truncated %}<p class="sp-trunc">Showing the first 500 rows. The CSV contains all {{ result.sample_size }}.</p>{% endif %}
+
+</section>
+{% endif %}
+
+</main>
+
+<script>
+(function () {
+  var form = document.getElementById("sp-form");
+  function sync() {
+    var m = form.querySelector('input[name="method"]:checked');
+    var method = m ? m.value : "simple_random";
+    form.querySelectorAll(".sp-field").forEach(function (f) {
+      var show = f.getAttribute("data-for").split(" ").indexOf(method) !== -1;
+      f.style.display = show ? "" : "none";
+    });
+  }
+  form.addEventListener("change", sync);
+  sync();
+  // changing the population resets the choices that depend on it
+  form.querySelectorAll('input[name="population"]').forEach(function (r) {
+    r.addEventListener("change", function () {
+      form.querySelector('[name="group_key"]').value = "";
+      form.querySelector('[name="cluster_key"]').value = "";
+      form.querySelector('[name="run"]').value = "0";
+      form.submit();
+    });
+  });
+})();
+</script>
+</body>
+</html>

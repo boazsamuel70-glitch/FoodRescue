@@ -1,0 +1,550 @@
+/* =========================================================
+   FOODRESQ - NGO DISTRIBUTION PAGE
+   Green + White Theme
+   Does NOT modify common.css
+========================================================= */
+
+.distribution-page {
+    width: 92%;
+    max-width: 1100px;
+    margin: 45px auto 70px;
+    color: #173b2a;
+}
+
+
+/* =========================================================
+   PAGE HEADING
+========================================================= */
+
+.page-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.page-heading > span {
+    display: inline-block;
+    color: #16834b;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.page-heading h1 {
+    margin: 0;
+    font-size: 42px;
+    font-weight: 800;
+    color: #123b29;
+}
+
+.page-heading p {
+    max-width: 650px;
+    margin: 12px auto 0;
+    color: #68776e;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   DONATION SUMMARY
+========================================================= */
+
+.donation-summary {
+    background: #ffffff;
+    border: 1px solid #dce9e1;
+    border-radius: 18px;
+    padding: 28px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 25px rgba(20, 90, 55, 0.07);
+}
+
+.summary-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid #e6eee9;
+}
+
+.summary-top span {
+    display: block;
+    color: #7b897f;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.summary-top h2 {
+    margin: 5px 0 0;
+    color: #123b29;
+    font-size: 28px;
+}
+
+.status-badge {
+    background: #e8f7ee;
+    color: #16834b;
+    border: 1px solid #bfe5ce;
+    padding: 9px 16px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.summary-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    padding-top: 25px;
+}
+
+.summary-content span {
+    display: block;
+    color: #7a887f;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 7px;
+}
+
+.summary-content strong {
+    display: block;
+    color: #183e2c;
+    font-size: 17px;
+}
+
+.summary-content small {
+    display: block;
+    margin-top: 6px;
+    color: #758279;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   ERROR MESSAGE
+========================================================= */
+
+.error-message {
+    background: #fff5f5;
+    border: 1px solid #f0caca;
+    border-left: 5px solid #d9534f;
+    border-radius: 12px;
+    padding: 17px 20px;
+    margin-bottom: 25px;
+    color: #7b2522;
+}
+
+.error-message strong {
+    font-size: 14px;
+}
+
+.error-message p {
+    margin: 5px 0 0;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   DISTRIBUTION SECTION
+========================================================= */
+
+.distribution-section {
+    background: #ffffff;
+    border: 1px solid #dce9e1;
+    border-radius: 20px;
+    padding: 35px;
+    box-shadow: 0 8px 28px rgba(20, 90, 55, 0.07);
+}
+
+.section-heading {
+    margin-bottom: 30px;
+}
+
+.section-heading > span {
+    color: #16834b;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.7px;
+}
+
+.section-heading h2 {
+    margin: 6px 0 5px;
+    color: #123b29;
+    font-size: 27px;
+}
+
+.section-heading p {
+    margin: 0;
+    color: #748178;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.distribution-section form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #234936;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.form-group label span {
+    color: #89958e;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #d5e3da;
+    border-radius: 10px;
+    padding: 13px 14px;
+    background: #fbfdfc;
+    color: #244333;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #22a35f;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(34, 163, 95, 0.10);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #a0aaa4;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 7px;
+    color: #89948d;
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   TWO COLUMN FORM
+========================================================= */
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+}
+
+
+/* =========================================================
+   PROOF / CONFIRMATION INFORMATION
+========================================================= */
+
+.proof-section {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: #f0faf4;
+    border: 1px solid #ccebd8;
+    border-radius: 14px;
+    padding: 20px;
+    margin: 30px 0 22px;
+}
+
+.proof-icon {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    border-radius: 50%;
+    background: #1b9957;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 17px;
+}
+
+.proof-section h3 {
+    margin: 0 0 6px;
+    color: #174b31;
+    font-size: 15px;
+}
+
+.proof-section p {
+    margin: 0;
+    color: #65766c;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   CHECKBOX
+========================================================= */
+
+.confirmation {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    background: #fafdfb;
+    border: 1px solid #dce9e1;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 25px;
+}
+
+.confirmation input {
+    margin-top: 3px;
+    accent-color: #16834b;
+    width: 17px;
+    height: 17px;
+    cursor: pointer;
+}
+
+.confirmation span {
+    color: #53645a;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+========================================================= */
+
+.submit-button {
+    width: 100%;
+    border: none;
+    border-radius: 11px;
+    padding: 15px 20px;
+    background: #16834b;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.submit-button span {
+    margin-left: 8px;
+    font-size: 17px;
+}
+
+.submit-button:hover {
+    background: #116b3c;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(22, 131, 75, 0.20);
+}
+
+.submit-button:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   BACK LINK
+========================================================= */
+
+.cancel-link {
+    display: block;
+    width: fit-content;
+    margin: 22px auto 0;
+    color: #16834b;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.cancel-link:hover {
+    color: #0d6336;
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   SUCCESS PAGE
+========================================================= */
+
+.success-section {
+    max-width: 720px;
+    margin: 70px auto;
+    background: #ffffff;
+    border: 1px solid #dce9e1;
+    border-radius: 22px;
+    padding: 45px;
+    text-align: center;
+    box-shadow: 0 12px 35px rgba(20, 90, 55, 0.09);
+}
+
+.success-icon {
+    width: 75px;
+    height: 75px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: #e3f7eb;
+    color: #16834b;
+    border: 2px solid #b9e5c9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 35px;
+    font-weight: 800;
+}
+
+.success-label {
+    color: #16834b;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.success-section h1 {
+    margin: 10px 0;
+    color: #123b29;
+    font-size: 36px;
+}
+
+.success-section > p {
+    max-width: 560px;
+    margin: 0 auto;
+    color: #6e7b73;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.success-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 30px 0;
+}
+
+.success-details > div {
+    background: #f6faf7;
+    border: 1px solid #e0ebe4;
+    border-radius: 12px;
+    padding: 15px 10px;
+}
+
+.success-details span {
+    display: block;
+    color: #89958e;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+}
+
+.success-details strong {
+    color: #234936;
+    font-size: 14px;
+}
+
+.success-details .completed {
+    color: #16834b;
+}
+
+.back-button {
+    display: inline-block;
+    background: #16834b;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 13px 22px;
+    font-size: 13px;
+    font-weight: 800;
+    transition: 0.2s ease;
+}
+
+.back-button:hover {
+    background: #116b3c;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 800px) {
+
+    .distribution-page {
+        width: 94%;
+        margin-top: 30px;
+    }
+
+    .page-heading h1 {
+        font-size: 32px;
+    }
+
+    .summary-content {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .success-details {
+        grid-template-columns: 1fr;
+    }
+
+    .distribution-section {
+        padding: 25px;
+    }
+
+    .success-section {
+        padding: 30px 22px;
+    }
+}
+
+
+@media (max-width: 550px) {
+
+    .summary-top {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .page-heading h1 {
+        font-size: 28px;
+    }
+
+    .distribution-section {
+        padding: 20px;
+    }
+
+    .success-section h1 {
+        font-size: 29px;
+    }
+}

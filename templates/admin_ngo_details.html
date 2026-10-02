@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>NGO Details | FoodResQ Admin</title>
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='common.css') }}">
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='admin_ngo_details.css') }}">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+
+        <img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+        <div>
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p class="tagline">
+                Turning <span>Surplus</span> into <span>Sustenance</span>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="/admin_dashboard">Dashboard</a>
+
+        
+        <a href="/logout" class="logout">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main class="admin-details-container">
+
+
+    <!-- BACK -->
+
+    <a href="/find_ngos/{{ donation.donation_id }}"
+       class="back-link">
+
+        ← Back to Nearby NGOs
+
+    </a>
+
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-header">
+
+        <div>
+
+            <span>ADMIN • NGO VERIFICATION</span>
+
+            <h1>
+                NGO Details
+            </h1>
+
+            <p>
+                Review the NGO information before assigning
+                this donation.
+            </p>
+
+        </div>
+
+        <div class="donation-id">
+
+            Donation #{{ donation.donation_id }}
+
+        </div>
+
+    </div>
+
+
+    <!-- NGO MAIN CARD -->
+
+    <section class="ngo-main-card">
+
+        <div class="ngo-icon">
+            🏢
+        </div>
+
+
+        <div class="ngo-heading">
+
+            <span class="verified-label">
+                FOODRESQ PARTNER
+            </span>
+
+            <h2>
+                {{ ngo.ngo_name }}
+            </h2>
+
+            <p>
+                Partner ID:
+                <strong>{{ ngo.partner_id }}</strong>
+            </p>
+
+        </div>
+
+
+        <div class="ngo-status">
+
+            {% if ngo.status == "Active" %}
+
+                <span class="status-dot active"></span>
+
+                Active
+
+            {% else %}
+
+                <span class="status-dot"></span>
+
+                {{ ngo.status }}
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- NGO INFORMATION -->
+
+    <section class="section-card">
+
+        <div class="section-title">
+
+            <span>01</span>
+
+            <div>
+
+                <h2>
+                    NGO Information
+                </h2>
+
+                <p>
+                    Registered organization details
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="info-grid">
+
+
+            <div class="info-item">
+
+                <span>NGO NAME</span>
+
+                <strong>
+                    {{ ngo.ngo_name }}
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>PARTNER ID</span>
+
+                <strong>
+                    {{ ngo.partner_id }}
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>PHONE</span>
+
+                <strong>
+                    {{ ngo.phone }}
+                </strong>
+
+            </div>
+
+
+            {% if ngo.email %}
+
+            <div class="info-item">
+
+                <span>EMAIL</span>
+
+                <strong>
+                    {{ ngo.email }}
+                </strong>
+
+            </div>
+
+            {% endif %}
+
+
+            <div class="info-item">
+
+                <span>ADDRESS</span>
+
+                <strong>
+                    {{ ngo.address }}
+                </strong>
+
+            </div>
+
+
+            {% if ngo.city %}
+
+            <div class="info-item">
+
+                <span>CITY</span>
+
+                <strong>
+                    {{ ngo.city }}
+                </strong>
+
+            </div>
+
+            {% endif %}
+
+
+            <div class="info-item">
+
+                <span>SERVICE AREA</span>
+
+                <strong>
+                    {{ ngo.service_area }}
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>STATUS</span>
+
+                <strong>
+                    {{ ngo.status }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- DONATION INFORMATION -->
+
+    <section class="section-card">
+
+        <div class="section-title">
+
+            <span>02</span>
+
+            <div>
+
+                <h2>
+                    Donation Information
+                </h2>
+
+                <p>
+                    Donation this NGO may be assigned to
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="info-grid">
+
+
+            <div class="info-item">
+
+                <span>FOOD</span>
+
+                <strong>
+                    {{ donation.food_name }}
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>FOOD TYPE</span>
+
+                <strong>
+                    {{ donation.food_type }}
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>QUANTITY</span>
+
+                <strong>
+                    {{ donation.quantity }}
+                    {{ donation.quantity_unit }}
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>DONOR</span>
+
+                <strong>
+                    {{ donation.donor_name }}
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>PICKUP DATE</span>
+
+                <strong>
+                    {{ donation.pickup_date }}
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>PICKUP TIME</span>
+
+                <strong>
+                    {{ donation.pickup_time }}
+                </strong>
+
+            </div>
+
+
+            <div class="info-item full">
+
+                <span>PICKUP ADDRESS</span>
+
+                <strong>
+                    {{ donation.address }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ACTIONS -->
+
+    <section class="action-card">
+
+        <div>
+
+            <h2>
+                Assign this NGO?
+            </h2>
+
+            <p>
+                Once assigned, the NGO will receive this
+                donation in its dashboard.
+            </p>
+
+        </div>
+
+
+        <div class="action-buttons">
+
+            <a href="/find_ngos/{{ donation.donation_id }}"
+               class="cancel-btn">
+
+                ← Back
+
+            </a>
+
+
+            <form action="/assign_ngo"
+                  method="POST">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <input
+                    type="hidden"
+                    name="donation_id"
+                    value="{{ donation.donation_id }}">
+
+                <input
+                    type="hidden"
+                    name="ngo_id"
+                    value="{{ ngo.ngo_id }}">
+
+                <button type="submit"
+                        class="assign-btn"
+                        onclick="return confirm(
+                        'Assign this NGO to the donation?'
+                        );">
+
+                    ✓ Assign NGO
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<footer>
+
+    <p>
+        FoodResQ Admin Panel © 2026
+    </p>
+
+</footer>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,772 @@
+/* =========================================================
+   NGO DONATION DETAILS
+   FoodResQ
+   Does NOT modify common.css
+========================================================= */
+
+.ngo-details-page {
+    width: 92%;
+    max-width: 1150px;
+    margin: 35px auto 70px;
+}
+
+
+/* =========================================================
+   BACK LINK
+========================================================= */
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 22px;
+
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #555;
+
+    transition: 0.2s ease;
+}
+
+.back-link:hover {
+    color: #d99a00;
+}
+
+
+/* =========================================================
+   DONATION HEADER
+========================================================= */
+
+.donation-header-card {
+    background: #ffffff;
+
+    border: 1px solid #e8e8e8;
+    border-radius: 16px;
+
+    padding: 28px 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+
+    margin-bottom: 22px;
+
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+.portal-label {
+    display: block;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    color: #d99a00;
+
+    margin-bottom: 8px;
+}
+
+.donation-header-card h1 {
+    margin: 0 0 5px;
+
+    font-size: 30px;
+    font-weight: 700;
+
+    color: #222;
+}
+
+.donation-header-card p {
+    margin: 0;
+
+    color: #777;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+========================================================= */
+
+.status-badge {
+    display: inline-block;
+
+    padding: 8px 15px;
+
+    border-radius: 30px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.status-assigned {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-accepted {
+    background: #e8f5e9;
+    color: #287a32;
+}
+
+.status-verified {
+    background: #e3f2fd;
+    color: #1769aa;
+}
+
+.status-awaiting {
+    background: #fff4d6;
+    color: #9a6b00;
+}
+
+.status-picked {
+    background: #ede7f6;
+    color: #5e35b1;
+}
+
+.status-onway {
+    background: #e1f5fe;
+    color: #0277bd;
+}
+
+.status-completed {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status-cancelled {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.status-pending {
+    background: #f5f5f5;
+    color: #666;
+}
+
+.status-other {
+    background: #f1f1f1;
+    color: #555;
+}
+
+
+/* =========================================================
+   GENERAL CARDS
+========================================================= */
+
+.details-card,
+.workflow-card {
+    background: #ffffff;
+
+    border: 1px solid #e8e8e8;
+    border-radius: 16px;
+
+    padding: 28px 30px;
+
+    margin-bottom: 22px;
+
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.details-card h2,
+.workflow-card h2 {
+    margin: 0 0 22px;
+
+    font-size: 20px;
+    font-weight: 700;
+
+    color: #222;
+}
+
+
+/* =========================================================
+   DONATION DETAILS GRID
+========================================================= */
+
+.details-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 14px;
+}
+
+.detail-box {
+    background: #fafafa;
+
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+
+    padding: 15px 16px;
+
+    min-width: 0;
+}
+
+.detail-box span {
+    display: block;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+
+    color: #888;
+
+    margin-bottom: 7px;
+}
+
+.detail-box strong {
+    display: block;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #333;
+
+    line-height: 1.5;
+
+    word-break: break-word;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+
+/* =========================================================
+   WORKFLOW INFO
+========================================================= */
+
+.workflow-info {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 16px;
+
+    padding: 20px;
+
+    border-radius: 12px;
+
+    margin-bottom: 20px;
+}
+
+.workflow-icon {
+    width: 42px;
+    height: 42px;
+
+    min-width: 42px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 19px;
+
+    background: #fff3cd;
+}
+
+.workflow-info h3 {
+    margin: 0 0 6px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    color: #222;
+}
+
+.workflow-info p {
+    margin: 5px 0 0;
+
+    font-size: 13px;
+    line-height: 1.6;
+
+    color: #666;
+}
+
+
+/* Workflow colours */
+
+.assigned-info {
+    background: #fffaf0;
+    border: 1px solid #f4e2b4;
+}
+
+.accepted-info {
+    background: #f4fbf5;
+    border: 1px solid #d9eedc;
+}
+
+.verified-info {
+    background: #f2f8fc;
+    border: 1px solid #d7eaf5;
+}
+
+.waiting-info {
+    background: #fffaf0;
+    border: 1px solid #f4e2b4;
+}
+
+.picked-info {
+    background: #f7f3fc;
+    border: 1px solid #e5d9f5;
+}
+
+.onway-info {
+    background: #f1f9fd;
+    border: 1px solid #d4ebf7;
+}
+
+.completed-info {
+    background: #f3faf4;
+    border: 1px solid #d7ecd9;
+}
+
+.cancelled-info {
+    background: #fff5f5;
+    border: 1px solid #f2d4d4;
+}
+
+.pending-info {
+    background: #f8f8f8;
+    border: 1px solid #e6e6e6;
+}
+
+
+/* =========================================================
+   DECISION CARD
+========================================================= */
+
+.decision-card {
+    background: #fafafa;
+
+    border: 1px solid #eeeeee;
+    border-radius: 12px;
+
+    padding: 20px;
+}
+
+.decision-card h3 {
+    margin: 0 0 6px;
+
+    font-size: 16px;
+    color: #222;
+}
+
+.decision-card p {
+    margin: 0 0 18px;
+
+    color: #666;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.decision-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.workflow-btn {
+    border: none;
+
+    border-radius: 9px;
+
+    padding: 11px 18px;
+
+    font-family: inherit;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    display: inline-block;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.workflow-btn:hover {
+    transform: translateY(-1px);
+    opacity: 0.92;
+}
+
+.accept-btn {
+    background: #e5f5e7;
+    color: #267332;
+}
+
+.reject-btn {
+    background: #fde8e8;
+    color: #c62828;
+}
+
+.verify-btn {
+    background: #f2c94c;
+    color: #222;
+}
+
+.pickup-btn {
+    background: #222;
+    color: #fff;
+}
+
+.delivery-btn {
+    background: #e8f0ff;
+    color: #2457a6;
+}
+
+.complete-btn {
+    background: #e5f5e7;
+    color: #267332;
+}
+
+
+/* =========================================================
+   PICKUP CODE SECTION
+========================================================= */
+
+.pickup-code-card {
+    max-width: 650px;
+
+    margin: 10px auto 0;
+
+    padding: 28px;
+
+    border-radius: 14px;
+
+    background: #fffdf5;
+
+    border: 1px solid #f0dfaa;
+
+    text-align: center;
+}
+
+.pickup-code-icon {
+    font-size: 30px;
+
+    margin-bottom: 8px;
+}
+
+.pickup-code-card h3 {
+    margin: 0 0 8px;
+
+    font-size: 20px;
+
+    color: #222;
+}
+
+.pickup-code-description {
+    max-width: 530px;
+
+    margin: 0 auto 20px;
+
+    color: #666;
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.pickup-code-warning {
+    text-align: left;
+
+    padding: 14px 16px;
+
+    background: #fff7df;
+
+    border-left: 4px solid #e3ad18;
+
+    border-radius: 8px;
+
+    margin-bottom: 20px;
+}
+
+.pickup-code-warning strong {
+    display: block;
+
+    color: #8a6500;
+
+    font-size: 13px;
+
+    margin-bottom: 4px;
+}
+
+.pickup-code-warning p {
+    margin: 0;
+
+    color: #705b20;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   PICKUP CODE FORM
+========================================================= */
+
+.pickup-code-form {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 9px;
+
+    text-align: left;
+}
+
+.pickup-code-form label {
+    font-size: 12px;
+
+    font-weight: 600;
+
+    color: #444;
+}
+
+.pickup-code-form input {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 12px 14px;
+
+    border: 1px solid #d8d8d8;
+
+    border-radius: 8px;
+
+    background: #fff;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s ease;
+}
+
+.pickup-code-form input:focus {
+    border-color: #d9a514;
+
+    box-shadow: 0 0 0 3px rgba(217, 165, 20, 0.12);
+}
+
+.pickup-code-form .workflow-btn {
+    width: 100%;
+
+    margin-top: 4px;
+}
+
+.pickup-code-note {
+    margin: 15px 0 0;
+
+    font-size: 11px;
+
+    color: #888;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .ngo-details-page {
+        width: 94%;
+    }
+
+    .details-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .donation-header-card {
+        align-items: flex-start;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .ngo-details-page {
+        width: 92%;
+        margin-top: 25px;
+    }
+
+    .donation-header-card {
+        flex-direction: column;
+        align-items: flex-start;
+
+        padding: 22px;
+    }
+
+    .donation-header-card h1 {
+        font-size: 25px;
+    }
+
+    .details-card,
+    .workflow-card {
+        padding: 22px;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: auto;
+    }
+
+    .decision-buttons {
+        flex-direction: column;
+    }
+
+    .decision-buttons .workflow-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .pickup-code-card {
+        padding: 22px 16px;
+    }
+
+    .workflow-info {
+        padding: 16px;
+    }
+
+}
+
+
+@media (max-width: 420px) {
+
+    .donation-header-card h1 {
+        font-size: 22px;
+    }
+
+    .details-card h2,
+    .workflow-card h2 {
+        font-size: 18px;
+    }
+
+    .workflow-btn {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+}
+/* =========================================
+   RECORD DISTRIBUTION
+========================================= */
+
+.distribution-action {
+    margin-top: 25px;
+    padding: 22px 25px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    background: #fffdf5;
+    border: 1px solid #eadfba;
+    border-radius: 14px;
+}
+
+.distribution-icon {
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f5c542;
+    color: #222;
+
+    border-radius: 12px;
+    font-size: 25px;
+    flex-shrink: 0;
+}
+
+.distribution-content {
+    flex: 1;
+}
+
+.distribution-content h3 {
+    margin: 0 0 5px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #222;
+}
+
+.distribution-content p {
+    margin: 0 0 15px;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   RECORD DISTRIBUTION BUTTON
+========================================= */
+
+.distribution-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 11px 20px;
+
+    background: #f5c542;
+    color: #222;
+
+    border: none;
+    border-radius: 9px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.distribution-btn:hover {
+    background: #e8b72f;
+    color: #222;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+}
+
+.distribution-btn:active {
+    transform: translateY(0);
+}

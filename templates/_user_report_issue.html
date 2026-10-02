@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Report Issue | FoodResQ</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='user.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='report_issue.css') }}">
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <div class="logo">
+
+        <img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+        <div>
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p>
+                Rescue. Reuse. Restore.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="{{ url_for('user_dashboard') }}">
+            Home
+        </a>
+
+        <a href="{{ url_for('my_donations') }}">
+            My Donations
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="report-page">
+
+
+    <!-- BACK -->
+
+    <a href="{{ url_for('my_donations') }}"
+       class="back-link">
+
+        ← Back to My Donations
+
+    </a>
+
+
+
+    <!-- ================= PAGE HEADER ================= -->
+
+    <section class="report-header">
+
+        <span>
+            DONOR SUPPORT
+        </span>
+
+        <h1>
+            Report an Issue
+        </h1>
+
+        <p>
+            Something went wrong with your donation?
+            Tell us what happened and our Admin will review it.
+        </p>
+
+    </section>
+
+
+
+    <!-- ================= DONATION DETAILS ================= -->
+
+    <section class="donation-summary">
+
+        <div class="summary-top">
+
+            <div>
+
+                <span class="small-label">
+                    DONATION
+                </span>
+
+                <h2>
+                    #{{ donation.donation_id }}
+                </h2>
+
+            </div>
+
+
+            <span class="status-badge">
+
+                {{ donation.status }}
+
+            </span>
+
+        </div>
+
+
+
+        <div class="details-grid">
+
+
+            <div class="detail-box">
+
+                <span>
+                    Food
+                </span>
+
+                <strong>
+                    {{ donation.food_name }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <span>
+                    Food Type
+                </span>
+
+                <strong>
+
+                    {% if donation.food_type %}
+
+                        {{ donation.food_type }}
+
+                    {% else %}
+
+                        Not specified
+
+                    {% endif %}
+
+                </strong>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <span>
+                    Quantity
+                </span>
+
+                <strong>
+                    {{ donation.quantity }}
+                    {{ donation.quantity_unit }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <span>
+                    City
+                </span>
+
+                <strong>
+                    {{ donation.city }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <span>
+                    Pickup Date
+                </span>
+
+                <strong>
+                    {{ donation.pickup_date }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <span>
+                    Pickup Time
+                </span>
+
+                <strong>
+                    {{ donation.pickup_time }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ADDRESS -->
+
+        <div class="address-box">
+
+            <div class="address-icon">
+                📍
+            </div>
+
+            <div>
+
+                <span>
+                    Pickup Address
+                </span>
+
+                <strong>
+                    {{ donation.address }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= REPORT FORM ================= -->
+
+    <section class="report-card">
+
+
+        <div class="form-heading">
+
+            <div class="warning-icon">
+                ⚠
+            </div>
+
+            <div>
+
+                <h2>
+                    Tell us what happened
+                </h2>
+
+                <p>
+                    Please provide accurate information
+                    so Admin can investigate the issue.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <form method="POST"
+              action="{{ url_for(
+                  'submit_report_issue',
+                  donation_id=donation.donation_id
+              ) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+
+            <!-- ISSUE TYPE -->
+
+            <div class="form-group">
+
+                <label for="issue_type">
+
+                    Issue Type
+
+                    <span>*</span>
+
+                </label>
+
+
+                <select id="issue_type"
+                        name="issue_type"
+                        required>
+
+                    <option value="">
+                        Select an issue
+                    </option>
+
+                    <option value="NGO did not arrive">
+                        NGO did not arrive
+                    </option>
+
+                    <option value="Pickup delayed">
+                        Pickup was delayed
+                    </option>
+
+                    <option value="Pickup cancelled">
+                        Pickup was cancelled
+                    </option>
+
+                    <option value="NGO did not collect">
+                        NGO did not collect the donation
+                    </option>
+
+                    <option value="Wrong NGO">
+                        Wrong NGO / NGO issue
+                    </option>
+
+                    <option value="OTP issue">
+                        OTP / pickup confirmation issue
+                    </option>
+
+                    <option value="Donation status issue">
+                        Donation status is incorrect
+                    </option>
+
+                    <option value="Communication issue">
+                        Communication problem
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="form-group">
+
+                <label for="issue_description">
+
+                    Describe the Issue
+
+                    <span>*</span>
+
+                </label>
+
+
+                <textarea
+                    id="issue_description"
+                    name="issue_description"
+                    rows="7"
+                    maxlength="1000"
+                    placeholder="Explain clearly what happened with your donation..."
+                    required></textarea>
+
+
+                <div class="textarea-info">
+                    Maximum 1000 characters
+                </div>
+
+            </div>
+
+
+
+            <!-- INFORMATION BOX -->
+
+            <div class="information-box">
+
+                <div class="info-icon">
+                    i
+                </div>
+
+                <div>
+
+                    <strong>
+                        What happens after you report?
+                    </strong>
+
+                    <p>
+                        Your report will be sent to the FoodResQ
+                        Admin. The Admin will review the issue
+                        and take the appropriate action.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ACTIONS -->
+
+            <div class="form-actions">
+
+
+                <a href="{{ url_for('my_donations') }}"
+                   class="cancel-button">
+
+                    Cancel
+
+                </a>
+
+
+                <button type="submit"
+                        class="report-button">
+
+                    ⚠ Submit Report
+
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+    </section>
+
+
+</main>
+
+
+
+</body>
+
+</html>

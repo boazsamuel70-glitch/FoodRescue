@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NGO Analytics | FoodResQ</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='ngo_analytics.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='analytics_modern.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <div class="logo">
+
+        <img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+        <div>
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p class="tagline">
+                Turning <span>Surplus</span> into <span>Sustenance</span>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="/ngo_home">
+            Dashboard
+        </a>
+
+        <a href="/nearby_donations">
+            Nearby Donations
+        </a>
+
+        <a href="/ngo_assigned_donations">
+            Assigned Donations
+        </a>
+
+
+
+        <a href="/logout" class="logout">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="analytics-page">
+
+
+    <!-- ================= HERO ================= -->
+
+    <section class="analytics-hero">
+
+        <div>
+
+            <p class="eyebrow">
+                FOODRESQ / NGO INTELLIGENCE
+            </p>
+
+            <h1>
+                Your Rescue<br>
+                <span>Impact.</span>
+            </h1>
+
+            <p class="hero-text">
+                A clear view of your donation activity,
+                rescue performance and community impact.
+            </p>
+
+        </div>
+
+
+        <div class="hero-stat">
+
+            <span>
+                TOTAL RESCUES
+            </span>
+
+            <strong>
+                {{ total_donations }}
+            </strong>
+
+            <small>
+                donations assigned to your NGO
+            </small>
+
+        </div>
+
+    </section>
+
+    <section class="month-filter-card">
+        <div class="mf-title">
+            <span class="month-filter-label">ANALYSIS PERIOD</span>
+            <h2>{{ selected_month_label }}</h2>
+            <p class="mf-sub">Records begin August 2026. Upcoming months are ready and fill in automatically.</p>
+        </div>
+        <form method="get" action="{{ url_for('ngo_analytics') }}" class="month-filter-form">
+            <label for="ngo-analytics-month">Choose month</label>
+            <select id="ngo-analytics-month" name="month" onchange="this.form.submit()">
+                <option value="">All Time</option>
+                <optgroup label="Recorded months">
+                {% for m in month_choices if not m.future %}
+                <option value="{{ m.value }}" {% if selected_month == m.value %}selected{% endif %}>{{ m.label }}</option>
+                {% endfor %}
+                </optgroup>
+                <optgroup label="Upcoming months">
+                {% for m in month_choices if m.future %}
+                <option value="{{ m.value }}" {% if selected_month == m.value %}selected{% endif %}>{{ m.label }}</option>
+                {% endfor %}
+                </optgroup>
+            </select>
+            {% if selected_month %}<a href="{{ url_for('ngo_analytics') }}" class="clear-month">Clear</a>{% endif %}
+        </form>
+    </section>
+
+
+    <!-- ================= OVERVIEW ================= -->
+
+    <section class="analytics-section">
+
+        <div class="section-heading">
+
+            <div class="section-number">
+                01
+            </div>
+
+            <div>
+
+                <span>
+                    OVERVIEW
+                </span>
+
+                <h2>
+                    Rescue Performance
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="stats-row">
+
+
+            <div class="stat-item">
+
+                <span>
+                    COMPLETION RATE
+                </span>
+
+                <strong>
+                    {{ completion_rate }}%
+                </strong>
+
+                <p>
+                    {{ completed_donations }} completed
+                    out of {{ total_donations }} donations
+                </p>
+
+            </div>
+
+
+            <div class="stat-item">
+
+                <span>
+                    FOOD RESCUED
+                </span>
+
+                <strong>
+                    {{ total_quantity }}
+                </strong>
+
+                <p>
+                    Total quantity received through your NGO
+                </p>
+
+            </div>
+
+
+            <div class="stat-item">
+
+                <span>
+                    VERIFIED PICKUPS
+                </span>
+
+                <strong>
+                    {{ verified_pickups }}
+                </strong>
+
+                <p>
+                    Pickup codes successfully verified
+                </p>
+
+            </div>
+
+
+            <div class="stat-item">
+
+                <span>
+                    DONOR RATING
+                </span>
+
+                <strong>
+                    {{ average_rating }}
+                    <small>/ 5</small>
+                </strong>
+
+                <p>
+                    Average donor feedback rating
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= ACTIVITY ================= -->
+
+    <section class="analytics-section">
+
+        <div class="section-heading">
+
+            <div class="section-number">
+                02
+            </div>
+
+            <div>
+
+                <span>
+                    ACTIVITY
+                </span>
+
+                <h2>
+                    Donation Timeline
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        {% if monthly_data %}
+
+        <div class="timeline">
+
+            {% for item in monthly_data %}
+
+            <div class="timeline-item">
+
+                <div class="timeline-date">
+                    {{ item.month_name }}
+                </div>
+
+                <div class="timeline-line"></div>
+
+                <div class="timeline-content">
+
+                    <div>
+
+                        <strong>
+                            {{ item.donations }}
+                        </strong>
+
+                        <span>
+                            donations
+                        </span>
+
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            {{ item.completed }}
+                        </strong>
+
+                        <span>
+                            completed
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <strong>
+                No activity yet
+            </strong>
+
+            <p>
+                Your monthly donation activity will appear here
+                once donations are assigned to your NGO.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+
+
+    <!-- ================= FOOD + LOCATION ================= -->
+
+    <section class="analytics-section">
+
+        <div class="section-heading">
+
+            <div class="section-number">
+                03
+            </div>
+
+            <div>
+
+                <span>
+                    PATTERNS
+                </span>
+
+                <h2>
+                    What Your NGO Receives
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="pattern-layout">
+
+
+            <!-- FOOD TYPES -->
+
+            <div class="pattern-panel">
+
+                <div class="panel-top">
+
+                    <div>
+
+                        <span>
+                            FOOD CATEGORIES
+                        </span>
+
+                        <h3>
+                            Most Frequent Donations
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                {% if food_categories %}
+
+                <div class="food-list">
+
+                    {% for item in food_categories %}
+
+                    <div class="food-row">
+
+                        <div class="food-name">
+
+                            <span class="food-index">
+                                {{ loop.index }}
+                            </span>
+
+                            <strong>
+                                {{ item.food_type }}
+                            </strong>
+
+                        </div>
+
+                        <div class="food-count">
+                            {{ item.count }}
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+                {% else %}
+
+                <div class="empty-state small">
+                    No food category data available yet.
+                </div>
+
+                {% endif %}
+
+            </div>
+
+
+
+            <!-- LOCATIONS -->
+
+            <div class="pattern-panel">
+
+                <div class="panel-top">
+
+                    <div>
+
+                        <span>
+                            LOCATION PATTERNS
+                        </span>
+
+                        <h3>
+                            Where Donations Come From
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                {% if locations %}
+
+                <div class="location-list">
+
+                    {% for location in locations %}
+
+                    <div class="location-row">
+
+                        <div class="location-number">
+                            {{ loop.index }}
+                        </div>
+
+                        <div class="location-details">
+
+                            <strong>
+                                {{ location.city }}
+                            </strong>
+
+                            <span>
+                                {{ location.count }} donations
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+                {% else %}
+
+                <div class="empty-state small">
+                    No location data available yet.
+                </div>
+
+                {% endif %}
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= OPERATIONS ================= -->
+
+    <section class="analytics-section">
+
+        <div class="section-heading">
+
+            <div class="section-number">
+                04
+            </div>
+
+            <div>
+
+                <span>
+                    OPERATIONS
+                </span>
+
+                <h2>
+                    Pickup Intelligence
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="operations">
+
+
+            <div class="operation">
+
+                <div class="operation-letter">
+                    R
+                </div>
+
+                <div>
+
+                    <span>
+                        RESPONSE TIME
+                    </span>
+
+                    <strong>
+
+                        {% if avg_response_minutes is not none %}
+                            {{ avg_response_minutes }} min
+                        {% else %}
+                            —
+                        {% endif %}
+
+                    </strong>
+
+                    <p>
+                        Assignment to on-the-way
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="operation">
+
+                <div class="operation-letter">
+                    P
+                </div>
+
+                <div>
+
+                    <span>
+                        PICKUP TIME
+                    </span>
+
+                    <strong>
+
+                        {% if avg_pickup_minutes is not none %}
+                            {{ avg_pickup_minutes }} min
+                        {% else %}
+                            —
+                        {% endif %}
+
+                    </strong>
+
+                    <p>
+                        Pickup marked to confirmation
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="operation">
+
+                <div class="operation-letter">
+                    C
+                </div>
+
+                <div>
+
+                    <span>
+                        COMPLETION TIME
+                    </span>
+
+                    <strong>
+
+                        {% if avg_completion_minutes is not none %}
+                            {{ avg_completion_minutes }} min
+                        {% else %}
+                            —
+                        {% endif %}
+
+                    </strong>
+
+                    <p>
+                        Confirmation to completion
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="operation">
+
+                <div class="operation-letter">
+                    ✓
+                </div>
+
+                <div>
+
+                    <span>
+                        VERIFIED PICKUPS
+                    </span>
+
+                    <strong>
+                        {{ verified_pickups }}
+                    </strong>
+
+                    <p>
+                        Successfully verified pickup codes
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= DONORS ================= -->
+
+    <section class="analytics-section">
+
+        <div class="section-heading">
+
+            <div class="section-number">
+                05
+            </div>
+
+            <div>
+
+                <span>
+                    COMMUNITY
+                </span>
+
+                <h2>
+                    Donor Engagement
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="donor-area">
+
+
+            <div class="donor-main">
+
+                <span>
+                    UNIQUE DONORS
+                </span>
+
+                <strong>
+                    {{ total_donors }}
+                </strong>
+
+                <p>
+                    Different donors have contributed
+                    food to your NGO.
+                </p>
+
+            </div>
+
+
+            <div class="donor-side">
+
+                <div>
+
+                    <span>
+                        REPEAT DONORS
+                    </span>
+
+                    <strong>
+                        {{ repeat_percentage }}%
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        NEW DONORS
+                    </span>
+
+                    <strong>
+                        {{ new_percentage }}%
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= PEAK ACTIVITY ================= -->
+
+    <section class="analytics-section">
+
+        <div class="section-heading">
+
+            <div class="section-number">
+                06
+            </div>
+
+            <div>
+
+                <span>
+                    TIMING
+                </span>
+
+                <h2>
+                    Pickup Activity
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="peak-area">
+
+            <div class="peak-number">
+
+                {% if peak_hour is not none %}
+
+                    {% if peak_hour == 0 %}
+                        12 AM
+                    {% elif peak_hour < 12 %}
+                        {{ peak_hour }} AM
+                    {% elif peak_hour == 12 %}
+                        12 PM
+                    {% else %}
+                        {{ peak_hour - 12 }} PM
+                    {% endif %}
+
+                {% else %}
+
+                    —
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="peak-text">
+
+                <span>
+                    PEAK PICKUP HOUR
+                </span>
+
+                <h3>
+                    Your busiest pickup period
+                </h3>
+
+                <p>
+
+                    {% if peak_hour is not none %}
+
+                        Most recorded pickups occur around this
+                        time, helping identify when your NGO
+                        experiences the highest operational activity.
+
+                    {% else %}
+
+                        Pickup timing insights will appear after
+                        your NGO records pickup activity.
+
+                    {% endif %}
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= SMART INSIGHTS ================= -->
+
+    <section class="insights-section">
+
+        <div class="insights-heading">
+
+            <span>
+                FOODRESQ INTELLIGENCE
+            </span>
+
+            <h2>
+                What Your Data Tells You
+            </h2>
+
+            <p>
+                Simple insights generated from your actual
+                donation activity.
+            </p>
+
+        </div>
+
+
+        <div class="insight-list">
+
+
+            <div class="insight">
+
+                <span>
+                    01
+                </span>
+
+                <div>
+
+                    <h3>
+                        Completion Performance
+                    </h3>
+
+                    <p>
+
+                        {% if total_donations == 0 %}
+
+                            There is not enough data yet to evaluate
+                            your completion performance.
+
+                        {% elif completion_rate >= 80 %}
+
+                            Excellent operational performance.
+                            Your NGO has completed
+                            <strong>{{ completion_rate }}%</strong>
+                            of assigned donations.
+
+                        {% elif completion_rate >= 50 %}
+
+                            Your NGO has completed
+                            <strong>{{ completion_rate }}%</strong>
+                            of assigned donations. Improving
+                            pickup follow-through could increase
+                            your overall impact.
+
+                        {% else %}
+
+                            Your completion rate is currently
+                            <strong>{{ completion_rate }}%</strong>.
+                            Reducing unsuccessful or incomplete
+                            pickups could significantly improve
+                            your rescue efficiency.
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="insight">
+
+                <span>
+                    02
+                </span>
+
+                <div>
+
+                    <h3>
+                        Dominant Food Category
+                    </h3>
+
+                    <p>
+
+                        {% if top_food %}
+
+                            <strong>{{ top_food }}</strong>
+                            is currently the most frequently received
+                            food category by your NGO.
+
+                        {% else %}
+
+                            Food category insights will appear
+                            as more donations are received.
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="insight">
+
+                <span>
+                    03
+                </span>
+
+                <div>
+
+                    <h3>
+                        Donation Hotspot
+                    </h3>
+
+                    <p>
+
+                        {% if top_location %}
+
+                            <strong>{{ top_location }}</strong>
+                            currently contributes the highest number
+                            of donations to your NGO.
+
+                        {% else %}
+
+                            Location patterns will appear once
+                            donations are received.
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="insight">
+
+                <span>
+                    04
+                </span>
+
+                <div>
+
+                    <h3>
+                        Most Active Month
+                    </h3>
+
+                    <p>
+
+                        {% if most_active_month %}
+
+                            <strong>{{ most_active_month }}</strong>
+                            recorded your highest number of donations.
+
+                        {% else %}
+
+                            Monthly activity insights will appear
+                            as your donation history grows.
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="insight">
+
+                <span>
+                    05
+                </span>
+
+                <div>
+
+                    <h3>
+                        Verification & Security
+                    </h3>
+
+                    <p>
+
+                        Your NGO has successfully verified
+                        <strong>{{ verified_pickups }}</strong>
+                        pickup codes, providing an additional
+                        layer of confirmation for rescue operations.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="insight">
+
+                <span>
+                    06
+                </span>
+
+                <div>
+
+                    <h3>
+                        Donor Satisfaction
+                    </h3>
+
+                    <p>
+
+                        {% if average_rating > 0 %}
+
+                            Your current average donor rating is
+                            <strong>{{ average_rating }}/5</strong>.
+
+                        {% else %}
+
+                            Donor satisfaction data will appear
+                            after feedback is received.
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+</body>
+
+</html>

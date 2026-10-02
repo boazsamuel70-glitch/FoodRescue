@@ -1,0 +1,490 @@
+/* =========================================================
+   FOODRESQ NOTIFICATIONS
+   Green + White Theme
+   Does NOT modify common.css
+   ========================================================= */
+
+.notifications-page {
+    width: 92%;
+    max-width: 1150px;
+    margin: 45px auto 70px;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.notifications-header {
+    background: #ffffff;
+    border: 1px solid #dce8e2;
+    border-radius: 18px;
+    padding: 35px 40px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 25px rgba(20, 80, 55, 0.08);
+}
+
+.notifications-header > span {
+    display: inline-block;
+    color: #18794e;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 7px;
+}
+
+.notifications-header h1 {
+    margin: 0;
+    color: #123f2d;
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.notifications-header p {
+    margin: 10px 0 0;
+    color: #64756d;
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   NOTIFICATION LIST
+   ========================================================= */
+
+.notification-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+/* =========================================================
+   NOTIFICATION CARD
+   ========================================================= */
+
+.notification-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+
+    background: #ffffff;
+
+    border: 1px solid #dfe9e4;
+    border-radius: 16px;
+
+    padding: 22px 25px;
+
+    box-shadow: 0 6px 20px rgba(20, 80, 55, 0.07);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.notification-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 28px rgba(20, 80, 55, 0.12);
+
+    border-color: #b9d9ca;
+}
+
+
+/* =========================================================
+   UNREAD NOTIFICATION
+   ========================================================= */
+
+.notification-card.unread {
+    background: #f1faf5;
+    border-left: 5px solid #198754;
+}
+
+
+/* =========================================================
+   NOTIFICATION ICON
+   ========================================================= */
+
+.notification-icon {
+    width: 48px;
+    height: 48px;
+
+    min-width: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e6f5ec;
+
+    border-radius: 50%;
+
+    font-size: 21px;
+
+    box-shadow:
+        inset 0 0 0 1px #cce8d7;
+}
+
+
+/* =========================================================
+   NOTIFICATION CONTENT
+   ========================================================= */
+
+.notification-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notification-content p {
+    margin: 2px 0 9px;
+
+    color: #173f2f;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    line-height: 1.6;
+}
+
+.notification-content small {
+    color: #819088;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   EMPTY NOTIFICATIONS
+   ========================================================= */
+
+.empty-notifications {
+    background: #ffffff;
+
+    border: 1px solid #dce8e2;
+    border-radius: 18px;
+
+    padding: 70px 30px;
+
+    text-align: center;
+
+    box-shadow:
+        0 8px 25px rgba(20, 80, 55, 0.07);
+}
+
+.empty-notifications > div {
+    width: 70px;
+    height: 70px;
+
+    margin: 0 auto 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eaf7ef;
+
+    border-radius: 50%;
+
+    font-size: 30px;
+
+    box-shadow:
+        inset 0 0 0 1px #d2eadb;
+}
+
+.empty-notifications h2 {
+    margin: 0 0 8px;
+
+    color: #164c35;
+
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.empty-notifications p {
+    margin: 0;
+
+    color: #728078;
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   ACTIVE NAVIGATION
+   Only affects this page's active notification link
+   ========================================================= */
+
+header nav a.active {
+    color: #16834f;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .notifications-page {
+        width: 94%;
+        margin-top: 30px;
+    }
+
+    .notifications-header {
+        padding: 28px 24px;
+    }
+
+    .notifications-header h1 {
+        font-size: 30px;
+    }
+
+    .notification-card {
+        padding: 18px;
+        gap: 13px;
+    }
+
+    .notification-icon {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        font-size: 18px;
+    }
+
+    .notification-content p {
+        font-size: 15px;
+    }
+
+    .empty-notifications {
+        padding: 55px 20px;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .notifications-header h1 {
+        font-size: 27px;
+    }
+
+    .notifications-header p {
+        font-size: 14px;
+    }
+
+    .notification-card {
+        padding: 16px;
+    }
+
+    .notification-content p {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .notification-content small {
+        font-size: 12px;
+    }
+}
+/* =========================================================
+   HEADER NOTIFICATION BELL
+   Phone-style unread badge
+   ========================================================= */
+
+.notification-link {
+    position: relative;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    text-decoration: none;
+}
+
+
+/* Bell */
+
+.notification-bell {
+    position: relative;
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 21px;
+
+    transition: transform 0.2s ease;
+}
+
+
+/* Red unread number */
+
+.notification-badge {
+    position: absolute;
+
+    top: -7px;
+    right: -8px;
+
+    min-width: 20px;
+    height: 20px;
+
+    padding: 0 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e53935;
+    color: #ffffff;
+
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    z-index: 999;
+
+    box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.20);
+
+    animation: notificationPop 0.25s ease-out;
+}
+
+
+/* Badge appears with a small pop */
+
+@keyframes notificationPop {
+
+    0% {
+        transform: scale(0);
+    }
+
+    70% {
+        transform: scale(1.15);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+}
+
+
+/* Bell gently rings when unread notifications exist */
+
+.notification-link:has(.notification-badge) .notification-bell {
+
+    animation: phoneBellRing 3s ease-in-out infinite;
+
+}
+
+
+@keyframes phoneBellRing {
+
+    0%,
+    85%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    87% {
+        transform: rotate(-8deg);
+    }
+
+    89% {
+        transform: rotate(8deg);
+    }
+
+    91% {
+        transform: rotate(-6deg);
+    }
+
+    93% {
+        transform: rotate(4deg);
+    }
+
+    95% {
+        transform: rotate(0deg);
+    }
+
+}
+
+
+/* Hover */
+
+.notification-link:hover .notification-bell {
+    transform: scale(1.08);
+}
+/* =========================================================
+   NOTIFICATIONS HEADER WITH CLEAR BUTTON
+   ========================================================= */
+
+.notifications-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.notifications-title {
+    flex: 1;
+}
+
+
+/* =========================================================
+   CLEAR NOTIFICATIONS BUTTON
+   ========================================================= */
+
+.clear-notifications-btn {
+    border: 1px solid #efcaca;
+    border-radius: 10px;
+
+    padding: 11px 17px;
+
+    background: #fff4f4;
+    color: #d73535;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.clear-notifications-btn:hover {
+    background: #ffe7e7;
+    border-color: #e3aaaa;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .notifications-heading {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .clear-notifications-btn {
+        width: 100%;
+    }
+}

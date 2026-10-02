@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FoodResQ Admin Login</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='common.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+
+<img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+<div>
+
+<h2>Food<span>ResQ</span></h2>
+
+<p class="tagline">Turning <span>Surplus</span> into <span>Sustenance</span></p>
+
+</div>
+
+</div>
+ <nav>
+
+        <a href="/">Home</a>
+
+        <a href="/about">About</a>
+
+        
+    </nav>
+
+</header>
+
+<section class="admin-login-page">
+
+<div class="admin-left">
+
+<h1>Administrator Portal</h1>
+
+<p>
+
+Welcome to the FoodResQ Administration Panel.
+
+Manage donors, NGOs, food donations, assignments and platform analytics from one secure dashboard.
+
+</p>
+
+<div class="feature">
+
+📊 Monitor donations in real time
+
+</div>
+
+<div class="feature">
+
+🤝 Approve and manage NGO partners
+
+</div>
+
+<div class="feature">
+
+🚚 Assign nearby NGOs for food pickup
+
+</div>
+
+<div class="feature">
+
+📈 Track platform performance
+
+</div>
+
+</div>
+
+<div class="login-box">
+
+<h2>Admin Login</h2>
+
+<form action="/admin_login_verify" method="POST">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+<label>Email</label>
+
+<input
+type="email"
+name="email"
+placeholder="Enter admin email"
+required>
+
+<label>Password</label>
+
+<input
+type="password"
+name="password"
+placeholder="Enter password"
+required>
+
+<p class="forgot-password">
+    <a href="/forgot_password">Forgot Password?</a>
+</p>
+
+<button type="submit">
+
+Login
+
+</button>
+
+</form>
+
+</div>
+
+</section>
+
+</body>
+
+</html>

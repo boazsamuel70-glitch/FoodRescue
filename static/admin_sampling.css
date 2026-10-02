@@ -1,0 +1,69 @@
+/* FoodResQ admin - sampling tool */
+.sampling-page{max-width:1100px;margin:0 auto;padding:24px 18px 60px}
+.sp-card,.sp-result{background:#fff;border:1px solid #d6ecdd;border-radius:22px;box-shadow:0 14px 34px rgba(20,120,65,.09);padding:8px 26px 26px;margin-bottom:24px}
+.sp-step{display:flex;gap:16px;padding:20px 0;border-bottom:1px dashed #d6ecdd}
+.sp-step:last-of-type{border-bottom:0}
+.sp-num{flex:0 0 36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#0f7a3d,#1fae5e);color:#fff;font-weight:800;display:grid;place-items:center;margin-top:2px}
+.sp-body{flex:1;min-width:0}
+.sp-body h2{margin:0 0 12px;font-size:18px;color:#123b2a}
+.sp-pills{display:flex;gap:10px;flex-wrap:wrap}
+.sp-pill input,.sp-method input{position:absolute;opacity:0;pointer-events:none}
+.sp-pill span{display:inline-block;padding:10px 20px;border:1.5px solid #bfe3cd;border-radius:99px;font-weight:600;cursor:pointer;background:#fff;min-height:44px;line-height:22px;transition:.2s}
+.sp-pill input:checked+span{background:linear-gradient(135deg,#0f7a3d,#1fae5e);color:#fff;border-color:transparent;box-shadow:0 8px 18px rgba(15,122,61,.25)}
+.sp-pill input:focus-visible+span,.sp-method input:focus-visible+span{outline:3px solid #A9D96D;outline-offset:2px}
+.sp-family{margin:14px 0 8px;font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.sp-family small{text-transform:none;letter-spacing:0;font-weight:500;color:#6b8a7d;margin-left:8px}
+.fam-prob{color:#0f7a3d}.fam-non{color:#b06a00}
+.sp-methods{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.sp-method{position:relative;display:block;cursor:pointer}
+.sp-method span{display:block;height:100%;padding:13px 15px;border:1.5px solid #dcefe3;border-radius:16px;background:#fbfefc;transition:.2s}
+.sp-method span b{display:block;color:#123b2a;font-size:14.5px}
+.sp-method span em{display:block;font-style:normal;font-size:12.5px;color:#6b8a7d;margin-top:3px;line-height:1.4}
+.sp-method:hover span{border-color:#1fae5e;transform:translateY(-2px)}
+.sp-method input:checked+span{border-color:#0f7a3d;background:linear-gradient(180deg,#eefaf2,#e0f6e8);box-shadow:0 8px 20px rgba(15,122,61,.14)}
+.sp-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.sp-field{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:#3d6353}
+.sp-field.wide{grid-column:1/-1}
+.sp-field small{font-weight:500;color:#8aa598}
+.sp-field input,.sp-field select{min-height:46px;padding:10px 14px;border:1.5px solid #bfe3cd;border-radius:12px;font:inherit;font-weight:500;color:#123b2a;background:#fff}
+.sp-field input:focus,.sp-field select:focus{outline:none;border-color:#0f7a3d;box-shadow:0 0 0 4px rgba(31,174,94,.16)}
+.sp-actions{padding-top:8px}
+.sp-run{min-height:50px;padding:12px 34px;border:0;border-radius:14px;font:inherit;font-weight:700;font-size:15px;color:#fff;cursor:pointer;background:linear-gradient(135deg,#0f7a3d,#1fae5e);box-shadow:0 12px 26px rgba(15,122,61,.28);transition:.2s}
+.sp-run:hover{transform:translateY(-2px)}
+.sp-error{margin:0 0 24px;padding:14px 18px;border-radius:14px;background:#fff3f1;border:1px solid #f0c9c4;color:#8f2b21;font-weight:600}
+.sp-result{padding:24px 26px}
+.sp-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:20px}
+.sp-kpi{padding:16px;border-radius:16px;background:linear-gradient(180deg,#f7fdf9,#eef9f2);border:1px solid #dcefe3}
+.sp-kpi span{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#6b8a7d;margin-bottom:6px}
+.sp-kpi strong{font-size:22px;color:#0f7a3d}
+.sp-badge{display:inline-block;margin-top:8px;font-style:normal;font-size:11px;font-weight:800;padding:3px 10px;border-radius:99px;background:#dff5e8}
+.sp-badge.fam-non{background:#fff0d4}
+.sp-explain{padding:18px 20px;border-radius:16px;background:#f7fbf8;border:1px solid #e3f1e8;margin-bottom:20px}
+.sp-explain h3,.sp-groups h3,.sp-table-head h3{margin:0 0 10px;font-size:16px;color:#123b2a}
+.sp-explain ul{margin:0 0 12px;padding-left:20px;color:#3d6353;line-height:1.7;font-size:14px}
+.sp-explain code{background:#e3f6ea;padding:2px 8px;border-radius:8px;font-weight:700}
+.sp-note{margin:0;padding:12px 14px;border-radius:12px;background:#fffaf0;border:1px solid #f6e3b8;color:#6a4a08;font-size:13.5px;line-height:1.6}
+.sp-groups{margin-bottom:22px}
+.sp-grow{display:grid;grid-template-columns:minmax(90px,170px) 1fr auto;gap:12px;align-items:center;padding:6px 0;font-size:13.5px}
+.sp-gname{font-weight:600;color:#123b2a;overflow-wrap:anywhere}
+.sp-gbar{height:14px;background:#eef5f0;border-radius:99px;overflow:hidden}
+.sp-gpop{height:100%;background:#d5ebc1;border-radius:99px;overflow:hidden}
+.sp-gsam{height:100%;background:linear-gradient(90deg,#0f7a3d,#1fae5e);border-radius:99px}
+.sp-gnum{font-weight:700;color:#0f7a3d;white-space:nowrap}.sp-gnum small{color:#8aa598;font-weight:500}
+.sp-table-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.sp-dl{display:inline-flex;align-items:center;min-height:44px;padding:10px 18px;border-radius:12px;border:1.5px solid #bfe3cd;color:#0f7a3d;font-weight:700;text-decoration:none;background:#fff}
+.sp-dl:hover{background:#eefaf2}
+.sp-table-wrap{overflow-x:auto;border:1px solid #e3f1e8;border-radius:14px;-webkit-overflow-scrolling:touch}
+.sp-table{width:100%;border-collapse:collapse;font-size:13.5px;display:table;white-space:nowrap}
+.sp-table th{background:#eefaf2;color:#0f5c30;text-align:left;padding:11px 14px;font-size:12px;letter-spacing:.05em;text-transform:uppercase;position:sticky;top:0}
+.sp-table td{padding:10px 14px;border-top:1px solid #edf5f0;color:#274d3d}
+.sp-table tbody tr:hover{background:#f7fcf9}
+.sp-trunc{color:#6b8a7d;font-size:13px;margin:10px 2px 0}
+@media (max-width:700px){
+ .sp-card,.sp-result{padding:6px 14px 20px;border-radius:18px}
+ .sp-result{padding:18px 14px}
+ .sp-step{gap:12px}.sp-num{flex-basis:30px;height:30px}
+ .sp-methods{grid-template-columns:1fr}
+ .sp-run{width:100%}
+ .sp-grow{grid-template-columns:1fr auto}.sp-gbar{grid-column:1/-1;order:3}
+}

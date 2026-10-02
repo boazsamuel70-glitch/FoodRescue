@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Find Nearby NGOs | FoodResQ
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='find_ngos.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+    <div class="logo">
+
+        <img src="{{ url_for('static',
+                             filename='images/homepgs.png') }}">
+
+        <div>
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p class="tagline">
+                Turning <span>Surplus</span> into <span>Sustenance</span>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="/admin_dashboard">
+            Dashboard
+        </a>
+
+        <a href="/admin_donors">
+            Donors
+        </a>
+
+        <a href="/admin_ngos">
+            NGOs
+        </a>
+
+        <a href="/admin_donations">
+            Donations
+        </a>
+
+        <a href="/admin_assignments"
+           class="active">
+            Assignments
+        </a>
+
+        <a href="/admin_analytics">
+            Analytics
+        </a>
+
+        <a href="/logout"
+           class="logout">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="ngo-page">
+
+
+    <!-- BACK -->
+
+    <a href="/admin_assignments"
+       class="back-link">
+
+        ← Back to Assignments
+
+    </a>
+
+
+
+    <!-- =================================================
+         PAGE HEADER
+    ================================================== -->
+
+    <section class="page-heading">
+
+        <div class="heading-content">
+
+            <span class="small-heading">
+                NGO ASSIGNMENT
+            </span>
+
+            <h1>
+                Find Nearby NGOs
+            </h1>
+
+            <p>
+                Select a suitable NGO based on location,
+                service area and availability for this donation.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         DONATION SUMMARY
+    ================================================== -->
+
+    {% if donation %}
+
+    <section class="donation-card">
+
+        <div class="donation-icon">
+            🍱
+        </div>
+
+
+        <div class="donation-main">
+
+            <span class="label">
+                DONATION
+            </span>
+
+            <h2>
+                {{ donation.food_name }}
+            </h2>
+
+            <p>
+                Donation #{{ donation.donation_id }}
+            </p>
+
+        </div>
+
+
+        <div class="donation-detail">
+
+            <span>
+                QUANTITY
+            </span>
+
+            <strong>
+                {{ donation.quantity }}
+                {{ donation.quantity_unit }}
+            </strong>
+
+        </div>
+
+
+        <div class="donation-detail">
+
+            <span>
+                LOCATION
+            </span>
+
+            <strong>
+                {{ donation.city }}
+            </strong>
+
+        </div>
+
+
+        <div class="donation-detail">
+
+            <span>
+                PICKUP
+            </span>
+
+            <strong>
+                {{ donation.pickup_date }}
+            </strong>
+
+        </div>
+
+    </section>
+
+    {% endif %}
+
+
+
+    <!-- =================================================
+         SECTION HEADER
+    ================================================== -->
+
+    <div class="results-header">
+
+        <div>
+
+            <span class="section-label">
+                RECOMMENDED PARTNERS
+            </span>
+
+            <h2>
+                Nearby NGOs
+            </h2>
+
+        </div>
+
+
+        <div class="results-count">
+
+            <span>
+                📍
+            </span>
+
+            {{ ngos|length }} NGOs found
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         NGO GRID
+    ================================================== -->
+
+    {% if ngos %}
+
+    <section class="ngo-grid">
+
+
+        {% for ngo in ngos %}
+
+        <article class="ngo-card">
+
+
+            <!-- DISTANCE -->
+
+            <div class="distance-badge">
+
+                📍
+
+                {% if ngo.distance is defined and ngo.distance is not none %}
+
+                    {{ "%.1f"|format(ngo.distance) }} km away
+
+                {% else %}
+
+                    Nearby
+
+                {% endif %}
+
+            </div>
+
+
+
+            <!-- NGO HEADER -->
+
+            <div class="ngo-top">
+
+
+                <div class="ngo-logo">
+
+                    🏢
+
+                </div>
+
+
+                <div class="ngo-name">
+
+                    <h3>
+                        {{ ngo.ngo_name }}
+                    </h3>
+
+                    <span class="partner-id">
+
+                        Partner ID:
+                        {{ ngo.partner_id }}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- NGO INFORMATION -->
+
+            <div class="ngo-info">
+
+
+                <!-- PHONE -->
+
+                <div class="ngo-info-row">
+
+                    <div class="info-icon">
+                        📞
+                    </div>
+
+                    <div>
+
+                        <span>
+                            PHONE
+                        </span>
+
+                        <strong>
+                            {{ ngo.phone or 'Not available' }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ADDRESS -->
+
+                <div class="ngo-info-row">
+
+                    <div class="info-icon">
+                        📍
+                    </div>
+
+                    <div>
+
+                        <span>
+                            ADDRESS
+                        </span>
+
+                        <strong>
+                            {{ ngo.address or 'Not available' }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SERVICE AREA -->
+
+                <div class="ngo-info-row">
+
+                    <div class="info-icon">
+                        🌐
+                    </div>
+
+                    <div>
+
+                        <span>
+                            SERVICE AREA
+                        </span>
+
+                        <strong>
+                            {{ ngo.service_area or 'Not specified' }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- STATUS -->
+
+            <div class="ngo-status">
+
+                {% if ngo.status == 'Active' %}
+
+                    <span class="status-dot active-dot"></span>
+
+                    <span>
+                        Available for assignments
+                    </span>
+
+                {% else %}
+
+                    <span class="status-dot inactive-dot"></span>
+
+                    <span>
+                        {{ ngo.status or 'Unavailable' }}
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+
+            <!-- ACTIONS -->
+
+            <div class="ngo-actions">
+
+
+                <!-- VIEW DETAILS -->
+<a href="{{ url_for(
+    'admin_ngo_details',
+    ngo_id=ngo.ngo_id,
+    donation_id=donation.donation_id
+) }}"
+class="view-btn">
+
+    👁 View Details
+
+</a>
+
+
+
+                <!-- ASSIGN -->
+
+                {% if ngo.status == 'Active' or not ngo.status %}
+
+                <form action="{{ url_for('assign_ngo') }}"
+                      method="POST"
+                      class="assign-form"
+                      onsubmit="return confirm(
+                        'Assign this NGO to Donation #{{ donation.donation_id }}?'
+                      );">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                    <input type="hidden"
+                           name="donation_id"
+                           value="{{ donation.donation_id }}">
+
+                    <input type="hidden"
+                           name="ngo_id"
+                           value="{{ ngo.ngo_id }}">
+
+                    <button type="submit"
+                            class="assign-btn">
+
+                        Assign NGO
+
+                    </button>
+
+                </form>
+
+                {% else %}
+
+                    <button class="disabled-btn"
+                            disabled>
+
+                        Unavailable
+
+                    </button>
+
+                {% endif %}
+
+
+            </div>
+
+
+        </article>
+
+        {% endfor %}
+
+
+    </section>
+
+
+    {% else %}
+
+
+    <!-- =================================================
+         EMPTY STATE
+    ================================================== -->
+
+    <section class="no-results">
+
+        <div class="no-results-icon">
+
+            📍
+
+        </div>
+
+        <h2>
+            No Nearby NGOs Found
+        </h2>
+
+        <p>
+            We couldn't find an active NGO near this
+            donation location. You may need to expand
+            the search area or assign another available NGO.
+        </p>
+
+        <a href="/admin_assignments"
+           class="back-dashboard">
+
+            ← Back to Assignments
+
+        </a>
+
+    </section>
+
+
+    {% endif %}
+
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <p>
+        FoodResQ Admin Panel © 2026
+    </p>
+
+</footer>
+
+
+
+</body>
+
+</html>

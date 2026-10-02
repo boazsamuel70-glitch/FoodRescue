@@ -1,0 +1,616 @@
+/* =========================================================
+   FOODRESQ - ADMIN DONOR MANAGEMENT
+   ========================================================= */
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.container {
+    width: 92%;
+    max-width: 1400px;
+    margin: 45px auto 70px;
+}
+
+
+/* =========================================================
+   PAGE TITLE
+   ========================================================= */
+
+.page-title {
+    margin-bottom: 30px;
+}
+
+.page-title h1 {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.page-title p {
+    color: #777;
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   SEARCH SECTION
+   ========================================================= */
+
+.search-section {
+    background: #ffffff;
+    padding: 20px 24px;
+    border-radius: 14px;
+    margin-bottom: 28px;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+}
+
+.search-section form {
+    display: flex;
+    gap: 12px;
+}
+
+.search-section input {
+    flex: 1;
+
+    height: 46px;
+
+    padding: 0 16px;
+
+    border: 1px solid #dcdcdc;
+    border-radius: 9px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+.search-section input:focus {
+    border-color: #4caf50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.10);
+}
+
+.search-section button {
+    height: 46px;
+
+    padding: 0 24px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #2e7d32;
+    color: white;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.search-section button:hover {
+    background: #256628;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   DONOR TABLE CARD
+   ========================================================= */
+
+.donor-table {
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    padding: 26px;
+
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+
+    overflow-x: auto;
+}
+
+.donor-table h2 {
+    margin: 0 0 22px;
+
+    font-size: 21px;
+    font-weight: 600;
+
+    color: #222;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.donor-table table {
+    width: 100%;
+
+    border-collapse: separate;
+    border-spacing: 0;
+
+    min-width: 850px;
+}
+
+
+/* TABLE HEADER */
+
+.donor-table th {
+    background: #f1f8f2;
+
+    color: #28632d;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-align: left;
+
+    padding: 15px 16px;
+
+    border-bottom: 1px solid #dce9de;
+
+    white-space: nowrap;
+}
+
+.donor-table th:first-child {
+    border-radius: 9px 0 0 9px;
+}
+
+.donor-table th:last-child {
+    border-radius: 0 9px 9px 0;
+}
+
+
+/* TABLE CELLS */
+
+.donor-table td {
+    padding: 16px;
+
+    font-size: 13.5px;
+
+    color: #444;
+
+    border-bottom: 1px solid #eeeeee;
+
+    vertical-align: middle;
+}
+
+
+/* ROW */
+
+.donor-table tbody tr {
+    transition: 0.2s;
+}
+
+.donor-table tbody tr:hover {
+    background: #f9fcf9;
+}
+
+
+/* =========================================================
+   DONOR ID
+   ========================================================= */
+
+.donor-table td:first-child {
+    font-weight: 600;
+    color: #2e7d32;
+}
+
+
+/* =========================================================
+   DONOR NAME
+   ========================================================= */
+
+.donor-table td:nth-child(2) {
+    font-weight: 600;
+    color: #222;
+}
+
+
+/* =========================================================
+   EMAIL
+   ========================================================= */
+
+.donor-table td:nth-child(3) {
+    color: #555;
+}
+
+
+/* =========================================================
+   PHONE
+   ========================================================= */
+
+.donor-table td:nth-child(4) {
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   DONATION COUNT
+   ========================================================= */
+
+.donor-table td:nth-child(5) {
+    font-weight: 600;
+}
+
+.donation-count {
+    display: inline-flex;
+
+    min-width: 34px;
+    height: 30px;
+
+    padding: 0 9px;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background: #e8f5e9;
+
+    color: #2e7d32;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   VIEW BUTTON
+   ========================================================= */
+
+.view-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 82px;
+    height: 36px;
+
+    padding: 0 15px;
+
+    border: 1px solid #c8dfca;
+
+    border-radius: 8px;
+
+    background: #f5faf5;
+
+    color: #2e7d32;
+
+    text-decoration: none;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.view-btn:hover {
+    background: #2e7d32;
+    color: white;
+
+    border-color: #2e7d32;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   DROPDOWN VIEW BUTTON
+   Use this if button is changed from <a> to <button>
+   ========================================================= */
+
+.details-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    min-width: 90px;
+    height: 36px;
+
+    padding: 0 14px;
+
+    border: 1px solid #c8dfca;
+    border-radius: 8px;
+
+    background: #f5faf5;
+
+    color: #2e7d32;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.details-btn:hover {
+    background: #2e7d32;
+    color: white;
+
+    border-color: #2e7d32;
+}
+
+.details-btn::after {
+    content: "▼";
+
+    font-size: 9px;
+
+    transition: transform 0.2s ease;
+}
+
+.details-btn.open::after {
+    transform: rotate(180deg);
+}
+
+
+/* =========================================================
+   EXPANDED DETAILS ROW
+   ========================================================= */
+
+.details-row {
+    display: none;
+}
+
+.details-row.show {
+    display: table-row;
+}
+
+.details-row td {
+    padding: 0;
+
+    background: #f8fbf8;
+
+    border-bottom: 1px solid #dfe9e0;
+}
+
+
+/* =========================================================
+   DETAILS CONTAINER
+   ========================================================= */
+
+.donor-details {
+    padding: 24px 26px 26px;
+
+    border-left: 4px solid #4caf50;
+}
+
+
+/* =========================================================
+   DETAILS HEADING
+   ========================================================= */
+
+.donor-details-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 18px;
+}
+
+.donor-details-title h3 {
+    margin: 0;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    color: #28632d;
+}
+
+
+/* =========================================================
+   DETAILS GRID
+   ========================================================= */
+
+.details-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 14px;
+}
+
+
+/* =========================================================
+   DETAIL CARD
+   ========================================================= */
+
+.detail-item {
+    background: white;
+
+    padding: 15px 17px;
+
+    border: 1px solid #e2ebe3;
+
+    border-radius: 10px;
+}
+
+.detail-item span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 11px;
+
+    color: #888;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.4px;
+}
+
+.detail-item strong {
+    display: block;
+
+    font-size: 13px;
+
+    color: #333;
+
+    font-weight: 500;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   FULL WIDTH DETAIL
+   ========================================================= */
+
+.detail-item.full-width {
+    grid-column: 1 / -1;
+}
+
+
+/* =========================================================
+   ACTION AREA
+   ========================================================= */
+
+.detail-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 20px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid #e0e8e1;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.profile-btn {
+    padding: 10px 20px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #2e7d32;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    transition: 0.2s;
+}
+
+.profile-btn:hover {
+    background: #256628;
+}
+
+
+/* =========================================================
+   EMPTY TABLE
+   ========================================================= */
+
+.empty-row td {
+    padding: 55px 20px;
+
+    text-align: center;
+
+    color: #888;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    text-align: center;
+
+    padding: 25px 20px;
+
+    color: #888;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .container {
+        width: 94%;
+    }
+
+    .details-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .container {
+        width: 95%;
+        margin-top: 30px;
+    }
+
+    .page-title h1 {
+        font-size: 24px;
+    }
+
+    .search-section form {
+        flex-direction: column;
+    }
+
+    .search-section button {
+        width: 100%;
+    }
+
+    .donor-table {
+        padding: 18px;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-actions {
+        flex-direction: column;
+    }
+
+    .profile-btn {
+        text-align: center;
+    }
+
+}

@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Assigned Donations | FoodResQ</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='ngo_assigned_orders.css') }}">
+
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+
+    {% with _frq = get_flashed_messages(with_categories=true) %}
+        {% if _frq %}
+        <script>
+            window.FOODRESQ_FLASH = {{ _frq|tojson }};
+        </script>
+        {% endif %}
+    {% endwith %}
+
+    <script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='responsive.css') }}">
+
+    <script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+
+        <img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+        <div>
+
+            <h2>Food<span>ResQ</span></h2>
+
+            <p>Rescue. Reuse. Restore.</p>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="{{ url_for('ngo_home') }}">
+            Home
+        </a>
+
+        <a href="{{ url_for('ngo_assigned_donations') }}"
+           class="active">
+            Assigned Donations
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<main class="assigned-page">
+
+
+    <section class="assigned-heading">
+
+        <div>
+
+            <span>NGO PORTAL</span>
+
+            <h1>Assigned Donations</h1>
+
+            <p>
+                Manage your assigned food donations and complete
+                each rescue through the FoodResQ verification process.
+            </p>
+
+        </div>
+
+
+        <div class="assigned-count">
+
+            <strong>
+                {{ donations|length }}
+            </strong>
+
+            <small>
+                Assigned Donations
+            </small>
+
+        </div>
+
+    </section>
+
+
+
+    <section class="assigned-tools">
+
+        <div class="assigned-search">
+
+            <span>⌕</span>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search donations..."
+                onkeyup="filterDonations()">
+
+        </div>
+
+
+        <select id="statusFilter"
+                onchange="filterDonations()">
+
+            <option value="all">
+                All Status
+            </option>
+
+            <option value="Assigned">
+                Assigned
+            </option>
+
+            <option value="Accepted">
+                Accepted
+            </option>
+
+            <option value="Verified">
+                Verified
+            </option>
+
+            <option value="Awaiting Donor Confirmation">
+                Awaiting Donor Confirmation
+            </option>
+
+            <option value="Picked Up">
+                Picked Up
+            </option>
+
+            <option value="On the Way">
+                On the Way
+            </option>
+
+            <option value="Completed">
+                Completed
+            </option>
+
+        </select>
+
+    </section>
+
+
+
+    {% if donations %}
+
+    <section id="donationList"
+             class="donation-list">
+
+
+        {% for donation in donations %}
+
+
+        <article class="assigned-card"
+                 data-status="{{ donation.status }}"
+                 data-search="{{ donation.donation_id }} {{ donation.food_name }} {{ donation.food_type }} {{ donation.city }} {{ donation.address }}">
+
+
+            <!-- CARD HEADER -->
+
+            <div class="card-top">
+
+                <span>
+                    Donation #{{ donation.donation_id }}
+                </span>
+
+
+                <strong class="status
+
+                    {% if donation.status == 'Assigned' %}
+                        status-assigned
+
+                    {% elif donation.status == 'Accepted' %}
+                        status-confirmed
+
+                    {% elif donation.status == 'Verified' %}
+                        status-verified
+
+                    {% elif donation.status == 'Awaiting Donor Confirmation' %}
+                        status-awaiting
+
+                    {% elif donation.status == 'Picked Up' %}
+                        status-picked
+
+                    {% elif donation.status == 'On the Way' %}
+                        status-onway
+
+                    {% elif donation.status == 'Completed' %}
+                        status-completed
+
+                    {% else %}
+                        status-other
+                    {% endif %}
+
+                ">
+
+                    {{ donation.status }}
+
+                </strong>
+
+            </div>
+
+
+
+            <!-- FOOD -->
+
+            <div class="food-details">
+
+                <div class="food-symbol">
+                    🍱
+                </div>
+
+                <div>
+
+                    <h2>
+                        {{ donation.food_name }}
+                    </h2>
+
+                    {% if donation.food_type %}
+
+                    <p>
+                        {{ donation.food_type }}
+                    </p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+
+            <!-- BASIC INFORMATION -->
+
+            <div class="donation-info">
+
+                <div>
+
+                    <span>
+                        Quantity
+                    </span>
+
+                    <strong>
+                        {{ donation.quantity }}
+                        {{ donation.quantity_unit }}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Pickup Date
+                    </span>
+
+                    <strong>
+                        {{ donation.pickup_date }}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Pickup Time
+                    </span>
+
+                    <strong>
+                        {{ donation.pickup_time }}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        City
+                    </span>
+
+                    <strong>
+                        {{ donation.city }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ADDRESS -->
+
+            <div class="pickup-address">
+
+                <span>
+                    📍
+                </span>
+
+                <div>
+
+                    <small>
+                        Pickup Address
+                    </small>
+
+                    <p>
+                        {{ donation.address }}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- VIEW DETAILS -->
+
+            <a href="{{ url_for(
+                'ngo_donations',
+                donation_id=donation.donation_id
+            ) }}"
+               class="view-donation">
+
+                View Donation Details
+
+                <span>→</span>
+
+            </a>
+
+
+
+            <!-- WORKFLOW -->
+
+            <div class="donation-actions">
+
+
+                <!-- ACCEPTED -->
+
+                {% if donation.status == 'Accepted' %}
+
+                <a href="{{ url_for(
+                    'ngo_verify_donation',
+                    donation_id=donation.donation_id
+                ) }}"
+                   class="workflow-btn verify-btn">
+
+                    ✓ Verify Donation
+
+                </a>
+
+                {% endif %}
+
+
+
+                <!-- VERIFIED -->
+
+                {% if donation.status == 'Verified' %}
+
+                <div class="workflow-message verified">
+
+                    <div class="message-icon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Donation Verified
+                        </strong>
+
+                        <p>
+                            Verification is complete. The donor's
+                            FoodResQ pickup code is required before
+                            the food can be marked as picked up.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <form method="POST"
+                      action="{{ url_for(
+                          'ngo_mark_picked_up',
+                          donation_id=donation.donation_id
+                      ) }}"
+                      class="pickup-code-form">
+
+                    <input type="hidden"
+                           name="csrf_token"
+                           value="{{ csrf_token() }}">
+
+
+                    <label for="pickup_code_{{ donation.donation_id }}">
+                        FoodResQ Pickup Code
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="pickup_code_{{ donation.donation_id }}"
+                        name="pickup_code"
+                        placeholder="Enter pickup code from donor"
+                        maxlength="30"
+                        autocomplete="off"
+                        required>
+
+
+                    <button type="submit"
+                            class="workflow-btn pickup-btn">
+
+                        📦 Verify Code & Confirm Pickup
+
+                    </button>
+
+                </form>
+
+
+                <p class="pickup-code-note">
+
+                    🔒 The donation will only be marked as picked up
+                    when the correct FoodResQ pickup code is entered.
+
+                </p>
+
+                {% endif %}
+
+
+
+                <!-- WAITING FOR DONOR -->
+
+                {% if donation.status == 'Awaiting Donor Confirmation' %}
+
+                <div class="workflow-message waiting">
+
+                    <div class="message-icon">
+                        ⏳
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Awaiting Donor Confirmation
+                        </strong>
+
+                        <p>
+                            The pickup code has been verified.
+                            Waiting for the donor to confirm
+                            the pickup.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+
+
+                <!-- PICKED UP -->
+
+                {% if donation.status == 'Picked Up' %}
+
+                <form method="POST"
+                      action="{{ url_for(
+                          'ngo_start_delivery',
+                          donation_id=donation.donation_id
+                      ) }}">
+
+                    <input type="hidden"
+                           name="csrf_token"
+                           value="{{ csrf_token() }}">
+
+
+                    <button type="submit"
+                            class="workflow-btn delivery-btn">
+
+                        🚚 Start Delivery
+
+                    </button>
+
+                </form>
+
+                {% endif %}
+
+
+
+                <!-- ON THE WAY -->
+
+                {% if donation.status == 'On the Way' %}
+
+                <div class="workflow-message onway">
+
+                    <div class="message-icon">
+                        🚚
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Food is On the Way
+                        </strong>
+
+                        <p>
+                            Once the food has been distributed,
+                            record the distribution below.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <a href="{{ url_for(
+                    'ngo_record_distribution',
+                    donation_id=donation.donation_id
+                ) }}"
+                   class="workflow-btn distribution-btn">
+
+                    ✓ Record Distribution
+
+                </a>
+
+                {% endif %}
+
+
+
+                <!-- COMPLETED -->
+
+                {% if donation.status == 'Completed' %}
+
+                <div class="workflow-message completed">
+
+                    <div class="message-icon">
+                        🎉
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Donation Completed
+                        </strong>
+
+                        <p>
+                            Distribution has been recorded
+                            and this rescue has been completed.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+
+            </div>
+
+
+        </article>
+
+
+        {% endfor %}
+
+
+    </section>
+
+
+
+    <div id="noResults"
+         class="no-results">
+
+        <h2>
+            No Donations Found
+        </h2>
+
+        <p>
+            Try changing your search or status filter.
+        </p>
+
+    </div>
+
+
+    {% else %}
+
+
+    <section class="empty-donations">
+
+        <div>
+            🍽️
+        </div>
+
+        <h2>
+            No Assigned Donations
+        </h2>
+
+        <p>
+            There are currently no donations assigned
+            to your NGO.
+        </p>
+
+        <a href="{{ url_for('ngo_home') }}">
+            Back to Home
+        </a>
+
+    </section>
+
+    {% endif %}
+
+
+</main>
+
+
+
+<script>
+
+function filterDonations() {
+
+    var searchInput = document.getElementById("searchInput");
+    var statusFilter = document.getElementById("statusFilter");
+
+    var search = searchInput.value.toLowerCase();
+    var selectedStatus = statusFilter.value;
+
+    var cards = document.querySelectorAll(".assigned-card");
+
+    var visibleCount = 0;
+
+    for (var i = 0; i < cards.length; i++) {
+
+        var card = cards[i];
+
+        var text = card.getAttribute("data-search");
+
+        var cardStatus = card.getAttribute("data-status");
+
+        if (!text) {
+            text = "";
+        }
+
+        text = text.toLowerCase();
+
+        var searchMatch =
+            text.indexOf(search) !== -1;
+
+        var statusMatch =
+            selectedStatus === "all" ||
+            cardStatus === selectedStatus;
+
+        if (searchMatch && statusMatch) {
+
+            card.style.display = "";
+
+            visibleCount++;
+
+        } else {
+
+            card.style.display = "none";
+
+        }
+
+    }
+
+
+    var noResults =
+        document.getElementById("noResults");
+
+    if (noResults) {
+
+        if (visibleCount === 0) {
+
+            noResults.style.display = "block";
+
+        } else {
+
+            noResults.style.display = "none";
+
+        }
+
+    }
+
+}
+
+</script>
+
+
+
+</body>
+
+</html>

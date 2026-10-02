@@ -1,0 +1,604 @@
+/* =========================================================
+   FOODRESQ - PROFILE PAGE
+   Green + White Theme
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.profile-page {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 55px 30px 70px;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PAGE INTRO
+   ========================================================= */
+
+.profile-intro {
+    margin-bottom: 35px;
+}
+
+.profile-label {
+    display: inline-block;
+    color: #238b57;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.profile-intro h1 {
+    margin: 0;
+    color: #183b2a;
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+.profile-intro p {
+    margin: 10px 0 0;
+    color: #6c7d73;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   MAIN PROFILE CONTAINER
+   ========================================================= */
+
+.profile-container {
+    display: grid;
+    grid-template-columns: 330px 1fr;
+    gap: 25px;
+    align-items: start;
+}
+
+
+/* =========================================================
+   PROFILE PHOTO CARD
+   ========================================================= */
+
+.profile-photo-card {
+    background: #ffffff;
+    border: 1px solid #e2eee7;
+    border-radius: 18px;
+    padding: 30px 25px;
+    text-align: center;
+    box-shadow: 0 8px 28px rgba(26, 91, 56, 0.07);
+}
+
+
+/* =========================================================
+   PHOTO
+   ========================================================= */
+
+.profile-photo-wrapper {
+    width: 145px;
+    height: 145px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #eaf7ef;
+    border: 5px solid #f3faf6;
+    box-shadow: 0 5px 18px rgba(35, 139, 87, 0.12);
+}
+
+.profile-photo-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+
+/* =========================================================
+   INITIALS WHEN NO PHOTO
+   ========================================================= */
+
+.profile-initials {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eaf7ef;
+    color: #238b57;
+
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   PHOTO INFORMATION
+   ========================================================= */
+
+.photo-information h2 {
+    margin: 0;
+    color: #183b2a;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.photo-information p {
+    margin: 6px 0 0;
+    color: #789087;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   PHOTO UPLOAD FORM
+   ========================================================= */
+
+.photo-upload-form {
+    margin-top: 25px;
+    padding-top: 23px;
+    border-top: 1px solid #edf3ef;
+}
+
+
+/* Hide actual file input */
+
+.photo-upload-form input[type="file"] {
+    display: none;
+}
+
+
+/* Choose photo */
+
+.photo-file-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 44px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #cfe5d8;
+    border-radius: 9px;
+
+    background: #f7fcf9;
+    color: #28794f;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.photo-file-label:hover {
+    background: #edf8f1;
+    border-color: #9fcdb0;
+    transform: translateY(-1px);
+}
+
+
+/* Upload button */
+
+.upload-photo-btn {
+    width: 100%;
+    margin-top: 10px;
+
+    min-height: 44px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #238b57;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.upload-photo-btn:hover {
+    background: #1d7449;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgba(35, 139, 87, 0.18);
+}
+
+
+/* Upload note */
+
+.photo-upload-form small {
+    display: block;
+    margin-top: 9px;
+
+    color: #8a9a92;
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   PROFILE DETAILS CARD
+   ========================================================= */
+
+.profile-details-card {
+    background: #ffffff;
+    border: 1px solid #e2eee7;
+    border-radius: 18px;
+    padding: 32px;
+
+    box-shadow: 0 8px 28px rgba(26, 91, 56, 0.07);
+}
+
+
+/* =========================================================
+   CARD HEADING
+   ========================================================= */
+
+.card-heading span,
+.edit-heading span {
+    display: block;
+
+    color: #238b57;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 1.7px;
+}
+
+.card-heading h2,
+.edit-heading h2 {
+    margin: 7px 0 0;
+
+    color: #183b2a;
+
+    font-size: 24px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   PROFILE INFORMATION
+   ========================================================= */
+
+.profile-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 15px;
+
+    margin-top: 25px;
+}
+
+.profile-info-item {
+    padding: 17px 18px;
+
+    background: #f8fcf9;
+
+    border: 1px solid #e5f0e9;
+    border-radius: 11px;
+}
+
+.profile-info-item span {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #809188;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+
+.profile-info-item strong {
+    display: block;
+
+    color: #254b36;
+
+    font-size: 14px;
+    font-weight: 650;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   EDIT PROFILE SECTION
+   ========================================================= */
+
+.edit-profile-section {
+    margin-top: 30px;
+    padding-top: 30px;
+
+    border-top: 1px solid #e8f0eb;
+}
+
+
+/* =========================================================
+   EDIT HEADING
+   ========================================================= */
+
+.edit-heading p {
+    margin: 8px 0 0;
+
+    color: #718179;
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.profile-form {
+    margin-top: 24px;
+}
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #294d38;
+
+    font-size: 13px;
+    font-weight: 650;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.form-group input {
+    width: 100%;
+    min-height: 45px;
+
+    box-sizing: border-box;
+
+    padding: 11px 13px;
+
+    border: 1px solid #d8e7de;
+    border-radius: 9px;
+
+    background: #ffffff;
+    color: #243f30;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.form-group input:focus {
+    border-color: #238b57;
+
+    box-shadow:
+        0 0 0 3px rgba(35, 139, 87, 0.09);
+}
+
+
+/* Disabled email */
+
+.form-group input:disabled {
+    background: #f5f8f6;
+    color: #7b8982;
+    cursor: not-allowed;
+}
+
+
+/* Form note */
+
+.form-group small {
+    display: block;
+
+    margin-top: 6px;
+
+    color: #8a9891;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   SAVE BUTTON
+   ========================================================= */
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    margin-top: 25px;
+}
+
+.save-profile-btn {
+    min-width: 145px;
+    min-height: 45px;
+
+    padding: 10px 20px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #238b57;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.save-profile-btn:hover {
+    background: #1d7449;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 5px 15px rgba(35, 139, 87, 0.18);
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    text-align: center;
+    padding: 25px 20px;
+    color: #7d8d84;
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .profile-page {
+        padding: 45px 22px 60px;
+    }
+
+    .profile-container {
+        grid-template-columns: 280px 1fr;
+        gap: 20px;
+    }
+
+    .profile-details-card {
+        padding: 27px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .profile-page {
+        padding: 35px 16px 50px;
+    }
+
+    .profile-intro {
+        margin-bottom: 25px;
+    }
+
+    .profile-intro h1 {
+        font-size: 30px;
+    }
+
+    .profile-intro p {
+        font-size: 14px;
+    }
+
+    .profile-container {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .profile-photo-card {
+        padding: 25px 20px;
+    }
+
+    .profile-details-card {
+        padding: 24px 20px;
+    }
+
+    .profile-info-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .card-heading h2,
+    .edit-heading h2 {
+        font-size: 21px;
+    }
+
+    .form-actions {
+        justify-content: stretch;
+    }
+
+    .save-profile-btn {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+    .profile-page {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .profile-intro h1 {
+        font-size: 27px;
+    }
+
+    .profile-photo-wrapper {
+        width: 125px;
+        height: 125px;
+    }
+
+    .profile-initials {
+        font-size: 36px;
+    }
+
+    .profile-details-card {
+        padding: 21px 16px;
+    }
+
+}

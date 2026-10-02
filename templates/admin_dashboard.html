@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Dashboard | FoodResQ</title>
+
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='common.css') }}">
+
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='admin_dashboard.css') }}">
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+
+<script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+
+
+{% with _frq = get_flashed_messages(with_categories=true) %}
+
+{% if _frq %}
+
+<script>
+window.FOODRESQ_FLASH = {{ _frq|tojson }};
+</script>
+
+{% endif %}
+
+{% endwith %}
+
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='responsive.css') }}">
+
+
+<script src="{{ url_for('static', filename='nav-toggle.js') }}"
+defer></script>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header>
+
+
+<div class="logo">
+
+
+<img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+
+<div>
+
+<h2>
+Food<span>ResQ</span>
+</h2>
+
+
+<p class="tagline">
+Turning <span>Surplus</span> into <span>Sustenance</span>
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     ADMIN NAVBAR
+========================================================= -->
+
+<nav>
+
+
+<!-- DASHBOARD -->
+
+<a href="/admin_dashboard"
+   class="active">
+
+Dashboard
+
+</a>
+
+
+<!-- NGO APPLICATIONS -->
+
+<a href="{{ url_for('ngo_applications') }}"
+   class="admin-nav-notification-link">
+
+<span>
+NGO Applications
+</span>
+
+{% if admin_ngo_notifications > 0 %}
+
+<span class="admin-nav-badge">
+{{ admin_ngo_notifications }}
+</span>
+
+{% endif %}
+
+</a>
+
+
+<!-- DONORS -->
+
+<a href="/admin_donors">
+
+Donors
+
+</a>
+
+
+<!-- NGO REQUESTS -->
+
+<a href="{{ url_for('admin_ngo_requests') }}">
+
+NGO Requests
+
+</a>
+
+
+<!-- NGOS -->
+
+<a href="/admin_ngos">
+
+NGOs
+
+</a>
+
+
+<!-- DONATIONS -->
+
+<a href="/admin_donations"
+   class="admin-nav-notification-link">
+
+<span>
+Donations
+</span>
+
+{% if admin_donation_notifications > 0 %}
+
+<span class="admin-nav-badge">
+{{ admin_donation_notifications }}
+</span>
+
+{% endif %}
+
+</a>
+
+
+<!-- ASSIGNMENTS -->
+
+<a href="/admin_assignments"
+   class="admin-nav-notification-link">
+
+<span>
+Assignments
+</span>
+
+{% if admin_assignment_notifications > 0 %}
+
+<span class="admin-nav-badge">
+{{ admin_assignment_notifications }}
+</span>
+
+{% endif %}
+
+</a>
+
+
+<!-- ANALYTICS -->
+
+<a href="{{ url_for('admin_analytics') }}">
+
+Analytics
+
+</a>
+
+
+<!-- SAMPLING -->
+
+<a href="/admin_sampling">
+
+Sampling
+
+</a>
+
+
+<!-- REPORTS -->
+
+<a href="{{ url_for('admin_reports') }}"
+   class="admin-nav-notification-link">
+
+<span>
+Reports
+</span>
+
+{% if admin_report_notifications > 0 %}
+
+<span class="admin-nav-badge">
+{{ admin_report_notifications }}
+</span>
+
+{% endif %}
+
+</a>
+
+
+<!-- LOGOUT -->
+
+<a href="/logout"
+   class="logout">
+
+Logout
+
+</a>
+
+
+</nav>
+
+
+</header>
+
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<div class="admin-container">
+
+
+
+<!-- =========================================================
+     WELCOME
+========================================================= -->
+
+<section class="welcome-card">
+
+
+<h1>
+👋 Welcome Administrator
+</h1>
+
+
+<p>
+Manage FoodResQ operations, verify NGOs,
+monitor donations and coordinate food rescue activities.
+</p>
+
+
+</section>
+
+
+
+
+<!-- =========================================================
+     PENDING ACTIONS
+========================================================= -->
+
+<section class="pending-section">
+
+
+<h2>
+⚡ Pending Actions
+</h2>
+
+
+
+<div class="pending-grid">
+
+
+
+<!-- NGO REQUESTS -->
+
+<div class="pending-card">
+
+
+<h3>
+🤝 NGO Requests
+</h3>
+
+
+<p>
+{{ pending_ngos }} NGOs waiting for approval
+</p>
+
+
+<a href="/admin/ngo_applications">
+
+Review NGOs
+
+</a>
+
+
+</div>
+
+
+
+<!-- DONATIONS -->
+
+<div class="pending-card">
+
+
+<h3>
+🍱 Donations
+</h3>
+
+
+<p>
+{{ pending_donations }} donations need assignment
+</p>
+
+
+<a href="/admin_assignments">
+
+Assign NGO
+
+</a>
+
+
+</div>
+
+
+
+
+<!-- NEW USERS -->
+
+<div class="pending-card">
+
+
+<h3>
+👥 New Users
+</h3>
+
+
+<p>
+{{ new_users }} recent registrations
+</p>
+
+
+<a href="/admin_donors">
+
+View Users
+
+</a>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- =========================================================
+     QUICK ACTIONS
+========================================================= -->
+
+<section class="quick-section">
+
+
+<h2>
+Admin Actions
+</h2>
+
+
+
+<div class="action-grid">
+
+
+
+<a href="/admin_ngos">
+
+🤝
+
+<br>
+
+Manage NGOs
+
+</a>
+
+
+
+
+<a href="/admin_donations">
+
+🍱
+
+<br>
+
+Manage Donations
+
+</a>
+
+
+
+
+<a href="/admin_donors">
+
+👥
+
+<br>
+
+Manage Donors
+
+</a>
+
+
+
+
+<a href="/admin_analytics">
+
+📊
+
+<br>
+
+Analytics
+
+</a>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- =========================================================
+     TOP NGOS
+========================================================= -->
+
+<section class="top-ngos">
+
+
+<h2>
+🏆 Top Performing NGOs
+</h2>
+
+
+<table>
+
+
+<tr>
+
+<th>
+Rank
+</th>
+
+
+<th>
+NGO Name
+</th>
+
+
+<th>
+Meals Rescued
+</th>
+
+</tr>
+
+
+
+{% if top_ngos %}
+
+
+{% for ngo in top_ngos %}
+
+
+<tr>
+
+
+<td>
+{{ loop.index }}
+</td>
+
+
+<td>
+{{ ngo.ngo_name }}
+</td>
+
+
+<td>
+{{ ngo.meals_saved }}
+</td>
+
+
+</tr>
+
+
+{% endfor %}
+
+
+
+{% else %}
+
+
+<tr>
+
+<td colspan="3">
+
+No NGO data available
+
+</td>
+
+</tr>
+
+
+{% endif %}
+
+
+
+</table>
+
+
+</section>
+
+
+
+
+<!-- =========================================================
+     RECENT ACTIVITY
+========================================================= -->
+
+<section class="activity-card">
+
+
+<h2>
+📌 Recent Activity
+</h2>
+
+
+
+<ul>
+
+
+<li>
+✔ New NGO registered
+</li>
+
+
+<li>
+✔ Donation assigned to NGO
+</li>
+
+
+<li>
+✔ Food pickup completed
+</li>
+
+
+<li>
+✔ New donor joined FoodResQ
+</li>
+
+
+</ul>
+
+
+</section>
+
+
+
+
+
+<!-- =========================================================
+     RECENT DONATIONS
+========================================================= -->
+
+<section class="table-card">
+
+
+<h2>
+🍱 Latest Donations
+</h2>
+
+
+
+<table>
+
+
+<tr>
+
+<th>
+Food
+</th>
+
+
+<th>
+Quantity
+</th>
+
+
+<th>
+Location
+</th>
+
+
+<th>
+Status
+</th>
+
+</tr>
+
+
+
+
+{% if recent_donations %}
+
+
+{% for donation in recent_donations %}
+
+
+<tr>
+
+
+<td>
+{{ donation.food_name }}
+</td>
+
+
+
+<td>
+{{ donation.quantity }}
+{{ donation.quantity_unit }}
+</td>
+
+
+
+<td>
+{{ donation.city }}
+</td>
+
+
+
+<td>
+
+<span class="status">
+
+{{ donation.status }}
+
+</span>
+
+</td>
+
+
+
+</tr>
+
+
+{% endfor %}
+
+
+
+{% else %}
+
+
+<tr>
+
+<td colspan="4">
+
+No recent donations
+
+</td>
+
+</tr>
+
+
+{% endif %}
+
+
+
+</table>
+
+
+
+</section>
+
+
+
+
+</div>
+
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+
+<p>
+FoodResQ Admin Panel © 2026
+</p>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

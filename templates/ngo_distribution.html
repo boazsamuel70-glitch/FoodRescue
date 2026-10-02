@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Record Distribution | FoodResQ</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='ngo_distribution.css') }}">
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+
+        <img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+        <div>
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p>
+                Rescue. Reuse. Restore.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="{{ url_for('ngo_home') }}">
+            Home
+        </a>
+
+        <a href="{{ url_for('ngo_assigned_donations') }}">
+            Assigned Donations
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main class="distribution-page">
+
+
+    {% if success %}
+
+    <!-- SUCCESS -->
+
+    <section class="success-section">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <span class="success-label">
+            FOODRESQ • DISTRIBUTION RECORDED
+        </span>
+
+        <h1>
+            Donation Completed
+        </h1>
+
+        <p>
+            The distribution has been successfully recorded.
+            This donation is now officially marked as completed.
+        </p>
+
+
+        <div class="success-details">
+
+            <div>
+
+                <span>
+                    DONATION
+                </span>
+
+                <strong>
+                    #{{ donation.donation_id }}
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    FOOD
+                </span>
+
+                <strong>
+                    {{ donation.food_name }}
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    STATUS
+                </span>
+
+                <strong class="completed">
+                    Completed
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <a href="{{ url_for('ngo_assigned_donations') }}"
+           class="back-button">
+
+            Back to Assigned Donations
+
+        </a>
+
+    </section>
+
+
+    {% elif already_completed %}
+
+    <!-- ALREADY COMPLETED -->
+
+    <section class="success-section">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <span class="success-label">
+            FOODRESQ • COMPLETED
+        </span>
+
+        <h1>
+            Already Completed
+        </h1>
+
+        <p>
+            This donation has already been recorded as completed.
+        </p>
+
+        <a href="{{ url_for('ngo_assigned_donations') }}"
+           class="back-button">
+
+            Back to Assigned Donations
+
+        </a>
+
+    </section>
+
+
+    {% else %}
+
+    <!-- PAGE HEADING -->
+
+    <section class="page-heading">
+
+        <span>
+            NGO PORTAL • FINAL STEP
+        </span>
+
+        <h1>
+            Record Distribution
+        </h1>
+
+        <p>
+            Record how the rescued food was distributed.
+            The recipient does not need to provide any written proof.
+        </p>
+
+    </section>
+
+
+    <!-- DONATION SUMMARY -->
+
+    <section class="donation-summary">
+
+        <div class="summary-top">
+
+            <div>
+
+                <span>
+                    DONATION
+                </span>
+
+                <h2>
+                    #{{ donation.donation_id }}
+                </h2>
+
+            </div>
+
+
+            <div class="status-badge">
+                {{ donation.status }}
+            </div>
+
+        </div>
+
+
+        <div class="summary-content">
+
+            <div>
+
+                <span>
+                    FOOD
+                </span>
+
+                <strong>
+                    {{ donation.food_name }}
+                </strong>
+
+                {% if donation.food_type %}
+
+                <small>
+                    {{ donation.food_type }}
+                </small>
+
+                {% endif %}
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    DONATED QUANTITY
+                </span>
+
+                <strong>
+                    {{ donation.quantity }}
+                    {{ donation.quantity_unit }}
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    DONATION LOCATION
+                </span>
+
+                <strong>
+                    {{ donation.city }}
+                </strong>
+
+                <small>
+                    {{ donation.address }}
+                </small>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    {% if error %}
+
+    <div class="error-message">
+
+        <strong>
+            Please check:
+        </strong>
+
+        <p>
+            {{ error }}
+        </p>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- FORM -->
+
+    <section class="distribution-section">
+
+        <div class="section-heading">
+
+            <span>
+                FINAL RECORD
+            </span>
+
+            <h2>
+                Distribution Details
+            </h2>
+
+            <p>
+                Enter the information based on the actual distribution.
+            </p>
+
+        </div>
+
+
+        <form method="POST"
+              action="{{ url_for(
+                  'ngo_record_distribution',
+                  donation_id=donation.donation_id
+              ) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+
+            <!-- RECIPIENT -->
+
+            <div class="form-group">
+
+                <label for="recipient_type">
+                    Who received the food?
+                </label>
+
+                <select id="recipient_type"
+                        name="recipient_type">
+
+                    <option value="People in need">
+                        People in need
+                    </option>
+
+                    <option value="Families in need">
+                        Families in need
+                    </option>
+
+                    <option value="Children">
+                        Children
+                    </option>
+
+                    <option value="Elderly people">
+                        Elderly people
+                    </option>
+
+                    <option value="Community">
+                        Community
+                    </option>
+
+                    <option value="Shelter">
+                        Shelter
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- PEOPLE -->
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="people_served">
+                        Approx. people served
+                    </label>
+
+                    <input
+                        type="number"
+                        id="people_served"
+                        name="people_served"
+                        min="0"
+                        value="0">
+
+                    <small>
+                        An approximate number is completely fine.
+                    </small>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="quantity_distributed">
+                        Quantity distributed
+                    </label>
+
+                    <input
+                        type="number"
+                        id="quantity_distributed"
+                        name="quantity_distributed"
+                        min="1"
+                        value="{{ donation.quantity }}">
+
+                    <small>
+                        Unit:
+                        {{ donation.quantity_unit }}
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- LOCATION -->
+
+            <div class="form-group">
+
+                <label for="distribution_location">
+                    Where was the food distributed?
+                </label>
+
+                <input
+                    type="text"
+                    id="distribution_location"
+                    name="distribution_location"
+                    placeholder="Example: Local community shelter, Kalyan"
+                    required>
+
+                <small>
+                    Enter the place where the recipients received the food.
+                </small>
+
+            </div>
+
+
+            <!-- NOTES -->
+
+            <div class="form-group">
+
+                <label for="notes">
+                    Additional notes
+                    <span>(Optional)</span>
+                </label>
+
+                <textarea
+                    id="notes"
+                    name="notes"
+                    rows="4"
+                    placeholder="Any useful information about the distribution..."></textarea>
+
+            </div>
+
+
+            <!-- PROOF -->
+
+            <div class="proof-section">
+
+                <div class="proof-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <h3>
+                        NGO Distribution Confirmation
+                    </h3>
+
+                    <p>
+                        The receiving person does not need to write
+                        anything or provide documentation. Your NGO
+                        confirms that the food was actually distributed
+                        using this official FoodResQ record.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONFIRMATION -->
+
+            <label class="confirmation">
+
+                <input
+                    type="checkbox"
+                    name="confirmation"
+                    value="confirmed"
+                    required>
+
+                <span>
+
+                    I confirm that the above information is accurate
+                    and that the donated food has been distributed.
+
+                </span>
+
+            </label>
+
+
+            <!-- SUBMIT -->
+
+            <button type="submit"
+                    class="submit-button">
+
+                Record Distribution
+                <span>→</span>
+
+            </button>
+
+
+        </form>
+
+    </section>
+
+
+    <!-- BACK -->
+
+    <a href="{{ url_for('ngo_assigned_donations') }}"
+       class="cancel-link">
+
+        ← Back to Assigned Donations
+
+    </a>
+
+
+    {% endif %}
+
+
+</main>
+
+
+
+</body>
+
+</html>

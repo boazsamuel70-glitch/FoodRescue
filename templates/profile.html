@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile | FoodResQ</title>
+
+    <!-- Common CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+    <!-- Profile CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='profile.css') }}">
+
+    <!-- Responsive CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='responsive.css') }}">
+
+    <!-- Website Alerts -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+
+    {% with _frq = get_flashed_messages(with_categories=true) %}
+        {% if _frq %}
+            <script>
+                window.FOODRESQ_FLASH = {{ _frq|tojson }};
+            </script>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Mobile Navigation -->
+    <script src="{{ url_for('static', filename='nav-toggle.js') }}"
+            defer></script>
+
+</head>
+
+
+<body>
+
+
+<!-- ========================================================= -->
+<!-- HEADER -->
+<!-- ========================================================= -->
+
+<header>
+
+    <div class="logo">
+
+        <img
+            src="{{ url_for('static', filename='images/homepgs.png') }}"
+            alt="FoodResQ Logo">
+
+        <div>
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p>
+                Rescue. Reuse. Restore.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="{{ url_for('user_dashboard') }}">
+            Home
+        </a>
+
+        <a href="{{ url_for('my_donations') }}">
+            My Donations
+        </a>
+
+        <a href="{{ url_for('notifications') }}">
+            🔔 Notifications
+        </a>
+
+        <a href="{{ url_for('profile') }}"
+           class="active">
+            Profile
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- ========================================================= -->
+<!-- PROFILE PAGE -->
+<!-- ========================================================= -->
+
+<main class="profile-page">
+
+
+    <!-- ===================================================== -->
+    <!-- PAGE INTRO -->
+    <!-- ===================================================== -->
+
+    <section class="profile-intro">
+
+        <span class="profile-label">
+            FOODRESQ
+        </span>
+
+        <h1>
+            My Profile
+        </h1>
+
+        <p>
+            Manage your personal information and profile photo.
+        </p>
+
+    </section>
+
+
+
+    <!-- ===================================================== -->
+    <!-- PROFILE CONTAINER -->
+    <!-- ===================================================== -->
+
+    <section class="profile-container">
+
+
+        <!-- ================================================= -->
+        <!-- PROFILE PHOTO CARD -->
+        <!-- ================================================= -->
+
+        <div class="profile-photo-card">
+
+
+            <!-- PROFILE PHOTO -->
+            <div class="profile-photo-wrapper">
+
+                {% if user.profile_photo %}
+
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename='uploads/profile_photos/' + user.profile_photo
+                        ) }}"
+                        alt="Profile Photo"
+                        class="profile-photo-image">
+
+                {% else %}
+
+                    <div class="profile-initials">
+
+                        {{ user.name[:2]|upper }}
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- PROFILE NAME -->
+
+            <div class="photo-information">
+
+                <h2>
+                    {{ user.name }}
+                </h2>
+
+                <p>
+                    FoodResQ Donor
+                </p>
+
+            </div>
+
+
+
+            <!-- ================================================= -->
+            <!-- PHOTO UPLOAD FORM -->
+            <!-- IMPORTANT: THIS IS A SEPARATE FORM -->
+            <!-- ================================================= -->
+
+            <form
+                action="{{ url_for('upload_profile_photo') }}"
+                method="POST"
+                enctype="multipart/form-data"
+                class="photo-upload-form">
+
+
+                <!-- CSRF TOKEN -->
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}">
+
+
+                <!-- FILE SELECT -->
+
+                <label
+                    for="profile_photo"
+                    class="photo-file-label">
+
+                    Choose Profile Photo
+
+                </label>
+
+
+                <input
+                    type="file"
+                    id="profile_photo"
+                    name="profile_photo"
+                    accept=".jpg,.jpeg,.png,.webp">
+
+
+                <!-- UPLOAD -->
+
+                <button
+                    type="submit"
+                    class="upload-photo-btn">
+
+                    Upload Photo
+
+                </button>
+
+
+                <small>
+                    JPG, JPEG, PNG or WEBP
+                </small>
+
+            </form>
+
+        </div>
+
+
+
+        <!-- ================================================= -->
+        <!-- PROFILE DETAILS CARD -->
+        <!-- ================================================= -->
+
+        <div class="profile-details-card">
+
+
+            <!-- ================================================= -->
+            <!-- ACCOUNT INFORMATION -->
+            <!-- ================================================= -->
+
+            <div class="card-heading">
+
+                <span>
+                    ACCOUNT INFORMATION
+                </span>
+
+                <h2>
+                    Personal Details
+                </h2>
+
+            </div>
+
+
+
+            <!-- ================================================= -->
+            <!-- DONOR INFORMATION -->
+            <!-- ================================================= -->
+
+            <div class="profile-info-grid">
+
+
+                <!-- DONOR ID -->
+
+                <div class="profile-info-item">
+
+                    <span>
+                        Donor ID
+                    </span>
+
+                    <strong>
+                        {{ user.donor_code or 'Not assigned' }}
+                    </strong>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="profile-info-item">
+
+                    <span>
+                        Email Address
+                    </span>
+
+                    <strong>
+                        {{ user.email }}
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ================================================= -->
+            <!-- EDIT PROFILE -->
+            <!-- ================================================= -->
+
+            <div class="edit-profile-section">
+
+
+                <div class="edit-heading">
+
+                    <span>
+                        EDIT DETAILS
+                    </span>
+
+                    <h2>
+                        Update Profile
+                    </h2>
+
+                    <p>
+                        Update your name or phone number below.
+                    </p>
+
+                </div>
+
+
+
+                <!-- ================================================= -->
+                <!-- EDIT PROFILE FORM -->
+                <!-- IMPORTANT: COMPLETELY SEPARATE FROM PHOTO FORM -->
+                <!-- ================================================= -->
+
+                <form
+                    action="{{ url_for('update_profile') }}"
+                    method="POST"
+                    class="profile-form">
+
+
+                    <!-- CSRF TOKEN -->
+
+                    <input
+                        type="hidden"
+                        name="csrf_token"
+                        value="{{ csrf_token() }}">
+
+
+
+                    <!-- ================================================= -->
+                    <!-- NAME -->
+                    <!-- ================================================= -->
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value="{{ user.name or '' }}"
+                            placeholder="Enter your full name"
+                            required>
+
+                    </div>
+
+
+
+                    <!-- ================================================= -->
+                    <!-- EMAIL -->
+                    <!-- ================================================= -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            value="{{ user.email or '' }}"
+                            disabled>
+
+                        <small>
+                            Email address cannot be changed here.
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- ================================================= -->
+                    <!-- PHONE -->
+                    <!-- ================================================= -->
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            value="{{ user.phone or '' }}"
+                            placeholder="Enter your phone number">
+
+                    </div>
+
+
+
+                    <!-- ================================================= -->
+                    <!-- SAVE BUTTON -->
+                    <!-- ================================================= -->
+
+                    <div class="form-actions">
+
+                        <button
+                            type="submit"
+                            class="save-profile-btn">
+
+                            Save Changes
+
+                        </button>
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- ========================================================= -->
+<!-- FOOTER -->
+<!-- ========================================================= -->
+
+<footer>
+
+    <p>
+        © 2026 FoodResQ. Turning Surplus into Sustenance.
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

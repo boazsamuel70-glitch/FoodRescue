@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Donation Details | FoodResQ</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='my_donation_details.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+
+    {% with _frq = get_flashed_messages(with_categories=true) %}
+        {% if _frq %}
+            <script>
+                window.FOODRESQ_FLASH = {{ _frq|tojson }};
+            </script>
+        {% endif %}
+    {% endwith %}
+
+    <script src="{{ url_for('static', filename='input-guard.js') }}"
+            defer></script>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='responsive.css') }}">
+
+    <script src="{{ url_for('static', filename='nav-toggle.js') }}"
+            defer></script>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+    <div class="logo">
+
+        <img
+            src="{{ url_for('static', filename='images/homepgs.png') }}"
+            alt="FoodResQ Logo"
+        >
+
+        <div>
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p class="tagline">
+                Turning
+                <span>Surplus</span>
+                into
+                <span>Sustenance</span>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="user-section">
+
+        <span>
+            Hello, {{ session["user_name"] }} 👋
+        </span>
+
+        <a href="/logout">
+            Logout
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN CONTAINER
+===================================================== -->
+
+<div class="details-container">
+
+
+    <!-- =================================================
+         TOP BAR
+    ================================================== -->
+
+    <div class="top-bar">
+
+        <a href="/my_donations"
+           class="back-btn">
+
+            ← Back to My Donations
+
+        </a>
+
+
+        <h1>
+            Donation #{{ donation.donation_id }}
+        </h1>
+
+
+        {% if donation.status == "Pending" %}
+
+            <span class="status pending">
+                Pending
+            </span>
+
+        {% elif donation.status == "Admin Verified" %}
+
+            <span class="status verified">
+                Admin Verified
+            </span>
+
+        {% elif donation.status == "Assigned" %}
+
+            <span class="status assigned">
+                NGO Assigned
+            </span>
+
+        {% elif donation.status == "NGO Accepted" %}
+
+            <span class="status accepted">
+                NGO Accepted
+            </span>
+
+        {% elif donation.status == "At Donor" %}
+
+            <span class="status at-donor">
+                NGO At Donor
+            </span>
+
+        {% elif donation.status == "Donation Verified" %}
+
+            <span class="status verified">
+                Donation Verified
+            </span>
+
+        {% elif donation.status == "Awaiting Pickup OTP" %}
+
+            <span class="status awaiting">
+                Awaiting Pickup
+            </span>
+
+        {% elif donation.status == "Pickup Confirmed" %}
+
+            <span class="status confirmed">
+                Pickup Confirmed
+            </span>
+
+        {% elif donation.status == "Picked Up" %}
+
+            <span class="status confirmed">
+                Picked Up
+            </span>
+
+        {% elif donation.status == "On The Way" %}
+
+            <span class="status on-way">
+                On The Way
+            </span>
+
+        {% elif donation.status == "Reached Distribution" %}
+
+            <span class="status reached">
+                Reached Distribution
+            </span>
+
+        {% elif donation.status == "Distributed" %}
+
+            <span class="status distributed">
+                Distributed
+            </span>
+
+        {% elif donation.status == "Proof Submitted" %}
+
+            <span class="status proof">
+                Proof Submitted
+            </span>
+
+        {% elif donation.status == "Completed" %}
+
+            <span class="status completed">
+                Completed
+            </span>
+
+        {% elif donation.status == "Rejected" %}
+
+            <span class="status rejected">
+                Rejected
+            </span>
+
+        {% elif donation.status == "Issue Reported" %}
+
+            <span class="status failed">
+                Issue Reported
+            </span>
+
+        {% else %}
+
+            <span class="status">
+                {{ donation.status }}
+            </span>
+
+        {% endif %}
+
+    </div>
+
+
+
+    <!-- =================================================
+         FOOD + PICKUP CARDS
+    ================================================== -->
+
+    <div class="cards">
+
+
+        <!-- FOOD DETAILS -->
+
+        <div class="card">
+
+            <h2>
+                🍱 Food Details
+            </h2>
+
+
+            <p>
+                <strong>Food Name</strong>
+                <br>
+                {{ donation.food_name }}
+            </p>
+
+
+            <p>
+                <strong>Food Type</strong>
+                <br>
+                {{ donation.food_type }}
+            </p>
+
+
+            {% if donation.food_description %}
+
+            <p>
+                <strong>Description</strong>
+                <br>
+                {{ donation.food_description }}
+            </p>
+
+            {% endif %}
+
+
+            <p>
+                <strong>Quantity</strong>
+                <br>
+                {{ donation.quantity }}
+                {{ donation.quantity_unit }}
+            </p>
+
+
+            {% if donation.serving_size %}
+
+            <p>
+                <strong>Serving Size</strong>
+                <br>
+                {{ donation.serving_size }}
+            </p>
+
+            {% endif %}
+
+
+            {% if donation.details %}
+
+            <p>
+                <strong>Additional Details</strong>
+                <br>
+                {{ donation.details }}
+            </p>
+
+            {% endif %}
+
+        </div>
+
+
+
+        <!-- PICKUP DETAILS -->
+
+        <div class="card">
+
+            <h2>
+                📍 Pickup Details
+            </h2>
+
+
+            <p>
+                <strong>Pickup Date</strong>
+                <br>
+                {{ donation.pickup_date }}
+            </p>
+
+
+            <p>
+                <strong>Pickup Time</strong>
+                <br>
+                {{ donation.pickup_time }}
+            </p>
+
+
+            {% if donation.preparation_time %}
+
+            <p>
+                <strong>Preparation Time</strong>
+                <br>
+                {{ donation.preparation_time }}
+            </p>
+
+            {% endif %}
+
+
+            {% if donation.expiry_time %}
+
+            <p>
+                <strong>Expiry Time</strong>
+                <br>
+                {{ donation.expiry_time }}
+            </p>
+
+            {% endif %}
+
+
+            <p>
+                <strong>Address</strong>
+                <br>
+                {{ donation.address }}
+            </p>
+
+
+            <p>
+                <strong>City</strong>
+                <br>
+                {{ donation.city }}
+            </p>
+
+
+            <p>
+                <strong>Contact</strong>
+                <br>
+                {{ donation.contact }}
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         FOODRESQ PICKUP CODE
+    ====================================================== -->
+
+    {% if donation.pickup_code
+          and donation.pickup_code_verified != 1
+          and donation.status in [
+              "Assigned",
+              "NGO Accepted",
+              "At Donor",
+              "Verified",
+              "Donation Verified"
+          ] %}
+
+    <div class="pickup-code-card">
+
+        <div class="pickup-code-header">
+
+            <div class="pickup-code-lock">
+                🔐
+            </div>
+
+            <div>
+
+                <h2>
+                    FoodResQ Pickup Code
+                </h2>
+
+                <p>
+                    Your unique code is required to confirm
+                    that the NGO has collected your donation.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="pickup-code-warning">
+
+            <strong>
+                ⚠ Important
+            </strong>
+
+            <p>
+                Do not share this code before the NGO
+                representative arrives to collect the food.
+            </p>
+
+        </div>
+
+
+        <div class="pickup-code-display">
+
+            {{ donation.pickup_code }}
+
+        </div>
+
+
+        <p class="pickup-code-instruction">
+
+            Tell this code to the authorized NGO representative
+            when your food is physically handed over.
+
+        </p>
+
+    </div>
+
+    {% endif %}
+
+
+
+    <!-- =====================================================
+         PICKUP CODE VERIFIED
+    ====================================================== -->
+
+    {% if donation.pickup_code_verified == 1 %}
+
+    <div class="pickup-success-card">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <div>
+
+            <h2>
+                Pickup Verified
+            </h2>
+
+            <p>
+                Your FoodResQ pickup code has been successfully
+                verified. The donation has been marked as picked up.
+            </p>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+
+    <!-- =====================================================
+         NGO DETAILS
+    ====================================================== -->
+
+    {% if donation.ngo_id %}
+
+    <div class="ngo-card">
+
+        <h2>
+            🏢 Assigned NGO
+        </h2>
+
+
+        <div class="ngo-grid">
+
+
+            <div>
+
+                <span class="label">
+                    NGO Name
+                </span>
+
+                <p>
+                    {{ donation.ngo_name }}
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <span class="label">
+                    Partner ID
+                </span>
+
+                <p>
+                    {{ donation.partner_id }}
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <span class="label">
+                    Phone
+                </span>
+
+                <p>
+                    {{ donation.ngo_phone }}
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <span class="label">
+                    Service Area
+                </span>
+
+                <p>
+                    {{ donation.service_area }}
+                </p>
+
+            </div>
+
+
+            {% if donation.ngo_address %}
+
+            <div>
+
+                <span class="label">
+                    NGO Address
+                </span>
+
+                <p>
+                    {{ donation.ngo_address }}
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+
+    <!-- =====================================================
+         DONATION PROGRESS
+    ====================================================== -->
+
+    <div class="timeline">
+
+        <h2>
+            📋 Donation Progress
+        </h2>
+
+
+        {% set status = donation.status|default("Pending") %}
+
+
+        {% if status == "Pending" %}
+
+            {% set progress_percent = 0 %}
+            {% set current_step = 1 %}
+
+        {% elif status == "Admin Verified" %}
+
+            {% set progress_percent = 10 %}
+            {% set current_step = 2 %}
+
+        {% elif status == "Assigned" %}
+
+            {% set progress_percent = 20 %}
+            {% set current_step = 3 %}
+
+        {% elif status == "NGO Accepted" %}
+
+            {% set progress_percent = 30 %}
+            {% set current_step = 4 %}
+
+        {% elif status == "At Donor" %}
+
+            {% set progress_percent = 40 %}
+            {% set current_step = 5 %}
+
+        {% elif status == "Donation Verified" %}
+
+            {% set progress_percent = 50 %}
+            {% set current_step = 6 %}
+
+        {% elif status in ["Awaiting Pickup OTP", "Awaiting Donor Confirmation"] %}
+
+            {% set progress_percent = 60 %}
+            {% set current_step = 7 %}
+
+        {% elif status in ["Pickup Confirmed", "NGO Confirmed Pickup", "Picked Up"] %}
+
+            {% set progress_percent = 70 %}
+            {% set current_step = 8 %}
+
+        {% elif status == "On The Way" %}
+
+            {% set progress_percent = 80 %}
+            {% set current_step = 9 %}
+
+        {% elif status == "Reached Distribution" %}
+
+            {% set progress_percent = 85 %}
+            {% set current_step = 10 %}
+
+        {% elif status == "Distributed" %}
+
+            {% set progress_percent = 90 %}
+            {% set current_step = 11 %}
+
+        {% elif status == "Proof Submitted" %}
+
+            {% set progress_percent = 95 %}
+            {% set current_step = 12 %}
+
+        {% elif status == "Completed" %}
+
+            {% set progress_percent = 100 %}
+            {% set current_step = 13 %}
+
+        {% elif status in ["Rejected", "Issue Reported"] %}
+
+            {% set progress_percent = 0 %}
+            {% set current_step = 0 %}
+
+        {% else %}
+
+            {% set progress_percent = 0 %}
+            {% set current_step = 1 %}
+
+        {% endif %}
+
+
+        {% if status == "Rejected" %}
+
+        <p class="timeline-stopped">
+            This donation was rejected and cannot proceed further.
+        </p>
+
+        {% elif status == "Issue Reported" %}
+
+        <p class="timeline-stopped">
+            An issue has been reported for this donation
+            and is currently under review.
+        </p>
+
+        {% endif %}
+
+
+        <div class="timeline-bar"
+             aria-hidden="true">
+
+            <span style="width: {{ progress_percent }}%;"></span>
+
+        </div>
+
+
+        <ul>
+
+
+            <!-- STEP 1 -->
+
+            <li class="{% if current_step > 1 %}done{% elif current_step == 1 %}current{% else %}todo{% endif %}">
+
+                <span class="timeline-icon">
+                    {% if current_step > 1 %}✔{% else %}1{% endif %}
+                </span>
+
+                <div>
+
+                    <strong>
+                        Donation Submitted
+                    </strong>
+
+                    <p>
+                        Your donation has been submitted to FoodResQ.
+                    </p>
+
+                    {% if current_step == 1 %}
+                        <span class="timeline-now">
+                            Current status
+                        </span>
+                    {% endif %}
+
+                </div>
+
+            </li>
+
+
+            <!-- STEP 2 -->
+
+            <li class="{% if current_step > 2 %}done{% elif current_step == 2 %}current{% else %}todo{% endif %}">
+
+                <span class="timeline-icon">
+                    {% if current_step > 2 %}✔{% else %}2{% endif %}
+                </span>
+
+                <div>
+
+                    <strong>
+                        Admin Verification
+                    </strong>
+
+                    <p>
+                        FoodResQ administrator verifies the donation.
+                    </p>
+
+                    {% if current_step == 2 %}
+                        <span class="timeline-now">
+                            Current status
+                        </span>
+                    {% endif %}
+
+                </div>
+
+            </li>
+
+
+            <!-- STEP 3 -->
+
+            <li class="{% if current_step > 3 %}done{% elif current_step == 3 %}current{% else %}todo{% endif %}">
+
+                <span class="timeline-icon">
+                    {% if current_step > 3 %}✔{% else %}3{% endif %}
+                </span>
+
+                <div>
+
+                    <strong>
+                        NGO Assigned
+                    </strong>
+
+                    <p>
+                        An NGO is assigned to your donation.
+                    </p>
+
+                    {% if current_step == 3 %}
+                        <span class="timeline-now">
+                            Current status
+                        </span>
+                    {% endif %}
+
+                </div>
+
+            </li>
+
+
+            <!-- STEP 4 -->
+
+            <li class="{% if current_step > 4 %}done{% elif current_step == 4 %}current{% else %}todo{% endif %}">
+
+                <span class="timeline-icon">
+                    {% if current_step > 4 %}✔{% else %}4{% endif %}
+                </span>
+
+                <div>
+
+                    <strong>
+                        NGO Accepted
+                    </strong>
+
+                    <p>
+                        The assigned NGO accepts the donation.
+                    </p>
+
+                    {% if current_step == 4 %}
+                        <span class="timeline-now">
+                            Current status
+                        </span>
+                    {% endif %}
+
+                </div>
+
+            </li>
+
+
+            <!-- STEP 5 -->
+
+            <li class="{% if current_step > 5 %}done{% elif current_step == 5 %}current{% else %}todo{% endif %}">
+
+                <span class="timeline-icon">
+                    {% if current_step > 5 %}✔{% else %}5{% endif %}
+                </span>
+
+                <div>
+
+                    <strong>
+                        NGO At Donor
+                    </strong>
+
+                    <p>
+                        The NGO arrives at the pickup location.
+                    </p>
+
+                    {% if current_step == 5 %}
+                        <span class="timeline-now">
+                            Current status
+                        </span>
+                    {% endif %}
+
+                </div>
+
+            </li>
+
+
+            <!-- STEP 6 -->
+
+            <li class="{% if current_step > 6 %}done{% elif current_step == 6 %}current{% else %}todo{% endif %}">
+
+                <span class="timeline-icon">
+                    {% if current_step > 6 %}✔{% else %}6{% endif %}
+                </span>
+
+                <div>
+
+                    <strong>
+                        Donation Verified
+                    </strong>
+
+                    <p>
+                        The NGO verifies the donation details.
+                    </p>
+
+                    {% if current_step == 6 %}
+                        <span class="timeline-now">
+                            Current status
+                        </span>
+                    {% endif %}
+
+                </div>
+
+            </li>
+
+
+            <!-- STEP 7 -->
+
+            <li class="{% if current_step > 7 %}done{% elif current_step == 7 %}current{% else %}todo{% endif %}">
+
+                <span class="timeline-icon">
+                    {% if current_step > 7 %}✔{% else %}7{% endif %}
+                </span>
+
+                <div>
+
+                    <strong>
+                        Pickup Confirmation
+                    </strong>
+
+                    <p>
+                        Your FoodResQ pickup code confirms the collection.
+                    </p>
+
+                    {% if current_step == 7 %}
+                        <span class="timeline-now">
+                            Current status
+                        </span>
+                    {% endif %}
+
+                </div>
+
+            </li>
+
+
+            <!-- STEP 8 -->
+
+            <li class="{% if current_step > 8 %}done{% elif current_step == 8 %}current{% else %}todo{% endif %}">
+
+                <span class="timeline-icon">
+                    {% if current_step > 8 %}✔{% else %}8{% endif %}
+                </span>
+
+                <div>
+
+                    <strong>
+                        Picked Up
+                    </strong>
+
+                    <p>
+                        The NGO has collected your donated food.
+                    </p>
+
+                    {% if current_step == 8 %}
+                        <span class="timeline-now">
+                            Current status
+                        </span>
+                    {% endif %}
+
+                </div>
+
+            </li>
+
+
+            <!-- STEP 9 -->
+
+            <li class="{% if current_step > 9 %}done{% elif current_step == 9 %}current{% else %}todo{% endif %}">
+
+                <span class="timeline-icon">
+                    {% if current_step > 9 %}✔{% else %}9{% endif %}
+                </span>
+
+                <div>
+
+                    <strong>
+                        On The Way
+                    </strong>
+
+                    <p>
+                        The food is being transported for distribution.
+                    </p>
+
+                    {% if current_step == 9 %}
+                        <span class="timeline-now">
+                            Current status
+                        </span>
+                    {% endif %}
+
+                </div>
+
+            </li>
+
+
+            <!-- STEP 10 -->
+
+            <li class="{% if current_step > 10 %}done{% elif current_step == 10 %}current{% else %}todo{% endif %}">
+
+                <span class="timeline-icon">
+                    {% if current_step > 10 %}✔{% else %}10{% endif %}
+                </span>
+
+                <div>
+
+                    <strong>
+                        Reached Distribution
+                    </strong>
+
+                    <p>
+                        The NGO has reached the distribution location.
+                    </p>
+
+                    {% if current_step == 10 %}
+                        <span class="timeline-now">
+                            Current status
+                        </span>
+                    {% endif %}
+
+                </div>
+
+            </li>
+
+
+            <!-- STEP 11 -->
+
+            <li class="{% if current_step > 11 %}done{% elif current_step == 11 %}current{% else %}todo{% endif %}">
+
+                <span class="timeline-icon">
+                    {% if current_step > 11 %}✔{% else %}11{% endif %}
+                </span>
+
+                <div>
+
+                    <strong>
+                        Distributed
+                    </strong>
+
+                    <p>
+                        Your donated food has been distributed.
+                    </p>
+
+                    {% if current_step == 11 %}
+                        <span class="timeline-now">
+                            Current status
+                        </span>
+                    {% endif %}
+
+                </div>
+
+            </li>
+
+
+            <!-- STEP 12 -->
+
+            <li class="{% if current_step > 12 %}done{% elif current_step == 12 %}current{% else %}todo{% endif %}">
+
+                <span class="timeline-icon">
+                    {% if current_step > 12 %}✔{% else %}12{% endif %}
+                </span>
+
+                <div>
+
+                    <strong>
+                        Proof Submitted
+                    </strong>
+
+                    <p>
+                        Completion proof has been submitted for verification.
+                    </p>
+
+                    {% if current_step == 12 %}
+                        <span class="timeline-now">
+                            Current status
+                        </span>
+                    {% endif %}
+
+                </div>
+
+            </li>
+
+
+            <!-- STEP 13 -->
+
+            <li class="{% if current_step == 13 %}done{% else %}todo{% endif %}">
+
+                <span class="timeline-icon">
+                    {% if current_step == 13 %}✔{% else %}13{% endif %}
+                </span>
+
+                <div>
+
+                    <strong>
+                        Completed
+                    </strong>
+
+                    <p>
+                        Your FoodResQ donation journey is complete.
+                    </p>
+
+                    {% if current_step == 13 %}
+                        <span class="timeline-now">
+                            Current status
+                        </span>
+                    {% endif %}
+
+                </div>
+
+            </li>
+
+
+        </ul>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         LATEST UPDATE
+    ====================================================== -->
+
+    <div class="update-card">
+
+        <h2>
+            ℹ Latest Update
+        </h2>
+
+
+        {% if donation.status == "Pending" %}
+
+            <p>
+                Your donation has been submitted and is waiting
+                for administrator verification.
+            </p>
+
+        {% elif donation.status == "Admin Verified" %}
+
+            <p>
+                Your donation has been verified by the administrator.
+                An NGO will be assigned shortly.
+            </p>
+
+        {% elif donation.status == "Assigned" %}
+
+            <p>
+                Your donation has been assigned to
+                <strong>{{ donation.ngo_name }}</strong>.
+                Your unique FoodResQ pickup code is now available
+                above. Keep it private until the NGO arrives.
+            </p>
+
+        {% elif donation.status == "NGO Accepted" %}
+
+            <p>
+                <strong>{{ donation.ngo_name }}</strong>
+                has accepted the donation pickup assignment.
+                Keep your FoodResQ pickup code ready for collection.
+            </p>
+
+        {% elif donation.status == "At Donor" %}
+
+            <p>
+                The NGO has reached your location.
+                Give your unique FoodResQ pickup code to the
+                authorized NGO representative after handing over
+                the food.
+            </p>
+
+        {% elif donation.status == "Donation Verified" %}
+
+            <p>
+                The NGO has verified your donation.
+                Your FoodResQ pickup code will be used to confirm
+                the collection.
+            </p>
+
+        {% elif donation.status == "Awaiting Pickup OTP" %}
+
+            <p>
+                The NGO is ready to collect your donation.
+                Provide your unique FoodResQ pickup code to the
+                NGO representative when the food is handed over.
+            </p>
+
+        {% elif donation.status == "Pickup Confirmed" %}
+
+            <p>
+                Pickup has been successfully confirmed.
+                The NGO is now transporting the food.
+            </p>
+
+        {% elif donation.status == "Picked Up" %}
+
+            <p>
+                Your donation has been successfully picked up
+                by the assigned NGO.
+            </p>
+
+        {% elif donation.status == "On The Way" %}
+
+            <p>
+                Your donated food is currently on the way
+                to the distribution location.
+            </p>
+
+        {% elif donation.status == "Reached Distribution" %}
+
+            <p>
+                The NGO has reached the distribution location
+                and is preparing to distribute the food.
+            </p>
+
+        {% elif donation.status == "Distributed" %}
+
+            <p>
+                Your donated food has been distributed successfully.
+            </p>
+
+        {% elif donation.status == "Proof Submitted" %}
+
+            <p>
+                The NGO has submitted completion proof.
+                The donation is waiting for final verification.
+            </p>
+
+        {% elif donation.status == "Completed" %}
+
+            <p>
+                🎉 Your donation has been successfully completed
+                and verified. Thank you for helping reduce food waste!
+            </p>
+
+        {% elif donation.status == "Rejected" %}
+
+            <p>
+                This donation could not proceed.
+                Please check the details or contact FoodResQ support.
+            </p>
+
+        {% elif donation.status == "Issue Reported" %}
+
+            <p>
+                Your issue has been reported to the administrator
+                and is currently under review.
+            </p>
+
+        {% else %}
+
+            <p>
+                Your donation status is:
+                <strong>{{ donation.status }}</strong>
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+
+    <!-- =====================================================
+         REPORT ISSUE
+    ====================================================== -->
+
+    {% if donation.status not in [
+        "Completed",
+        "Rejected",
+        "Issue Reported"
+    ] %}
+
+    <div class="action-buttons">
+
+        <a href="{{ url_for(
+            'report_issue',
+            donation_id=donation.donation_id
+        ) }}">
+
+            <button type="button"
+                    class="report-btn">
+
+                ❌ Report an Issue
+
+            </button>
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+
+
+    
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div class="footer-container">
+
+
+        <div class="footer-about">
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p>
+                FoodResQ connects surplus food with people in need
+                by bringing together donors, NGOs and administrators
+                on one trusted platform.
+            </p>
+
+        </div>
+
+
+
+        <div class="footer-links">
+
+            <h3>
+                Quick Links
+            </h3>
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="/about">
+                About
+            </a>
+
+            <a href="/findngos">
+                NGOs
+            </a>
+
+            <a href="/contact">
+                Contact
+            </a>
+
+        </div>
+
+
+
+        <div class="footer-links">
+
+            <h3>
+                Services
+            </h3>
+
+            <a href="/donate">
+                Donate Food
+            </a>
+
+            <a href="/my_donations">
+                My Donations
+            </a>
+
+            <a href="/findngos">
+                Food Requests
+            </a>
+
+        </div>
+
+
+
+        <div class="footer-links">
+
+            <h3>
+                Contact
+            </h3>
+
+            <p>
+                Email
+            </p>
+
+            <p>
+                support@foodresq.in
+            </p>
+
+            <p>
+                +91 7738618583
+            </p>
+
+            <p>
+                Mumbai, India
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <hr>
+
+
+    <p class="copyright">
+
+        © 2026 FoodResQ. All Rights Reserved.
+
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

@@ -1,0 +1,734 @@
+/* =========================================
+   ASSIGNED DONATIONS
+   FOODRESQ GREEN + WHITE THEME
+========================================= */
+
+.assigned-page {
+    width: 90%;
+    max-width: 1350px;
+
+    margin: auto;
+
+    padding: 45px 0 70px;
+}
+
+
+/* =========================================
+   HEADING
+========================================= */
+
+.assigned-heading {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 30px;
+}
+
+.assigned-heading span {
+    color: #2e8b57;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+.assigned-heading h1 {
+    margin: 7px 0 0;
+
+    color: #174d35;
+
+    font-size: 38px;
+
+    font-weight: 800;
+}
+
+.assigned-heading p {
+    margin-top: 9px;
+
+    color: #718078;
+
+    font-size: 16px;
+}
+
+
+/* =========================================
+   COUNT
+========================================= */
+
+.assigned-count {
+    min-width: 150px;
+
+    padding: 18px 25px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px solid #dce8e1;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 5px 18px rgba(20, 65, 45, 0.06);
+}
+
+.assigned-count strong {
+    display: block;
+
+    color: #237a4b;
+
+    font-size: 31px;
+}
+
+.assigned-count small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #718078;
+
+    font-size: 12px;
+}
+
+
+/* =========================================
+   SEARCH
+========================================= */
+
+.assigned-tools {
+    display: flex;
+
+    gap: 14px;
+
+    margin-bottom: 28px;
+}
+
+.assigned-search {
+    flex: 1;
+
+    height: 54px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 17px;
+
+    background: #ffffff;
+
+    border: 1px solid #d7e4dd;
+
+    border-radius: 11px;
+}
+
+.assigned-search:focus-within {
+    border-color: #2e8b57;
+
+    box-shadow:
+        0 0 0 3px rgba(46, 139, 87, 0.10);
+}
+
+.assigned-search span {
+    margin-right: 10px;
+
+    color: #718078;
+
+    font-size: 25px;
+}
+
+.assigned-search input {
+    width: 100%;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    color: #18352a;
+
+    font-size: 15px;
+}
+
+.assigned-search input::placeholder {
+    color: #9aa69f;
+}
+
+
+#statusFilter {
+    width: 190px;
+
+    height: 54px;
+
+    padding: 0 15px;
+
+    background: #ffffff;
+
+    border: 1px solid #d7e4dd;
+
+    border-radius: 11px;
+
+    color: #496456;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+#statusFilter:focus {
+    border-color: #2e8b57;
+}
+
+
+/* =========================================
+   DONATION LIST
+========================================= */
+
+.donation-list {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(390px, 1fr));
+
+    gap: 24px;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.assigned-card {
+    padding: 24px;
+
+    background: #ffffff;
+
+    border: 1px solid #dfe9e3;
+
+    border-radius: 17px;
+
+    box-shadow:
+        0 7px 25px rgba(25, 70, 48, 0.055);
+
+    transition: 0.2s ease;
+}
+
+.assigned-card:hover {
+    transform: translateY(-4px);
+
+    border-color: #b8d3c3;
+
+    box-shadow:
+        0 13px 32px rgba(25, 70, 48, 0.10);
+}
+
+
+/* =========================================
+   CARD TOP
+========================================= */
+
+.card-top {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 21px;
+
+    color: #7a8981;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.status {
+    padding: 7px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 800;
+}
+
+.status-assigned {
+    background: #e8f4ec;
+
+    color: #237a4b;
+}
+
+.status-confirmed {
+    background: #dcefe3;
+
+    color: #17663c;
+}
+
+.status-picked {
+    background: #e4f0e8;
+
+    color: #286b49;
+}
+
+.status-completed {
+    background: #d9eee1;
+
+    color: #17663c;
+}
+
+.status-other {
+    background: #edf1ee;
+
+    color: #65746b;
+}
+
+
+/* =========================================
+   FOOD
+========================================= */
+
+.food-details {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #e8efeb;
+}
+
+.food-symbol {
+    width: 58px;
+
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #edf6f0;
+
+    border-radius: 14px;
+
+    font-size: 28px;
+}
+
+.food-details h2 {
+    color: #174d35;
+
+    font-size: 21px;
+}
+
+.food-details p {
+    margin-top: 5px;
+
+    color: #7c8a82;
+
+    font-size: 14px;
+}
+
+
+/* =========================================
+   INFORMATION
+========================================= */
+
+.donation-info {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 19px;
+
+    padding: 21px 0;
+}
+
+.donation-info div {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.donation-info span {
+    color: #819088;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+}
+
+.donation-info strong {
+    color: #304c3c;
+
+    font-size: 15px;
+}
+
+
+/* =========================================
+   ADDRESS
+========================================= */
+
+.pickup-address {
+    display: flex;
+
+    gap: 12px;
+
+    padding: 14px;
+
+    margin-bottom: 20px;
+
+    background: #f3f8f5;
+
+    border: 1px solid #e4eee8;
+
+    border-radius: 11px;
+}
+
+.pickup-address > span {
+    font-size: 20px;
+}
+
+.pickup-address small {
+    display: block;
+
+    color: #819088;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+}
+
+.pickup-address p {
+    margin-top: 5px;
+
+    color: #56675d;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   VIEW BUTTON
+========================================= */
+
+.view-donation {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 13px 18px;
+
+    background: #237a4b;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    border-radius: 9px;
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+    transition: 0.2s ease;
+}
+
+.view-donation:hover {
+    background: #195f39;
+}
+
+.view-donation span {
+    font-size: 19px;
+}
+
+
+/* =========================================
+   EMPTY
+========================================= */
+
+.empty-donations {
+    max-width: 620px;
+
+    margin: 70px auto;
+
+    padding: 55px 35px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px solid #dfe9e3;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 8px 25px rgba(25, 70, 48, 0.06);
+}
+
+.empty-donations > div {
+    width: 80px;
+
+    height: 80px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin: 0 auto 20px;
+
+    background: #edf6f0;
+
+    border-radius: 50%;
+
+    font-size: 36px;
+}
+
+.empty-donations h2 {
+    color: #174d35;
+
+    font-size: 25px;
+
+    margin-bottom: 10px;
+}
+
+.empty-donations p {
+    color: #718078;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+
+    margin-bottom: 25px;
+}
+
+.empty-donations a {
+    display: inline-block;
+
+    padding: 12px 23px;
+
+    background: #237a4b;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    border-radius: 9px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================
+   NO RESULTS
+========================================= */
+
+.no-results {
+    display: none;
+
+    text-align: center;
+
+    padding: 60px 20px;
+}
+
+.no-results h2 {
+    color: #174d35;
+
+    margin-bottom: 8px;
+}
+
+.no-results p {
+    color: #718078;
+
+    font-size: 15px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+    .assigned-page {
+        width: 92%;
+    }
+
+    .assigned-heading {
+        gap: 20px;
+
+        align-items: flex-start;
+    }
+
+    .donation-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .assigned-heading {
+        flex-direction: column;
+    }
+
+    .assigned-count {
+        width: 100%;
+    }
+
+    .assigned-tools {
+        flex-direction: column;
+    }
+
+    #statusFilter {
+        width: 100%;
+    }
+
+    .donation-info {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+.donation-actions {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.workflow-btn {
+    display: inline-block;
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.verify-btn {
+    background: #2563eb;
+    color: white;
+}
+
+.verify-btn:hover {
+    background: #1d4ed8;
+}
+
+.pickup-btn {
+    background: #16a34a;
+    color: white;
+}
+
+.pickup-btn:hover {
+    background: #15803d;
+}
+
+.delivery-btn {
+    background: #7c3aed;
+    color: white;
+}
+
+.delivery-btn:hover {
+    background: #6d28d9;
+}
+
+.complete-btn {
+    background: #059669;
+    color: white;
+}
+
+.complete-btn:hover {
+    background: #047857;
+}
+
+
+/* ================= STATUS ================= */
+
+.status-verified {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status-awaiting {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-onway {
+    background: #ede9fe;
+    color: #5b21b6;
+}
+
+
+/* ================= WORKFLOW MESSAGES ================= */
+
+.workflow-message {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.workflow-message strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.workflow-message p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.workflow-message.waiting {
+    background: #fff7ed;
+    color: #9a3412;
+}
+
+.workflow-message.reminder {
+    background: #f5f3ff;
+    color: #5b21b6;
+}
+
+.workflow-message.completed-message {
+    background: #ecfdf5;
+    color: #166534;
+}

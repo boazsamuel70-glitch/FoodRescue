@@ -1,0 +1,930 @@
+/* =========================================================
+   NGO REGISTRATION PAGE
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PAGE - TWO COLUMN LAYOUT
+========================================================= */
+
+.ngo-registration-page {
+    width: 92%;
+    max-width: 1250px;
+    margin: 35px auto;
+
+    display: grid;
+
+    /* FORM LEFT | GUIDELINES RIGHT */
+    grid-template-columns: minmax(0, 1fr) 330px;
+
+    gap: 28px;
+    align-items: start;
+}
+
+
+/* =========================================================
+   FORM CONTAINER
+========================================================= */
+
+.ngo-form-container {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 35px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.07);
+}
+
+
+.ngo-form-header {
+    margin-bottom: 30px;
+}
+
+
+.ngo-form-header h1 {
+    margin: 0 0 8px;
+    font-size: 31px;
+    color: #26352a;
+}
+
+
+.ngo-form-header p {
+    margin: 0;
+    color: #707970;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   ERROR MESSAGE
+========================================================= */
+
+.registration-error {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    margin-bottom: 18px;
+    padding: 13px 16px;
+
+    background: #fff1f1;
+    border: 1px solid #f0b5b5;
+    border-left: 4px solid #d32f2f;
+
+    border-radius: 8px;
+
+    color: #c62828;
+    font-size: 13px;
+    font-weight: 500;
+
+    animation: errorAppear 0.25s ease;
+}
+
+
+.error-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 22px;
+    height: 22px;
+
+    border-radius: 50%;
+
+    background: #d32f2f;
+    color: white;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+@keyframes errorAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.form-section-title {
+    margin-top: 30px;
+    margin-bottom: 20px;
+
+    padding-bottom: 10px;
+
+    border-bottom: 2px solid #e7eee8;
+
+    color: #2e7d32;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+
+.form-section-title:first-of-type {
+    margin-top: 0;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+
+.form-group {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #344238;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border: 1px solid #ccd7cf;
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #ffffff;
+    color: #27322a;
+
+    font-size: 14px;
+    font-family: inherit;
+
+    transition: 0.2s;
+}
+
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #2e7d32;
+
+    box-shadow:
+        0 0 0 3px rgba(46, 125, 50, 0.09);
+}
+
+
+.form-group input[readonly] {
+    background: #f4f6f4;
+    color: #777;
+}
+
+
+.field-help {
+    display: block;
+
+    margin-top: 7px;
+
+    color: #7a837c;
+
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   PASSWORD FIELDS
+========================================================= */
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 48px;
+    box-sizing: border-box;
+}
+
+
+.password-toggle {
+    position: absolute;
+
+    right: 10px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 34px;
+    height: 34px;
+
+    border: none;
+    background: transparent;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    font-size: 17px;
+    line-height: 1;
+
+    padding: 0;
+
+    color: #718078;
+}
+
+
+.password-toggle:hover {
+    color: #26965a;
+    background: #eaf7ef;
+    border-radius: 7px;
+}
+
+
+.password-toggle:focus {
+    outline: none;
+}
+
+
+/* =========================================================
+   ADDRESS INFORMATION
+========================================================= */
+
+.address-info {
+    margin-bottom: 20px;
+
+    padding: 17px;
+
+    border-radius: 10px;
+
+    background: #f0f8f1;
+
+    border-left: 4px solid #2e7d32;
+}
+
+
+.address-info strong {
+    color: #246329;
+    font-size: 15px;
+}
+
+
+.address-info p {
+    margin: 7px 0 0;
+
+    color: #59635b;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   SERVICE LOCATION INFORMATION
+========================================================= */
+
+.service-location-info {
+    margin-bottom: 20px;
+
+    padding: 17px;
+
+    border-radius: 10px;
+
+    background: #eef5ff;
+
+    border-left: 4px solid #3f72af;
+}
+
+
+.service-location-info strong {
+    color: #24558d;
+    font-size: 15px;
+}
+
+
+.service-location-info p {
+    margin: 7px 0 0;
+
+    color: #56616d;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   MAP SEARCH
+========================================================= */
+
+.map-search-row {
+    display: flex;
+    gap: 10px;
+}
+
+
+.map-search-row input {
+    flex: 1;
+
+    padding: 13px 14px;
+
+    border: 1px solid #ccd7cf;
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    outline: none;
+}
+
+
+.map-search-row input:focus {
+    border-color: #2e7d32;
+}
+
+
+.map-search-btn {
+    border: none;
+    border-radius: 8px;
+
+    padding: 0 20px;
+
+    background: #2e7d32;
+    color: white;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.map-search-btn:hover {
+    background: #256628;
+}
+
+
+/* =========================================================
+   MAP
+========================================================= */
+
+.map-wrapper {
+    margin-top: 10px;
+
+    padding: 15px;
+
+    border: 1px solid #dce5de;
+    border-radius: 12px;
+
+    background: #fafcfb;
+}
+
+
+.map-title {
+    margin-bottom: 12px;
+}
+
+
+.map-title h3 {
+    margin: 0 0 5px;
+
+    color: #2e3b31;
+
+    font-size: 18px;
+}
+
+
+.map-title p {
+    margin: 0;
+
+    color: #747d76;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   LEAFLET MAP FIX
+========================================================= */
+
+#ngo-map {
+    width: 100% !important;
+    height: 400px !important;
+    min-height: 400px !important;
+
+    position: relative !important;
+
+    overflow: hidden !important;
+
+    margin-top: 12px;
+
+    border-radius: 9px;
+
+    background: #e5e5e5;
+}
+
+
+#ngo-map .leaflet-container {
+    width: 100% !important;
+    height: 100% !important;
+
+    position: relative !important;
+
+    overflow: hidden !important;
+}
+
+
+#ngo-map .leaflet-tile {
+    width: 256px !important;
+    height: 256px !important;
+
+    max-width: none !important;
+    max-height: none !important;
+
+    display: block !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    border: none !important;
+}
+
+
+#ngo-map img {
+    max-width: none !important;
+    max-height: none !important;
+}
+
+
+#ngo-map .leaflet-pane {
+    position: absolute !important;
+}
+
+
+#ngo-map .leaflet-map-pane {
+    position: absolute !important;
+}
+
+
+#ngo-map .leaflet-tile-pane {
+    z-index: 200 !important;
+}
+
+
+#ngo-map .leaflet-overlay-pane {
+    z-index: 400 !important;
+}
+
+
+#ngo-map .leaflet-marker-pane {
+    z-index: 600 !important;
+}
+
+
+#ngo-map .leaflet-control {
+    z-index: 800 !important;
+}
+
+
+/* =========================================================
+   MAP STATUS
+========================================================= */
+
+.map-status {
+    margin-top: 12px;
+
+    padding: 12px 14px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+.map-status.waiting {
+    background: #fff8df;
+    border: 1px solid #ead68b;
+    color: #705900;
+}
+
+
+.map-status.searching {
+    background: #edf6ff;
+    border: 1px solid #b9dcf5;
+    color: #155a91;
+}
+
+
+.map-status.success {
+    background: #eaf7ed;
+    border: 1px solid #a9d8b1;
+    color: #1d6429;
+}
+
+
+.map-status.error {
+    background: #fff0f0;
+    border: 1px solid #efb0b0;
+    color: #a52020;
+}
+
+
+/* =========================================================
+   CONFIRM LOCATION BUTTON
+========================================================= */
+
+.confirm-location-btn {
+    width: 100%;
+
+    margin-top: 12px;
+
+    padding: 13px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #3f72af;
+    color: white;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.confirm-location-btn:hover {
+    background: #315d91;
+}
+
+
+.confirm-location-btn.confirmed {
+    background: #2e7d32;
+}
+
+
+/* =========================================================
+   AGREEMENT
+========================================================= */
+
+.ngo-agreement {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 10px;
+
+    margin: 25px 0;
+
+    padding: 15px;
+
+    border-radius: 9px;
+
+    background: #f7f9f7;
+}
+
+
+.ngo-agreement input {
+    width: 17px;
+    height: 17px;
+
+    margin-top: 1px;
+}
+
+
+.ngo-agreement label {
+    color: #515a53;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   REGISTER BUTTON
+========================================================= */
+
+.ngo-register-btn {
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #2e7d32;
+    color: white;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.ngo-register-btn:hover {
+    background: #256628;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   APPLICATION NOTE
+========================================================= */
+
+.application-note {
+    margin: 15px 0 0;
+
+    text-align: center;
+
+    color: #777;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   SIDE GUIDELINES
+========================================================= */
+
+.ngo-guidelines {
+    width: 100%;
+
+    padding: 27px;
+
+    background: #ffffff;
+
+    border-radius: 15px;
+
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.06);
+
+    position: sticky;
+    top: 100px;
+}
+
+
+.ngo-guidelines h2 {
+    margin: 0 0 25px;
+
+    color: #2e7d32;
+
+    font-size: 22px;
+}
+
+
+.guideline-item {
+    display: flex;
+
+    gap: 13px;
+
+    margin-bottom: 25px;
+}
+
+
+.guideline-item > span {
+    flex: 0 0 32px;
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eaf5eb;
+
+    color: #2e7d32;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+.guideline-item h4 {
+    margin: 0 0 5px;
+
+    color: #344238;
+
+    font-size: 14px;
+}
+
+
+.guideline-item p {
+    margin: 0;
+
+    color: #747c75;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   VERIFICATION NOTE
+========================================================= */
+
+.verification-note {
+    margin-top: 25px;
+
+    padding: 15px;
+
+    border-radius: 9px;
+
+    background: #fff8e5;
+
+    border: 1px solid #f0d990;
+}
+
+
+.verification-note strong {
+    color: #735d12;
+
+    font-size: 13px;
+}
+
+
+.verification-note p {
+    margin: 7px 0 0;
+
+    color: #766b47;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+/*
+   IMPORTANT:
+   Keep TWO COLUMNS until 700px.
+
+   Desktop / laptop:
+   FORM LEFT + GUIDELINES RIGHT
+
+   Mobile:
+   FORM TOP + GUIDELINES BELOW
+*/
+
+@media (max-width: 700px) {
+
+    .ngo-registration-page {
+        width: 94%;
+
+        grid-template-columns: 1fr;
+
+        gap: 25px;
+
+        margin: 25px auto;
+    }
+
+
+    .ngo-guidelines {
+        position: static;
+        order: 0;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    header {
+        flex-direction: column;
+
+        gap: 15px;
+
+        padding: 15px 5%;
+    }
+
+
+    nav {
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 15px;
+    }
+
+
+    .ngo-form-container {
+        padding: 22px;
+    }
+
+
+    .form-row {
+        grid-template-columns: 1fr;
+
+        gap: 0;
+    }
+
+
+    .map-search-row {
+        flex-direction: column;
+    }
+
+
+    .map-search-btn {
+        min-height: 45px;
+    }
+
+
+    #ngo-map {
+        height: 350px !important;
+        min-height: 350px !important;
+    }
+
+
+    .ngo-guidelines {
+        padding: 22px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+========================================================= */
+
+@media (max-width: 450px) {
+
+    .ngo-registration-page {
+        width: 96%;
+    }
+
+
+    .ngo-form-container {
+        padding: 18px;
+    }
+
+
+    .ngo-form-header h1 {
+        font-size: 26px;
+    }
+
+
+    .ngo-form-header p {
+        font-size: 14px;
+    }
+
+
+    .ngo-guidelines h2 {
+        font-size: 20px;
+    }
+
+}

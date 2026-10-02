@@ -1,0 +1,749 @@
+/* =========================================================
+   FOODRESQ - ADMIN NGO DETAILS
+   ========================================================= */
+
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+
+
+/* LOGO */
+
+
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.admin-details-container {
+    width: min(1180px, 92%);
+    margin: 40px auto 70px;
+}
+
+
+/* BACK BUTTON */
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    color: #168c4b;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    margin-bottom: 25px;
+
+    transition: 0.2s ease;
+}
+
+.back-link:hover {
+    color: #0c6835;
+    transform: translateX(-3px);
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    margin-bottom: 25px;
+}
+
+.page-header span {
+    color: #159447;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+}
+
+.page-header h1 {
+    margin-top: 5px;
+
+    font-size: 36px;
+    font-weight: 700;
+
+    color: #183c2d;
+}
+
+.page-header p {
+    margin-top: 5px;
+
+    font-size: 15px;
+
+    color: #74827b;
+}
+
+.donation-id {
+    background: #eaf6ef;
+
+    color: #147b43;
+
+    padding: 10px 17px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    border: 1px solid #d5ecdf;
+}
+
+
+/* =========================================================
+   NGO HERO CARD
+   ========================================================= */
+
+.ngo-main-card {
+    background: linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #f7fcf9 100%
+    );
+
+    border: 1px solid #dfeae4;
+
+    border-radius: 20px;
+
+    padding: 30px 32px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 22px;
+
+    box-shadow:
+        0 8px 30px rgba(29, 86, 59, 0.07);
+
+    margin-bottom: 25px;
+}
+
+
+/* NGO ICON */
+
+.ngo-icon {
+    width: 75px;
+    height: 75px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e7f6ed;
+
+    border: 1px solid #d1ecdc;
+
+    border-radius: 18px;
+
+    font-size: 35px;
+}
+
+
+/* NGO HEADING */
+
+.ngo-heading {
+    flex: 1;
+}
+
+.verified-label {
+    display: inline-block;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 1.4px;
+
+    color: #148444;
+
+    background: #e7f6ed;
+
+    padding: 5px 9px;
+
+    border-radius: 6px;
+
+    margin-bottom: 7px;
+}
+
+.ngo-heading h2 {
+    font-size: 27px;
+
+    color: #183c2d;
+
+    font-weight: 700;
+}
+
+.ngo-heading p {
+    margin-top: 5px;
+
+    color: #74827b;
+
+    font-size: 14px;
+}
+
+.ngo-heading strong {
+    color: #168b4a;
+}
+
+
+/* STATUS */
+
+.ngo-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce8e1;
+
+    padding: 11px 16px;
+
+    border-radius: 10px;
+
+    color: #347054;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: #9aa7a1;
+}
+
+.status-dot.active {
+    background: #20a35a;
+
+    box-shadow:
+        0 0 0 4px rgba(32, 163, 90, 0.12);
+}
+
+
+/* =========================================================
+   SECTION CARD
+   ========================================================= */
+
+.section-card {
+    background: #ffffff;
+
+    border: 1px solid #e3ebe7;
+
+    border-radius: 18px;
+
+    padding: 28px 30px;
+
+    margin-bottom: 22px;
+
+    box-shadow:
+        0 6px 22px rgba(28, 78, 55, 0.05);
+}
+
+
+/* SECTION TITLE */
+
+.section-title {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    padding-bottom: 22px;
+
+    border-bottom: 1px solid #edf1ef;
+
+    margin-bottom: 23px;
+}
+
+.section-title > span {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e8f6ee;
+
+    color: #168b4a;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.section-title h2 {
+    font-size: 20px;
+
+    color: #1d3d30;
+
+    font-weight: 650;
+}
+
+.section-title p {
+    font-size: 12px;
+
+    color: #8a9690;
+
+    margin-top: 2px;
+}
+
+
+/* =========================================================
+   INFORMATION GRID
+   ========================================================= */
+
+.info-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 15px;
+}
+
+.info-item {
+    background: #f8faf9;
+
+    border: 1px solid #e7eeea;
+
+    border-radius: 12px;
+
+    padding: 17px 18px;
+
+    min-height: 78px;
+
+    transition: 0.2s ease;
+}
+
+.info-item:hover {
+    background: #f2f9f5;
+
+    border-color: #d5e9dd;
+
+    transform: translateY(-2px);
+}
+
+.info-item span {
+    display: block;
+
+    color: #8a9790;
+
+    font-size: 10px;
+
+    letter-spacing: 1.1px;
+
+    font-weight: 700;
+
+    margin-bottom: 6px;
+}
+
+.info-item strong {
+    display: block;
+
+    color: #29483a;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    line-height: 1.5;
+
+    word-break: break-word;
+}
+
+.info-item.full {
+    grid-column: 1 / -1;
+}
+
+
+/* =========================================================
+   ACTION CARD
+   ========================================================= */
+
+.action-card {
+    background: #183c2d;
+
+    border-radius: 18px;
+
+    padding: 27px 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    box-shadow:
+        0 10px 30px rgba(24, 60, 45, 0.15);
+}
+
+.action-card h2 {
+    color: #ffffff;
+
+    font-size: 20px;
+
+    margin-bottom: 5px;
+}
+
+.action-card p {
+    color: #b8ccc2;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+
+/* ACTION BUTTONS */
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    flex-shrink: 0;
+}
+
+.cancel-btn {
+    text-decoration: none;
+
+    color: #d5e4dd;
+
+    border: 1px solid #587366;
+
+    padding: 11px 18px;
+
+    border-radius: 9px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: 0.25s ease;
+}
+
+.cancel-btn:hover {
+    background: rgba(255,255,255,0.08);
+
+    color: #ffffff;
+}
+
+
+.assign-btn {
+    border: none;
+
+    background: #20a35a;
+
+    color: white;
+
+    padding: 12px 21px;
+
+    border-radius: 9px;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+
+    box-shadow:
+        0 5px 14px rgba(32, 163, 90, 0.25);
+}
+
+.assign-btn:hover {
+    background: #17894a;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 7px 18px rgba(32, 163, 90, 0.32);
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    background: #183c2d;
+
+    color: #aebfb6;
+
+    text-align: center;
+
+    padding: 22px;
+
+    font-size: 12px;
+}
+
+footer p {
+    margin: 0;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    header {
+        padding: 12px 25px;
+    }
+
+    nav a {
+        font-size: 12px;
+
+        padding: 8px 7px;
+    }
+
+    .admin-details-container {
+        width: 94%;
+    }
+
+}
+
+
+@media (max-width: 800px) {
+
+    header {
+        flex-direction: column;
+
+        gap: 15px;
+
+        align-items: flex-start;
+    }
+
+    nav {
+        width: 100%;
+
+        overflow-x: auto;
+
+        padding-bottom: 5px;
+    }
+
+    .page-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .ngo-main-card {
+        flex-wrap: wrap;
+    }
+
+    .ngo-status {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .action-card {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .action-buttons {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .admin-details-container {
+        width: 94%;
+
+        margin-top: 25px;
+    }
+
+    .page-header h1 {
+        font-size: 28px;
+    }
+
+    .ngo-main-card {
+        padding: 22px;
+
+        gap: 15px;
+    }
+
+    .ngo-icon {
+        width: 60px;
+        height: 60px;
+
+        font-size: 28px;
+    }
+
+    .ngo-heading h2 {
+        font-size: 21px;
+    }
+
+    .section-card {
+        padding: 22px 18px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .info-item.full {
+        grid-column: auto;
+    }
+
+    .action-card {
+        padding: 23px 20px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .cancel-btn,
+    .assign-btn {
+        text-align: center;
+
+        width: 100%;
+    }
+
+}
+/* =========================================================
+   ADMIN DONATION DETAILS - ACTION PANEL
+========================================================= */
+
+.actions .assign,
+.actions .update,
+.actions .cancel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    margin: 6px 6px 6px 0;
+    border: none;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: .95rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .15s ease, transform .1s ease;
+}
+
+.actions .assign {
+    background: #2E7D32;
+    color: #FFFFFF;
+}
+
+.actions .assign:hover {
+    background: #256A29;
+}
+
+.actions .update {
+    background: #1565C0;
+    color: #FFFFFF;
+}
+
+.actions .update:hover {
+    background: #11509C;
+}
+
+.actions .cancel {
+    background: #C62828;
+    color: #FFFFFF;
+}
+
+.actions .cancel:hover {
+    background: #AD2222;
+}
+
+.actions .assign:active,
+.actions .update:active,
+.actions .cancel:active {
+    transform: translateY(1px);
+}
+
+.actions .status-form {
+    margin: 14px 0;
+}
+
+.actions .status-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #1B4332;
+    font-size: .95rem;
+}
+
+.actions .status-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.actions .status-row select {
+    flex: 1 1 200px;
+    padding: 11px 12px;
+    border: 1px solid #CFDAD3;
+    border-radius: 10px;
+    background: #FFFFFF;
+    font-family: inherit;
+    font-size: .95rem;
+    color: #263A31;
+}
+
+.actions .status-row select:focus {
+    outline: none;
+    border-color: #2E7D32;
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, .15);
+}
+
+.actions .status-row .update {
+    margin: 0;
+}
+
+.actions .action-note {
+    padding: 14px 16px;
+    background: #F4F8F5;
+    border-left: 4px solid #8AA396;
+    border-radius: 8px;
+    color: #47584F;
+    font-size: .95rem;
+    line-height: 1.6;
+}
+
+.actions .review-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#168344">
+<meta name="robots" content="noindex">
+<title>Waiting Room | FoodResQ</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='access_queue.css') }}">
+</head>
+<body>
+
+<main class="queue-page">
+  <section class="queue-card" aria-live="polite">
+
+    <div class="queue-logo">
+      <img src="{{ url_for('static', filename='images/homepgs.png') }}" alt="" class="queue-logo-img">
+      <div>
+        <h1>Food<span>ResQ</span></h1>
+        <p>Turning surplus into sustenance</p>
+      </div>
+    </div>
+
+    <div class="queue-icon" aria-hidden="true"><span class="pulse"></span>&#9203;</div>
+
+    <h2 class="queue-title" id="queue-status-text">You're in the waiting room</h2>
+    <p class="queue-message">
+      FoodResQ is very busy right now. To keep the site fast for everyone,
+      only <strong>{{ capacity }}</strong> people can be logged in at the same time.
+      Keep this page open &mdash; we'll let you in automatically.
+    </p>
+
+    <div class="queue-stats">
+      <div class="stat">
+        <span class="stat-label">Your position</span>
+        <span class="stat-number" id="queue-position">{{ position }}</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">People waiting</span>
+        <span class="stat-number" id="queue-total">{{ waiting_total }}</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Estimated wait</span>
+        <span class="stat-number"><span id="queue-eta">{{ eta_minutes }}</span><small> min</small></span>
+      </div>
+    </div>
+
+    <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+
+    <p class="live-status"><span class="live-dot"></span><span id="live-text">Checking your place in line&hellip;</span></p>
+
+    <form method="post" action="{{ url_for('queue_leave') }}" class="queue-leave">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button type="submit" class="queue-logout">Leave the queue</button>
+    </form>
+
+  </section>
+</main>
+
+<script>
+  window.FOODRESQ_QUEUE_POSITION = {{ position|tojson }};
+  window.FOODRESQ_CSRF = {{ csrf_token()|tojson }};
+</script>
+<script src="{{ url_for('static', filename='access_queue.js') }}"></script>
+</body>
+</html>

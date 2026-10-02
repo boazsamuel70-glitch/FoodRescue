@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Food | FoodResQ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='contact.css') }}">
+<script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+<body>
+<header>
+    <div class="logo">
+        <img src="{{ url_for('static', filename='images/homepgs.png') }}" alt="FoodResQ logo">
+        <div><h2>Food<span>ResQ</span></h2><p class="tagline">Turning <span>Surplus</span> into <span>Sustenance</span></p></div>
+    </div>
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('about') }}">About</a>
+        <a href="{{ url_for('findngos') }}">NGOs</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+    </nav>
+</header>
+<main class="simple-page">
+    <section class="simple-card">
+        <p class="eyebrow">FOOD SUPPORT</p>
+        <h1>Request Food</h1>
+        <p>Submit a request for food support. Your request will be reviewed by the FoodResQ team.</p>
+        <form method="post" class="request-form">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label>Name</label><input name="requester_name" required>
+            <label>Phone</label><input name="phone" required>
+            <label>Location</label><input name="location" required>
+            <label>Number of people</label><input type="number" min="1" name="people_count" required>
+            <label>Request details</label><textarea name="request_details" rows="5"></textarea>
+            <button type="submit">Submit Request</button>
+        </form>
+    </section>
+</main>
+</body>
+</html>

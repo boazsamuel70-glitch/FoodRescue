@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NGO Management | FoodResQ Admin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='common.css') }}">
+
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='admin_dashboard.css') }}">
+
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='admin_ngos.css') }}">
+
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+
+<body>
+
+
+<header>
+
+
+<div class="logo">
+
+<img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+
+<div>
+
+<h2>Food<span>ResQ</span></h2>
+
+<p class="tagline">
+Turning <span>Surplus</span> into <span>Sustenance</span>
+</p>
+
+
+</div>
+
+</div>
+
+
+
+<nav>
+
+<a href="/admin_dashboard">
+Dashboard
+</a>
+
+
+
+<a href="/logout" class="logout">
+            Logout
+        </a>
+
+
+</nav>
+
+
+</header>
+
+
+
+
+
+<div class="container">
+
+
+
+<section class="page-header">
+
+
+<h1>
+🤝 NGO Management
+</h1>
+
+
+<p>
+Manage registered FoodResQ partner NGOs
+</p>
+
+
+</section>
+
+
+
+
+
+<section class="search-box">
+
+
+<form method="GET">
+
+
+<input 
+type="text"
+name="search"
+placeholder="Search NGO name or location..."
+value="{{request.args.get('search','')}}">
+
+
+<button>
+🔍 Search
+</button>
+
+{% if request.args.get('search') %}
+<a class="clear-search" href="{{ url_for('admin_ngos') }}">
+✕ Clear
+</a>
+{% endif %}
+
+
+</form>
+
+
+</section>
+
+
+
+
+
+
+
+<section class="ngo-table">
+
+
+<h2>
+Registered NGOs
+</h2>
+
+
+<table>
+
+
+<tr>
+
+<th>
+ID
+</th>
+
+<th>
+Partner ID
+</th>
+
+<th>
+NGO Name
+</th>
+
+
+<th>
+Address
+</th>
+
+<th>
+    Service Area
+</th>
+
+
+<th>
+Email
+</th>
+
+
+<th>
+Status
+</th>
+
+
+<th>
+Action
+</th>
+
+
+</tr>
+
+
+
+
+{% for ngo in ngos %}
+
+
+<tr>
+
+
+<td>
+{{ngo.ngo_id}}
+</td>
+
+<td class="partner-id">
+    {% if ngo.partner_id %}
+        {{ ngo.partner_id }}
+    {% else %}
+        <span class="muted">not issued</span>
+    {% endif %}
+</td>
+
+<td class="ngo-name">
+{{ ngo.ngo_name }}
+</td>
+
+
+<td class="address">
+{{ ngo.address }}
+</td>
+
+<td>
+{{ngo.service_area}}
+</td>
+
+
+<td>
+{{ngo.email}}
+</td>
+
+
+<td>
+
+<span class="status">
+
+{{ngo.status}}
+
+</span>
+
+</td>
+
+
+
+<td>
+
+<a class="view-btn"
+href="{{ url_for('admin_ngo_profile', ngo_id=ngo.ngo_id) }}">
+
+View
+
+</a>
+
+
+</td>
+
+
+</tr>
+
+
+
+{% endfor %}
+
+
+
+</table>
+
+
+
+</section>
+
+
+
+</div>
+
+
+
+
+
+<footer>
+
+<p>
+FoodResQ Admin Panel © 2026
+</p>
+
+</footer>
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Donations | FoodResQ Admin
+    </title>
+
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='admin_donation.css') }}">
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='admin_ngos.css') }}">
+
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+    <div class="logo">
+
+        <img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+        <div>
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p class="tagline">
+                Turning <span>Surplus</span> into <span>Sustenance</span>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="/admin_dashboard">
+            Dashboard
+        </a>
+
+        
+
+        <a href="/logout" class="logout">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+<div class="container">
+
+
+<section class="page-header">
+
+<h1>🍲 Donation Management</h1>
+
+<p>
+Every donation on FoodResQ, newest first.
+</p>
+
+</section>
+
+
+<!-- SUMMARY -->
+
+<section class="ngo-stats">
+
+    <div class="stat">
+        <span class="stat-label">Total Donations</span>
+        <span class="stat-value">{{ total }}</span>
+    </div>
+
+    <div class="stat">
+        <span class="stat-label">Pending</span>
+        <span class="stat-value">{{ pending }}</span>
+    </div>
+
+    <div class="stat">
+        <span class="stat-label">Completed</span>
+        <span class="stat-value">{{ completed }}</span>
+    </div>
+
+</section>
+
+
+<!-- FILTERS -->
+
+<section class="search-box">
+
+<form method="GET" action="{{ url_for('admin_donations') }}">
+
+    <input type="text"
+           name="search"
+           placeholder="Search food or donor name..."
+           value="{{ search or '' }}">
+
+    <select name="status">
+        <option value="">All statuses</option>
+        {% for option in status_options %}
+        <option value="{{ option }}" {% if status == option %}selected{% endif %}>
+            {{ option }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <select name="category">
+        <option value="">All food types</option>
+        {% for option in category_options %}
+        <option value="{{ option }}" {% if category == option %}selected{% endif %}>
+            {{ option }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <button>🔍 Filter</button>
+
+    {% if search or status or category %}
+    <a class="clear-search" href="{{ url_for('admin_donations') }}">
+        ✕ Clear
+    </a>
+    {% endif %}
+
+</form>
+
+</section>
+
+
+<!-- LIST -->
+
+<section class="ngo-table">
+
+<h2>
+    {% if search or status or category %}
+        {{ donations|length }} matching donation{{ '' if donations|length == 1 else 's' }}
+    {% else %}
+        All Donations
+    {% endif %}
+</h2>
+
+<div class="table-scroll">
+
+<table>
+
+<thead>
+<tr>
+    <th>ID</th>
+    <th>Food</th>
+    <th>Type</th>
+    <th>Quantity</th>
+    <th>Donor</th>
+    <th>Pickup Date</th>
+    <th>Status</th>
+    <th>Action</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for donation in donations %}
+
+<tr>
+    <td>{{ donation.donation_id }}</td>
+    <td class="ngo-name">{{ donation.food_name }}</td>
+    <td>{{ donation.food_type or '—' }}</td>
+    <td>{{ donation.quantity }} {{ donation.quantity_unit or '' }}</td>
+    <td>{{ donation.donor_name or '—' }}</td>
+    <td>{{ donation.pickup_date or '—' }}</td>
+    <td>
+        <span class="status {{ (donation.status or 'unknown')|lower|replace(' ', '-') }}">
+            {{ donation.status }}
+        </span>
+    </td>
+    <td>
+        <a class="view-btn"
+           href="{{ url_for('admin_donation', donation_id=donation.donation_id) }}">
+            Review
+        </a>
+    </td>
+</tr>
+
+{% else %}
+
+<tr class="empty-row">
+    <td colspan="8">
+        {% if search or status or category %}
+            No donations match those filters.
+        {% else %}
+            No donations have been submitted yet.
+        {% endif %}
+    </td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+</div>
+
+
+</body>
+
+</html>

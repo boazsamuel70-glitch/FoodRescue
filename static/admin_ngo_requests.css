@@ -1,0 +1,851 @@
+/* =====================================================
+   FOODRESQ - NGO REQUESTS
+   Professional Table Design
+===================================================== */
+
+
+/* =====================================================
+   PAGE
+===================================================== */
+
+body {
+    background: #f5f8f6;
+    font-family: 'Poppins', sans-serif;
+    color: #26352d;
+}
+
+.requests-page {
+    width: 93%;
+    max-width: 1350px;
+    margin: 42px auto 70px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+header {
+    border-bottom: 1px solid #e3ebe6;
+
+    box-shadow:
+        0 3px 14px rgba(25, 75, 50, 0.06);
+}
+
+
+/* =====================================================
+   PAGE HEADING
+===================================================== */
+
+.page-heading {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 28px;
+}
+
+.page-label {
+    display: block;
+
+    color: #2b8a52;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    margin-bottom: 6px;
+}
+
+.page-heading h1 {
+    margin: 0;
+
+    color: #173d2b;
+
+    font-size: 30px;
+
+    font-weight: 700;
+}
+
+.page-heading p {
+    margin: 7px 0 0;
+
+    color: #748079;
+
+    font-size: 13.5px;
+}
+
+
+/* =====================================================
+   REQUEST COUNT
+===================================================== */
+
+.request-count {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce8e0;
+
+    border-radius: 12px;
+
+    padding: 10px 16px;
+
+    color: #637269;
+
+    font-size: 13px;
+
+    box-shadow:
+        0 4px 15px rgba(26, 76, 51, 0.05);
+}
+
+.request-count span {
+    color: #218c4b;
+
+    font-size: 20px;
+
+    font-weight: 700;
+}
+
+
+/* =====================================================
+   TABLE CONTAINER
+===================================================== */
+
+.requests-table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+
+    background: #ffffff;
+
+    border: 1px solid #dfe9e3;
+
+    border-radius: 17px;
+
+    box-shadow:
+        0 8px 28px rgba(26, 76, 51, 0.07);
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.requests-table {
+    width: 100%;
+
+    border-collapse: separate;
+
+    border-spacing: 0;
+
+    min-width: 900px;
+}
+
+
+/* =====================================================
+   TABLE HEADER
+===================================================== */
+
+.requests-table thead th {
+    background: #f1f7f3;
+
+    color: #496255;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.7px;
+
+    text-transform: uppercase;
+
+    padding: 16px 18px;
+
+    text-align: left;
+
+    border-bottom: 1px solid #dfe9e3;
+
+    white-space: nowrap;
+}
+
+
+/* rounded top */
+
+.requests-table thead th:first-child {
+    border-top-left-radius: 17px;
+}
+
+.requests-table thead th:last-child {
+    border-top-right-radius: 17px;
+}
+
+
+/* =====================================================
+   MAIN ROW
+===================================================== */
+
+.main-row td {
+    padding: 17px 18px;
+
+    border-bottom: 1px solid #edf2ef;
+
+    background: #ffffff;
+
+    vertical-align: middle;
+
+    font-size: 13px;
+}
+
+.main-row:hover td {
+    background: #fbfdfc;
+}
+
+
+/* =====================================================
+   DONATION CELL
+===================================================== */
+
+.donation-cell {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-width: 190px;
+}
+
+.food-icon {
+    width: 39px;
+    height: 39px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #eaf6ee;
+
+    font-size: 19px;
+}
+
+.donation-cell strong {
+    display: block;
+
+    color: #254936;
+
+    font-size: 13.5px;
+
+    font-weight: 600;
+}
+
+.donation-cell span {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #8a968f;
+
+    font-size: 11px;
+}
+
+
+/* =====================================================
+   NGO CELL
+===================================================== */
+
+.ngo-cell {
+    min-width: 160px;
+}
+
+.ngo-cell strong {
+    display: block;
+
+    color: #254936;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+.ngo-cell span {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #2b8a52;
+
+    font-size: 11px;
+
+    font-weight: 500;
+}
+
+
+/* =====================================================
+   LOCATION
+===================================================== */
+
+.location-cell {
+    color: #56675e;
+
+    white-space: nowrap;
+}
+
+
+/* =====================================================
+   PICKUP
+===================================================== */
+
+.pickup-cell strong {
+    display: block;
+
+    color: #354c3e;
+
+    font-size: 12.5px;
+
+    font-weight: 600;
+}
+
+.pickup-cell span {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #87938d;
+
+    font-size: 11px;
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 6px 11px;
+
+    border-radius: 30px;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+}
+
+
+/* Pending */
+
+.status-badge.pending {
+    background: #fff7df;
+
+    color: #9a7312;
+
+    border: 1px solid #f0dfaa;
+}
+
+.status-badge.pending .status-dot {
+    background: #d9a91a;
+}
+
+
+/* Approved */
+
+.status-badge.approved {
+    background: #eaf7ef;
+
+    color: #187744;
+
+    border: 1px solid #d0ead9;
+}
+
+.status-badge.approved .status-dot {
+    background: #27a65a;
+}
+
+
+/* Rejected */
+
+.status-badge.rejected {
+    background: #fff0f0;
+
+    color: #b53b3b;
+
+    border: 1px solid #efd0d0;
+}
+
+.status-badge.rejected .status-dot {
+    background: #c94a4a;
+}
+
+
+/* Other */
+
+.status-badge.other {
+    background: #f1f4f2;
+
+    color: #65736b;
+
+    border: 1px solid #dfe6e1;
+}
+
+.status-badge.other .status-dot {
+    background: #87938d;
+}
+
+
+/* =====================================================
+   DETAILS BUTTON
+===================================================== */
+
+.details-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    min-width: 82px;
+
+    padding: 8px 12px;
+
+    border: 1px solid #cfe0d5;
+
+    background: #f7faf8;
+
+    color: #277747;
+
+    border-radius: 8px;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 11.5px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.details-btn:hover {
+    background: #eaf6ee;
+
+    border-color: #aecdba;
+}
+
+.details-btn .arrow {
+    font-size: 9px;
+
+    transition: transform 0.25s ease;
+}
+
+.details-btn.open {
+    background: #218c4b;
+
+    color: #ffffff;
+
+    border-color: #218c4b;
+}
+
+.details-btn.open .arrow {
+    transform: rotate(180deg);
+}
+
+
+/* =====================================================
+   EXPANDED DETAILS ROW
+===================================================== */
+
+.details-row {
+    display: none;
+}
+
+.details-row.show {
+    display: table-row;
+}
+
+.details-row > td {
+    padding: 0;
+
+    background: #f8fbf9;
+
+    border-bottom: 1px solid #dfe9e3;
+}
+
+
+/* =====================================================
+   DETAILS CONTAINER
+===================================================== */
+
+.details-container {
+    padding: 25px 28px 26px;
+
+    border-left: 4px solid #2b9254;
+
+    animation: detailsOpen 0.22s ease;
+}
+
+@keyframes detailsOpen {
+
+    from {
+        opacity: 0;
+
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: translateY(0);
+    }
+
+}
+
+
+/* =====================================================
+   DETAIL SECTION
+===================================================== */
+
+.detail-section {
+    background: #ffffff;
+
+    border: 1px solid #e1eae4;
+
+    border-radius: 12px;
+
+    padding: 18px 20px;
+
+    margin-bottom: 14px;
+}
+
+.detail-section h3 {
+    margin: 0 0 15px;
+
+    color: #205339;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   DETAIL GRID
+===================================================== */
+
+.detail-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(160px, 1fr));
+
+    gap: 14px 25px;
+}
+
+.detail-item span {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #8a968f;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+}
+
+.detail-item strong {
+    display: block;
+
+    color: #405349;
+
+    font-size: 12.5px;
+
+    font-weight: 500;
+
+    line-height: 1.5;
+
+    word-break: break-word;
+}
+
+
+/* =====================================================
+   ACTIONS
+===================================================== */
+
+.request-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding-top: 5px;
+}
+
+.request-actions form {
+    margin: 0;
+}
+
+
+/* =====================================================
+   APPROVE
+===================================================== */
+
+.approve-btn {
+    border: none;
+
+    background: #218c4b;
+
+    color: #ffffff;
+
+    padding: 10px 18px;
+
+    border-radius: 8px;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 12px rgba(33, 140, 75, 0.18);
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.approve-btn:hover {
+    background: #176c38;
+
+    transform: translateY(-1px);
+}
+
+
+/* =====================================================
+   REJECT
+===================================================== */
+
+.reject-btn {
+    border: 1px solid #e2bbbb;
+
+    background: #fff7f7;
+
+    color: #b53d3d;
+
+    padding: 9px 18px;
+
+    border-radius: 8px;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.reject-btn:hover {
+    background: #b53d3d;
+
+    color: #ffffff;
+
+    border-color: #b53d3d;
+}
+
+
+/* =====================================================
+   EMPTY STATE
+===================================================== */
+
+.empty-state {
+    background: #ffffff;
+
+    border: 1px solid #dfe9e3;
+
+    border-radius: 17px;
+
+    padding: 70px 25px;
+
+    text-align: center;
+
+    box-shadow:
+        0 8px 28px rgba(26, 76, 51, 0.06);
+}
+
+.empty-icon {
+    width: 62px;
+    height: 62px;
+
+    margin: 0 auto 15px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #eaf6ee;
+
+    border-radius: 16px;
+
+    font-size: 27px;
+}
+
+.empty-state h2 {
+    margin: 0;
+
+    color: #214c35;
+
+    font-size: 20px;
+}
+
+.empty-state p {
+    margin: 7px 0 0;
+
+    color: #7b8981;
+
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+    text-align: center;
+
+    color: #8a968f;
+
+    font-size: 11px;
+
+    padding: 20px;
+
+    border-top: 1px solid #e3ebe6;
+
+    background: #ffffff;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .requests-page {
+        width: 94%;
+    }
+
+    .page-heading {
+        align-items: flex-start;
+
+        gap: 20px;
+    }
+
+    .detail-grid {
+        grid-template-columns:
+            repeat(2, minmax(150px, 1fr));
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .requests-page {
+        width: 92%;
+
+        margin-top: 28px;
+    }
+
+    .page-heading {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .page-heading h1 {
+        font-size: 24px;
+    }
+
+    .request-count {
+        align-self: flex-start;
+    }
+
+    .requests-table-wrapper {
+        border-radius: 12px;
+    }
+
+    .details-container {
+        padding: 18px;
+
+        border-left-width: 3px;
+    }
+
+    .detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .request-actions {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .request-actions form {
+        width: 100%;
+    }
+
+    .approve-btn,
+    .reject-btn {
+        width: 100%;
+    }
+
+}

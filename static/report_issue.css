@@ -1,0 +1,696 @@
+/* =========================================================
+   DONOR REPORT PAGE
+========================================================= */
+
+.report-page {
+
+    width: 90%;
+
+    max-width: 900px;
+
+    margin: 40px auto 70px;
+}
+
+
+/* =========================================================
+   BACK LINK
+========================================================= */
+
+.back-link {
+
+    display: inline-block;
+
+    margin-bottom: 25px;
+
+    color: #555;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+
+.back-link:hover {
+
+    color: #2563eb;
+
+    transform: translateX(-2px);
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.report-header {
+
+    margin-bottom: 25px;
+}
+
+
+.report-header span {
+
+    display: inline-block;
+
+    color: #dc2626;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+
+    margin-bottom: 8px;
+}
+
+
+.report-header h1 {
+
+    margin: 0 0 8px;
+
+    color: #1f2937;
+
+    font-size: 34px;
+
+    font-weight: 700;
+}
+
+
+.report-header p {
+
+    margin: 0;
+
+    color: #6b7280;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   DONATION SUMMARY
+========================================================= */
+
+.donation-summary {
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 16px;
+
+    padding: 26px;
+
+    margin-bottom: 22px;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,0.06);
+}
+
+
+/* =========================================================
+   SUMMARY TOP
+========================================================= */
+
+.summary-top {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding-bottom: 20px;
+
+    margin-bottom: 20px;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+
+.small-label {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #9ca3af;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.2px;
+}
+
+
+.summary-top h2 {
+
+    margin: 0;
+
+    color: #1f2937;
+
+    font-size: 22px;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status-badge {
+
+    display: inline-block;
+
+    padding: 8px 15px;
+
+    border-radius: 30px;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   DETAILS GRID
+========================================================= */
+
+.details-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 13px;
+}
+
+
+.detail-box {
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    background: #f8fafc;
+
+    border: 1px solid #f1f5f9;
+}
+
+
+.detail-box span {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+
+.detail-box strong {
+
+    display: block;
+
+    color: #1f2937;
+
+    font-size: 14px;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   ADDRESS
+========================================================= */
+
+.address-box {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin-top: 15px;
+
+    padding: 16px;
+
+    border-radius: 10px;
+
+    background: #f8fafc;
+
+    border: 1px solid #f1f5f9;
+}
+
+
+.address-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #fee2e2;
+
+    font-size: 18px;
+}
+
+
+.address-box span {
+
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+
+.address-box strong {
+
+    color: #1f2937;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   REPORT CARD
+========================================================= */
+
+.report-card {
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 16px;
+
+    padding: 32px;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,0.06);
+}
+
+
+/* =========================================================
+   FORM HEADING
+========================================================= */
+
+.form-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 28px;
+}
+
+
+.warning-icon {
+
+    width: 46px;
+
+    height: 46px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 12px;
+
+    background: #fee2e2;
+
+    color: #dc2626;
+
+    font-size: 22px;
+}
+
+
+.form-heading h2 {
+
+    margin: 0 0 5px;
+
+    color: #1f2937;
+
+    font-size: 22px;
+}
+
+
+.form-heading p {
+
+    margin: 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   FORM GROUP
+========================================================= */
+
+.form-group {
+
+    margin-bottom: 23px;
+}
+
+
+.form-group label {
+
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #374151;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+
+.form-group label span {
+
+    color: #dc2626;
+}
+
+
+/* =========================================================
+   SELECT + TEXTAREA
+========================================================= */
+
+.form-group select,
+.form-group textarea {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 14px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 9px;
+
+    background: white;
+
+    color: #1f2937;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+
+.form-group select {
+
+    cursor: pointer;
+}
+
+
+.form-group select:focus,
+.form-group textarea:focus {
+
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37,99,235,0.10);
+}
+
+
+.form-group textarea {
+
+    min-height: 145px;
+
+    resize: vertical;
+
+    line-height: 1.6;
+}
+
+
+.textarea-info {
+
+    margin-top: 7px;
+
+    text-align: right;
+
+    color: #9ca3af;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   INFORMATION BOX
+========================================================= */
+
+.information-box {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 13px;
+
+    margin-bottom: 27px;
+
+    padding: 17px;
+
+    border: 1px solid #dbeafe;
+
+    border-radius: 10px;
+
+    background: #eff6ff;
+}
+
+
+.info-icon {
+
+    width: 25px;
+
+    height: 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+.information-box strong {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #1e40af;
+
+    font-size: 13px;
+}
+
+
+.information-box p {
+
+    margin: 0;
+
+    color: #1e40af;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.form-actions {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 12px;
+}
+
+
+.cancel-button {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 48px;
+
+    box-sizing: border-box;
+
+    border-radius: 9px;
+
+    background: #f3f4f6;
+
+    color: #374151;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    transition: 0.2s;
+}
+
+
+.cancel-button:hover {
+
+    background: #e5e7eb;
+}
+
+
+.report-button {
+
+    min-height: 48px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #dc2626;
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.report-button:hover {
+
+    background: #b91c1c;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 750px) {
+
+    .report-page {
+
+        width: 94%;
+
+        margin-top: 25px;
+    }
+
+
+    .details-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .report-card {
+
+        padding: 24px;
+    }
+
+}
+
+
+@media (max-width: 550px) {
+
+    .report-header h1 {
+
+        font-size: 28px;
+    }
+
+
+    .summary-top {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+
+    .details-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .form-actions {
+
+        grid-template-columns: 1fr;
+    }
+
+}

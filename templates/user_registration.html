@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1B4332">
+
+
+    <title>Donor Registration</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='user.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+<body>
+    <header>
+
+    <div class="logo">
+
+        <img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+        <div>
+
+            <h2>Food<span>ResQ</span></h2>
+
+            <p class="tagline">Turning <span>Surplus</span> into <span>Sustenance</span></p>
+
+        </div>
+
+    </div>
+    <nav>
+
+        <a href="/">Home</a>
+
+        <a href="/about">About</a>
+
+         <div class="dropdown">
+
+            <button class="dropbtn">
+
+                Register ▼
+
+            </button>
+
+            <div class="dropdown-content">
+
+                <a href="/user_registration">
+
+                    Donor Registration
+
+                </a>
+
+                <a href="/ngo_registration">
+
+                    NGO Registration
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- LOGIN -->
+
+        <div class="dropdown">
+
+            <button class="dropbtn">
+
+                Login ▼
+
+            </button>
+
+            <div class="dropdown-content">
+
+                <a href="/user_login">
+
+                    Donor Login
+
+                </a>
+
+                <a href="/ngo_login">
+
+                    NGO Login
+
+                </a>
+
+                <a href="/FRSq_adm_log">
+
+                    Admin Login
+
+                </a>
+
+            </div>
+
+        </div>
+    </nav>
+    </header>
+{% if error %}
+<div class="registration-error">
+    <span class="error-icon">⚠</span>
+    <span>{{ error }}</span>
+</div>
+{% endif %}
+<section class="register-container">
+
+    <div class="register-left">
+
+        <h1>Welcome to FoodResQ</h1>
+
+        <p>
+
+            Join our mission to reduce food waste and ensure
+            surplus food reaches people who need it the most.
+
+        </p>
+
+        <div class="feature">
+
+            ✓ Donate surplus food responsibly
+
+        </div>
+
+        <div class="feature">
+
+            ✓ Connect with trusted NGOs
+
+        </div>
+
+        <div class="feature">
+
+            ✓ Help feed communities in need
+
+        </div>
+
+        <div class="feature">
+
+            ✓ Be a part of positive change
+
+        </div>
+
+    </div>
+
+
+    <div class="register-box">
+
+        <h2>Create Donor Account</h2>
+
+        <form action="/register_user" method="POST">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <input type="text" name="name"
+            placeholder="Full Name" required>
+
+            <input type="email" name="email"
+            placeholder="Email Address" required>
+
+            <input type="text" name="phone"
+            placeholder="Phone Number" required>
+
+            <div class="password-field">
+
+    <input type="password"
+           name="password"
+           id="password"
+           placeholder="Password"
+           required>
+
+    <i class="fa-solid fa-eye password-toggle"
+       onclick="togglePassword('password', this)"></i>
+
+</div>
+
+
+
+<div class="password-field">
+
+    <input type="password"
+           name="confirm_password"
+           id="confirm_password"
+           placeholder="Confirm Password"
+           required>
+
+    <i class="fa-solid fa-eye password-toggle"
+       onclick="togglePassword('confirm_password', this)"></i>
+
+</div>
+
+            <button type="submit">
+
+                Register
+
+            </button>
+
+        </form>
+
+        <p class="login-link">
+
+            Already have an account?
+
+            <a href="/user_login">Login</a>
+
+        </p>
+
+    </div>
+
+</section>
+<script>
+
+
+
+function togglePassword(id, icon) {
+
+    const input = document.getElementById(id);
+
+    if (input.type === "password") {
+
+        input.type = "text";
+
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+
+    } else {
+
+        input.type = "password";
+
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+
+    }
+}
+
+
+
+</script>
+
+</body>
+
+</html>

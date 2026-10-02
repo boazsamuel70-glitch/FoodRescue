@@ -1,0 +1,841 @@
+/* =========================================================
+   FOODRESQ - FIND NEARBY NGOs
+   Larger / Readable UI
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f5f8f6;
+    color: #293b34;
+}
+
+
+/* =========================================================
+   MAIN PAGE
+========================================================= */
+
+.ngo-page {
+    width: 92%;
+    max-width: 1400px;
+    margin: 40px auto 70px;
+}
+
+
+/* =========================================================
+   BACK LINK
+========================================================= */
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 20px;
+
+    color: #68766f;
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    transition: 0.2s;
+}
+
+.back-link:hover {
+    color: #287a56;
+    transform: translateX(-3px);
+}
+
+
+/* =========================================================
+   PAGE HEADING
+========================================================= */
+
+.page-heading {
+    position: relative;
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e0e9e4;
+    border-radius: 20px;
+
+    padding: 38px 42px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 8px 28px rgba(36, 62, 50, 0.07);
+}
+
+.page-heading::after {
+    content: "";
+
+    position: absolute;
+
+    width: 250px;
+    height: 250px;
+
+    right: -90px;
+    top: -120px;
+
+    border-radius: 50%;
+
+    background: #eaf5ef;
+}
+
+.heading-content {
+    position: relative;
+    z-index: 1;
+}
+
+.small-heading {
+    display: block;
+
+    color: #36815f;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 8px;
+}
+
+.page-heading h1 {
+    color: #263a32;
+
+    font-size: 34px;
+    font-weight: 700;
+}
+
+.page-heading p {
+    max-width: 760px;
+
+    margin-top: 10px;
+
+    color: #77837e;
+
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   DONATION SUMMARY
+========================================================= */
+
+.donation-card {
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0e9e4;
+    border-radius: 17px;
+
+    padding: 22px 25px;
+
+    margin-bottom: 32px;
+
+    box-shadow:
+        0 7px 23px rgba(36, 62, 50, 0.05);
+}
+
+.donation-icon {
+    width: 58px;
+    height: 58px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: #eaf6f0;
+
+    font-size: 27px;
+}
+
+.donation-main {
+    flex: 1;
+    min-width: 230px;
+}
+
+.donation-main .label {
+    display: block;
+
+    color: #96a19c;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    letter-spacing: 1px;
+}
+
+.donation-main h2 {
+    margin-top: 3px;
+
+    color: #30443b;
+
+    font-size: 18px;
+    font-weight: 650;
+}
+
+.donation-main p {
+    margin-top: 3px;
+
+    color: #929d98;
+
+    font-size: 11px;
+}
+
+.donation-detail {
+    min-width: 130px;
+
+    padding-left: 22px;
+
+    border-left: 1px solid #e9eeeb;
+}
+
+.donation-detail span {
+    display: block;
+
+    color: #98a29e;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    letter-spacing: 0.7px;
+}
+
+.donation-detail strong {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #475a51;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   RESULTS HEADER
+========================================================= */
+
+.results-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+.section-label {
+    display: block;
+
+    color: #36815f;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 1.7px;
+}
+
+.results-header h2 {
+    margin-top: 5px;
+
+    color: #293d35;
+
+    font-size: 25px;
+    font-weight: 650;
+}
+
+.results-count {
+    display: flex;
+
+    align-items: center;
+    gap: 7px;
+
+    padding: 9px 15px;
+
+    background: #eaf6f0;
+
+    border: 1px solid #d6e9df;
+
+    border-radius: 22px;
+
+    color: #287452;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   NGO GRID
+========================================================= */
+
+.ngo-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 25px;
+}
+
+
+/* =========================================================
+   NGO CARD
+========================================================= */
+
+.ngo-card {
+    position: relative;
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #dfe8e3;
+
+    border-radius: 19px;
+
+    padding: 26px;
+
+    box-shadow:
+        0 8px 25px rgba(36, 62, 50, 0.06);
+
+    transition: 0.25s;
+}
+
+.ngo-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 4px;
+
+    background: #3b916b;
+}
+
+.ngo-card:hover {
+    transform: translateY(-6px);
+
+    border-color: #c4dbcf;
+
+    box-shadow:
+        0 18px 38px rgba(36, 62, 50, 0.11);
+}
+
+
+/* =========================================================
+   DISTANCE
+========================================================= */
+
+.distance-badge {
+    position: absolute;
+
+    top: 21px;
+    right: 21px;
+
+    padding: 7px 12px;
+
+    border-radius: 20px;
+
+    background: #edf7f2;
+
+    border: 1px solid #d5e9df;
+
+    color: #327654;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   NGO HEADER
+========================================================= */
+
+.ngo-top {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding-bottom: 20px;
+
+    margin-bottom: 20px;
+
+    border-bottom: 1px solid #e9eeeb;
+}
+
+.ngo-logo {
+    width: 58px;
+    height: 58px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background: #eaf6f0;
+
+    border: 1px solid #d5e8dd;
+
+    font-size: 25px;
+}
+
+.ngo-name {
+    min-width: 0;
+
+    padding-right: 75px;
+}
+
+.ngo-name h3 {
+    color: #2e4239;
+
+    font-size: 17px;
+    font-weight: 650;
+
+    line-height: 1.4;
+}
+
+.partner-id {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #929c98;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   NGO INFORMATION
+========================================================= */
+
+.ngo-info {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 16px;
+
+    margin-bottom: 18px;
+}
+
+.ngo-info-row {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+}
+
+.info-icon {
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background: #f0f7f3;
+
+    color: #347b5b;
+
+    font-size: 14px;
+}
+
+.ngo-info-row span {
+    display: block;
+
+    color: #929d98;
+
+    font-size: 9px;
+    font-weight: 600;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 3px;
+}
+
+.ngo-info-row strong {
+    display: block;
+
+    color: #52615a;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    line-height: 1.55;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.ngo-status {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 12px 14px;
+
+    margin: 18px 0;
+
+    border-radius: 10px;
+
+    background: #f7faf8;
+
+    border: 1px solid #e4ece8;
+
+    color: #65736d;
+
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+}
+
+.active-dot {
+    background: #3b9a68;
+
+    box-shadow:
+        0 0 0 4px rgba(59, 154, 104, 0.12);
+}
+
+.inactive-dot {
+    background: #a4aaa7;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.ngo-actions {
+    display: flex;
+
+    gap: 10px;
+}
+
+.assign-form {
+    flex: 1;
+
+    margin: 0;
+}
+
+.assign-btn {
+    width: 100%;
+
+    min-height: 44px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #287a56;
+
+    color: #ffffff;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 5px 13px rgba(40, 122, 86, 0.18);
+
+    transition: 0.25s;
+}
+
+.assign-btn:hover {
+    background: #206b4a;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 9px 18px rgba(40, 122, 86, 0.25);
+}
+
+.view-btn {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 44px;
+
+    padding: 0 17px;
+
+    border: 1px solid #d5e0db;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color: #607069;
+
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    transition: 0.25s;
+}
+
+.view-btn:hover {
+    border-color: #72a98e;
+
+    color: #287452;
+
+    background: #f3faf6;
+}
+
+
+/* =========================================================
+   DISABLED BUTTON
+========================================================= */
+
+.disabled-btn {
+    flex: 1;
+
+    min-height: 44px;
+
+    border: 1px solid #e0e5e2;
+
+    border-radius: 10px;
+
+    background: #f2f5f3;
+
+    color: #9ba49f;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 12px;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.no-results {
+    background: #ffffff;
+
+    border: 1px solid #e0e9e4;
+
+    border-radius: 19px;
+
+    padding: 75px 30px;
+
+    text-align: center;
+
+    box-shadow:
+        0 8px 25px rgba(36, 62, 50, 0.05);
+}
+
+.no-results-icon {
+    width: 80px;
+    height: 80px;
+
+    margin: 0 auto 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eaf6f0;
+
+    color: #287a56;
+
+    font-size: 32px;
+}
+
+.no-results h2 {
+    color: #34483f;
+
+    font-size: 21px;
+    font-weight: 600;
+}
+
+.no-results p {
+    max-width: 550px;
+
+    margin: 10px auto 22px;
+
+    color: #929b97;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+.back-dashboard {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 11px 20px;
+
+    border-radius: 9px;
+
+    background: #287a56;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    padding: 24px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border-top: 1px solid #e2eae6;
+
+    color: #89948f;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1150px) {
+
+    .ngo-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 800px) {
+
+    .donation-card {
+        flex-wrap: wrap;
+    }
+
+    .donation-main {
+        min-width: 200px;
+    }
+
+    .donation-detail {
+        padding-left: 0;
+
+        border-left: none;
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .ngo-page {
+        width: 94%;
+
+        margin-top: 25px;
+    }
+
+    .page-heading {
+        padding: 28px 25px;
+    }
+
+    .page-heading h1 {
+        font-size: 27px;
+    }
+
+    .page-heading p {
+        font-size: 13px;
+    }
+
+    .ngo-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .results-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+    .donation-card {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .donation-detail {
+        width: 100%;
+
+        padding-top: 12px;
+
+        border-top: 1px solid #e9eeeb;
+    }
+
+    .ngo-actions {
+        flex-direction: column;
+    }
+
+    .view-btn {
+        width: 100%;
+    }
+}

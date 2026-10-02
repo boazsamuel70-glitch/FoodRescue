@@ -1,0 +1,874 @@
+/* ================================================= */
+/* RESET */
+/* ================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+    margin: 0;
+
+    font-family: 'Poppins', sans-serif;
+
+    background: #f4f7f2;
+
+    color: #26352a;
+}
+
+
+
+/* ================================================= */
+/* HEADER */
+/* ================================================= */
+
+.logout {
+
+    text-decoration: none;
+
+    background: white;
+
+    color: #1b7f5a;
+
+    padding: 10px 22px;
+
+    border-radius: 25px;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+
+.logout:hover {
+
+    background: #eef7e9;
+
+    transform: translateY(-1px);
+}
+
+
+
+/* ================================================= */
+/* PAGE */
+/* ================================================= */
+
+.donation-page {
+
+    max-width: 1400px;
+
+    margin: 40px auto;
+
+    padding: 0 30px;
+
+    display: grid;
+
+    grid-template-columns: 0.8fr 1.2fr;
+
+    gap: 45px;
+
+    align-items: start;
+}
+
+
+
+/* ================================================= */
+/* LEFT SIDE */
+/* ================================================= */
+
+.donation-left {
+
+    padding: 20px 10px;
+}
+
+
+.badge {
+
+    display: inline-block;
+
+    background: #e7f1dd;
+
+    color: #5d8c38;
+
+    padding: 8px 15px;
+
+    border-radius: 30px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+.donation-left h1 {
+
+    margin: 20px 0;
+
+    font-size: 47px;
+
+    line-height: 1.15;
+
+    color: #26352a;
+}
+
+
+.donation-left > p {
+
+    color: #68736c;
+
+    font-size: 15px;
+
+    line-height: 1.8;
+}
+
+
+
+/* ================================================= */
+/* GUIDELINES */
+/* ================================================= */
+
+.tips {
+
+    margin-top: 30px;
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 17px;
+
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.06);
+}
+
+
+.tips h3 {
+
+    margin-top: 0;
+
+    color: #527b35;
+}
+
+
+.tips ul {
+
+    list-style: none;
+
+    padding: 0;
+
+    margin: 0;
+}
+
+
+.tips li {
+
+    margin: 11px 0;
+
+    font-size: 13px;
+
+    color: #606a63;
+
+    line-height: 1.5;
+}
+
+
+
+/* ================================================= */
+/* IMAGE */
+/* ================================================= */
+
+.pic {
+
+    margin-top: 30px;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+}
+
+
+.pic img {
+
+    display: block;
+
+    width: 100%;
+
+    height: 240px;
+
+    object-fit: cover;
+}
+
+
+
+/* ================================================= */
+/* QUOTE */
+/* ================================================= */
+
+.quote {
+
+    text-align: center;
+
+    margin-top: 20px;
+}
+
+
+.quote h2 {
+
+    color: #5a793f;
+
+    font-size: 18px;
+
+    line-height: 1.6;
+
+    font-weight: 500;
+}
+
+
+
+/* ================================================= */
+/* FORM CARD */
+/* ================================================= */
+
+.donation-form {
+
+    background: white;
+
+    padding: 32px;
+
+    border-radius: 20px;
+
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+}
+
+
+.donation-form > h2 {
+
+    margin: 0;
+
+    font-size: 29px;
+
+    color: #29362c;
+}
+
+
+.form-subtitle {
+
+    margin: 7px 0 25px;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+
+    color: #7b837d;
+}
+
+
+
+/* ================================================= */
+/* FORM SECTIONS */
+/* ================================================= */
+
+.form-section {
+
+    margin-top: 22px;
+
+    padding: 24px;
+
+    border: 1px solid #e3e9e1;
+
+    border-radius: 16px;
+
+    background: #fcfdfb;
+}
+
+
+.section-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding-bottom: 16px;
+
+    margin-bottom: 8px;
+
+    border-bottom: 1px solid #e5eae3;
+}
+
+
+.section-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background: #e8f2df;
+
+    font-size: 20px;
+
+    flex-shrink: 0;
+}
+
+
+.section-heading h3 {
+
+    margin: 0;
+
+    font-size: 17px;
+
+    color: #3f5f2d;
+}
+
+
+.section-heading p {
+
+    margin: 2px 0 0;
+
+    font-size: 11px;
+
+    color: #858d87;
+}
+
+
+
+/* ================================================= */
+/* LABELS */
+/* ================================================= */
+
+.donation-form label {
+
+    display: block;
+
+    margin-top: 17px;
+
+    margin-bottom: 7px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #454e48;
+}
+
+
+
+/* ================================================= */
+/* INPUTS */
+/* ================================================= */
+
+.donation-form input,
+.donation-form select,
+.donation-form textarea {
+
+    width: 100%;
+
+    padding: 12px 13px;
+
+    border: 1px solid #d9e0d8;
+
+    border-radius: 9px;
+
+    background: white;
+
+    outline: none;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 13px;
+
+    color: #333;
+
+    transition: 0.2s;
+}
+
+
+.donation-form input:focus,
+.donation-form select:focus,
+.donation-form textarea:focus {
+
+    border-color: #78a653;
+
+    box-shadow: 0 0 0 3px rgba(108, 156, 67, 0.10);
+}
+
+
+.donation-form textarea {
+
+    resize: vertical;
+
+    min-height: 45px;
+}
+
+
+
+/* ================================================= */
+/* FULL ADDRESS */
+/* ================================================= */
+
+/*
+   Address is now typed manually by the donor.
+   It MUST NOT look disabled.
+*/
+
+#address {
+
+    background: #ffffff;
+
+    cursor: text;
+
+    min-height: 95px;
+
+    line-height: 1.6;
+}
+
+
+#address::placeholder {
+
+    color: #9aa39c;
+}
+
+
+
+/* ================================================= */
+/* LANDMARK */
+/* ================================================= */
+
+#landmark {
+
+    background: #ffffff;
+}
+
+
+#landmark::placeholder {
+
+    color: #9aa39c;
+}
+
+
+
+/* ================================================= */
+/* LOCATION SEARCH */
+/* ================================================= */
+
+.location-box {
+
+    display: flex;
+
+    gap: 8px;
+
+    width: 100%;
+}
+
+
+.location-box input {
+
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+.search-btn {
+
+    border: none;
+
+    padding: 0 18px;
+
+    border-radius: 9px;
+
+    background: #6d9e45;
+
+    color: white;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition: 0.2s;
+}
+
+
+.search-btn:hover {
+
+    background: #557e36;
+
+    transform: translateY(-1px);
+}
+
+
+
+/* ================================================= */
+/* CURRENT LOCATION */
+/* ================================================= */
+
+.current-location-btn {
+
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding: 11px;
+
+    border-radius: 9px;
+
+    border: 1px solid #bdd0ae;
+
+    background: #eff6ea;
+
+    color: #557d38;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.current-location-btn:hover {
+
+    background: #e4efdc;
+
+    transform: translateY(-1px);
+}
+
+
+
+/* ================================================= */
+/* MAP NOTE */
+/* ================================================= */
+
+.map-note {
+
+    font-size: 11px;
+
+    line-height: 1.7;
+
+    color: #858d87;
+
+    margin: 10px 0;
+}
+
+
+
+/* ================================================= */
+/* MAP */
+/* ================================================= */
+
+#map {
+
+    width: 100%;
+
+    height: 350px;
+
+    margin-top: 12px;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    border: 1px solid #d8dfd6;
+
+    z-index: 1;
+}
+
+
+
+/* ================================================= */
+/* MAP LOCATION SELECTED MESSAGE */
+/* ================================================= */
+
+#latitude:not([value=""]) {
+
+    /* Coordinates are hidden inputs.
+       This rule intentionally does not visually display them. */
+}
+
+
+
+/* ================================================= */
+/* ROW */
+/* ================================================= */
+
+.row {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 15px;
+}
+
+
+
+/* ================================================= */
+/* DATE & TIME INPUTS */
+/* ================================================= */
+
+.donation-form input[type="date"],
+.donation-form input[type="time"] {
+
+    cursor: pointer;
+}
+
+
+
+/* ================================================= */
+/* SELECT DROPDOWNS */
+/* ================================================= */
+
+.donation-form select {
+
+    cursor: pointer;
+}
+
+
+
+/* ================================================= */
+/* SUBMIT AREA */
+/* ================================================= */
+
+.submit-area {
+
+    margin-top: 25px;
+
+    padding: 22px;
+
+    background: #f0f6eb;
+
+    border-radius: 15px;
+
+    text-align: center;
+}
+
+
+.submit-area p {
+
+    margin: 0 0 15px;
+
+    font-size: 12px;
+
+    color: #6f796f;
+}
+
+
+.donate-btn {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #6d9e45;
+
+    color: white;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.donate-btn:hover {
+
+    background: #557e36;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 6px 16px rgba(85, 126, 54, 0.25);
+}
+
+
+
+/* ================================================= */
+/* REQUIRED FIELD VISUAL */
+/* ================================================= */
+
+.donation-form input:required:invalid,
+.donation-form select:required:invalid,
+.donation-form textarea:required:invalid {
+
+    /* Don't show red borders before the user interacts */
+}
+
+
+.donation-form input:focus:invalid,
+.donation-form select:focus:invalid,
+.donation-form textarea:focus:invalid {
+
+    border-color: #d6a84f;
+}
+
+
+
+/* ================================================= */
+/* RESPONSIVE */
+/* ================================================= */
+
+@media (max-width: 1050px) {
+
+    .donation-page {
+
+        grid-template-columns: 1fr;
+
+        gap: 30px;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    header {
+
+        height: auto;
+
+        padding: 15px 20px;
+
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+
+    nav {
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 12px;
+    }
+
+
+    .donation-page {
+
+        padding: 0 15px;
+
+        margin-top: 20px;
+    }
+
+
+    .donation-form {
+
+        padding: 18px;
+    }
+
+
+    .donation-left h1 {
+
+        font-size: 36px;
+    }
+
+
+    .form-section {
+
+        padding: 18px;
+    }
+
+
+    .row {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .location-box {
+
+        flex-direction: column;
+    }
+
+
+    .search-btn {
+
+        padding: 12px;
+
+        width: 100%;
+    }
+
+
+    #map {
+
+        height: 280px;
+    }
+
+}
+
+
+@media (max-width: 450px) {
+
+    .donation-page {
+
+        padding: 0 10px;
+    }
+
+
+    .donation-form {
+
+        padding: 14px;
+    }
+
+
+    .form-section {
+
+        padding: 15px;
+    }
+
+
+    .section-heading {
+
+        gap: 10px;
+    }
+
+
+    .section-icon {
+
+        width: 38px;
+
+        height: 38px;
+
+        font-size: 18px;
+    }
+
+
+    .section-heading h3 {
+
+        font-size: 15px;
+    }
+
+
+    .section-heading p {
+
+        font-size: 10px;
+    }
+
+}

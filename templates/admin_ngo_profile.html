@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>{{ ngo.ngo_name }} | FoodResQ Admin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='common.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='admin_dashboard.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='admin_ngos.css') }}">
+
+<script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+{% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+<script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+{% endif %}{% endwith %}
+
+<script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+
+<img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+<div>
+<h2>Food<span>ResQ</span></h2>
+<p class="tagline">
+Turning <span>Surplus</span> into <span>Sustenance</span>
+</p>
+</div>
+
+</div>
+
+
+<nav>
+
+<a href="/admin_dashboard">Dashboard</a>
+
+
+<a href="/logout" class="logout">Logout</a>
+
+</nav>
+
+</header>
+
+
+<div class="container">
+
+
+<a href="{{ url_for('admin_ngos') }}" class="clear-search">
+← Back to NGOs
+</a>
+
+
+<section class="page-header ngo-profile-head">
+
+<div>
+
+<h1>🤝 {{ ngo.ngo_name }}</h1>
+
+<p>
+    {% if ngo.partner_id %}
+        Partner ID {{ ngo.partner_id }}
+    {% else %}
+        No partner ID issued yet
+    {% endif %}
+    &middot;
+    Registered
+    {% if ngo.registered_on %}
+        {{ ngo.registered_on }}
+    {% else %}
+        date unknown
+    {% endif %}
+</p>
+
+</div>
+
+<span class="status {{ (ngo.status or 'unknown')|lower }}">
+    {{ ngo.status or 'Unknown' }}
+</span>
+
+</section>
+
+
+<!-- SUMMARY -->
+
+<section class="ngo-stats">
+
+    <div class="stat">
+        <span class="stat-label">Donations Handled</span>
+        <span class="stat-value">{{ stats.handled or 0 }}</span>
+    </div>
+
+    <div class="stat">
+        <span class="stat-label">Completed</span>
+        <span class="stat-value">{{ stats.completed or 0 }}</span>
+    </div>
+
+    <div class="stat">
+        <span class="stat-label">Food Moved</span>
+        <span class="stat-value">{{ stats.quantity or 0 }}</span>
+    </div>
+
+</section>
+
+
+<!-- DETAILS -->
+
+<section class="ngo-table">
+
+<h2>Organisation Details</h2>
+
+<dl class="detail-list">
+
+    <div>
+        <dt>Contact Person</dt>
+        <dd>{{ ngo.person_name or '—' }}</dd>
+    </div>
+
+    <div>
+        <dt>Email</dt>
+        <dd>{{ ngo.email or '—' }}</dd>
+    </div>
+
+    <div>
+        <dt>Phone</dt>
+        <dd>{{ ngo.phone or '—' }}</dd>
+    </div>
+
+    <div>
+        <dt>Registration No.</dt>
+        <dd>{{ ngo.registration_number or '—' }}</dd>
+    </div>
+
+    <div>
+        <dt>Service Area</dt>
+        <dd>{{ ngo.service_area or '—' }}</dd>
+    </div>
+
+    <div class="wide">
+        <dt>Address</dt>
+        <dd>{{ ngo.address or '—' }}</dd>
+    </div>
+
+</dl>
+
+</section>
+
+
+<!-- ACTIONS -->
+
+<section class="ngo-table">
+
+<h2>Admin Actions</h2>
+
+<div class="ngo-actions">
+
+{% if ngo.status == 'Active' %}
+
+    <form method="POST"
+          action="{{ url_for('admin_set_ngo_status', ngo_id=ngo.ngo_id) }}"
+          onsubmit="return confirm(
+              'Mark {{ ngo.ngo_name }} as inactive? They will stop receiving new assignments.'
+          );">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="new_status" value="Inactive">
+        <button type="submit" class="danger-btn">
+            ⏸ Mark Inactive
+        </button>
+    </form>
+
+{% else %}
+
+    <form method="POST"
+          action="{{ url_for('admin_set_ngo_status', ngo_id=ngo.ngo_id) }}"
+          onsubmit="return confirm(
+              'Mark {{ ngo.ngo_name }} as active? They will start receiving assignments.'
+          );">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="new_status" value="Active">
+        <button type="submit" class="view-btn">
+            ▶ Mark Active
+        </button>
+    </form>
+
+{% endif %}
+
+</div>
+
+</section>
+
+
+<!-- DONATION HISTORY -->
+
+<section class="ngo-table">
+
+<h2>Recent Donations Handled</h2>
+
+<div class="table-scroll">
+
+<table>
+
+<thead>
+<tr>
+    <th>ID</th>
+    <th>Food</th>
+    <th>Quantity</th>
+    <th>Donor</th>
+    <th>Pickup Date</th>
+    <th>Status</th>
+    <th>Action</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for donation in donations %}
+
+<tr>
+    <td>{{ donation.donation_id }}</td>
+    <td class="ngo-name">{{ donation.food_name }}</td>
+    <td>{{ donation.quantity }} {{ donation.quantity_unit or '' }}</td>
+    <td>{{ donation.donor_name or '—' }}</td>
+    <td>{{ donation.pickup_date or '—' }}</td>
+    <td>
+        <span class="status {{ (donation.status or 'unknown')|lower|replace(' ', '-') }}">
+            {{ donation.status }}
+        </span>
+    </td>
+    <td>
+        <a class="view-btn"
+           href="{{ url_for('admin_donation', donation_id=donation.donation_id) }}">
+            View
+        </a>
+    </td>
+</tr>
+
+{% else %}
+
+<tr class="empty-row">
+    <td colspan="7">
+        This NGO has not been assigned any donations yet.
+    </td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+</div>
+
+
+</body>
+
+</html>

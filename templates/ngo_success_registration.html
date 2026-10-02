@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Registration Successful - FoodResQ</title>
+
+    <!-- NGO CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='ngo.css') }}">
+
+    <!-- Common CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+     ========================= -->
+
+<header>
+
+    <div class="logo">
+
+        <img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+        <div>
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p class="tagline">
+
+                Turning
+                <span>Surplus</span>
+                into
+                <span>Sustenance</span>
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/about">
+            About
+        </a>
+
+        <a href="/ngo_login">
+            NGO Login
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- =========================
+     SUCCESS PAGE
+     ========================= -->
+
+<main class="success-page">
+
+    <div class="card">
+
+
+        <!-- SUCCESS ICON -->
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+
+        <!-- HEADING -->
+
+        <h1>
+            Registration Successful
+        </h1>
+
+
+        <!-- MESSAGE -->
+
+        <p class="success-message">
+
+            <b>{{ ngo_name }}</b>
+            has been successfully registered with
+            FoodResQ.
+
+        </p>
+
+
+        <!-- PARTNER ID -->
+
+        <div class="partner">
+
+            <span>
+                FoodResQ Partner ID
+            </span>
+
+            <h2>
+                {{ partner_id }}
+            </h2>
+
+        </div>
+
+
+        <!-- INFORMATION -->
+
+        <p class="save-message">
+
+            Please save this Partner ID for future reference.
+
+        </p>
+
+
+        <!-- VERIFICATION MESSAGE -->
+
+        <div class="verification-message">
+
+            <strong>
+                ⏳ Verification Pending
+            </strong>
+
+            <p>
+                Your NGO application will be reviewed by
+                the FoodResQ administration. You will be able
+                to access NGO services after your organization
+                has been verified and approved.
+            </p>
+
+        </div>
+
+
+        <!-- LOGIN BUTTON -->
+
+        <a href="/ngo_login"
+           class="success-btn">
+
+            Proceed to Login
+
+        </a>
+
+
+        <!-- HOME LINK -->
+
+        <a href="/"
+           class="home-link">
+
+            ← Back to Home
+
+        </a>
+
+
+    </div>
+
+</main>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Reports | FoodResQ</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='admin_reports.css') }}">
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+
+        <img src="{{ url_for(
+            'static',
+            filename='images/homepgs.png'
+        ) }}">
+
+        <div>
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p>
+                Rescue. Reuse. Restore.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="{{ url_for('admin_dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<main class="reports-page">
+
+
+    <section class="page-heading">
+
+        <span>
+            ADMINISTRATION
+        </span>
+
+        <h1>
+            Reports
+        </h1>
+
+        <p>
+            Review and manage issues reported by
+            donors and NGOs.
+        </p>
+
+    </section>
+
+
+
+    <section class="report-options">
+
+
+        <!-- DONOR REPORTS -->
+
+        <div class="report-card">
+
+            <div class="report-icon">
+                👤
+            </div>
+
+            <div class="report-content">
+
+                <span class="category">
+                    DONOR REPORTS
+                </span>
+
+                <h2>
+                    Donor Issues
+                </h2>
+
+                <p>
+                    View issues submitted by donors
+                    regarding their donations, pickups
+                    and NGO interactions.
+                </p>
+
+
+                <div class="report-footer">
+
+                    <div>
+
+                        <strong>
+                            {{ donor_count }}
+                        </strong>
+
+                        <small>
+                            Pending Reports
+                        </small>
+
+                    </div>
+
+
+                    <a href="{{ url_for(
+                        'admin_donor_reports'
+                    ) }}">
+
+                        View Reports
+                        <span>→</span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- NGO REPORTS -->
+
+        <div class="report-card">
+
+            <div class="report-icon">
+                🏢
+            </div>
+
+            <div class="report-content">
+
+                <span class="category">
+                    NGO REPORTS
+                </span>
+
+                <h2>
+                    NGO Issues
+                </h2>
+
+                <p>
+                    View issues reported by NGOs during
+                    donation verification, pickup and
+                    collection.
+                </p>
+
+
+                <div class="report-footer">
+
+                    <div>
+
+                        <strong>
+                            {{ ngo_count }}
+                        </strong>
+
+                        <small>
+                            Pending Reports
+                        </small>
+
+                    </div>
+
+
+                    <a href="{{ url_for(
+                        'admin_ngo_reports'
+                    ) }}">
+
+                        View Reports
+                        <span>→</span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+</body>
+
+</html>

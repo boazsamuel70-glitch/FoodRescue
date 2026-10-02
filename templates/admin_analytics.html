@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Analytics | FoodResQ Admin</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='common.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='admin_dashboard.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='admin_analytics.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='analytics_modern.css') }}">
+
+<script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+{% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+<script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+{% endif %}{% endwith %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+
+<div class="logo">
+
+<img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+<div>
+
+<h2>Food<span>ResQ</span></h2>
+
+<p class="tagline">
+Turning <span>Surplus</span> into <span>Sustenance</span>
+</p>
+
+</div>
+
+</div>
+
+
+<nav>
+
+<a href="/admin_dashboard">
+Dashboard
+</a>
+
+
+<a href="/logout" class="logout">
+Logout
+</a>
+
+</nav>
+
+
+</header>
+
+
+<!-- MAIN -->
+
+<main class="analytics-page">
+
+
+<div class="page-head">
+
+<div>
+
+<h1>Platform Analytics</h1>
+
+<p>
+How donations are flowing through FoodResQ, and who is
+moving them.
+</p>
+
+</div>
+
+<a class="print-btn" href="#" onclick="window.print(); return false;">
+🖨 Print report
+</a>
+
+</div>
+
+<section class="month-filter-card">
+    <div class="mf-title">
+        <span class="month-filter-label">ANALYSIS PERIOD</span>
+        <h2>{{ selected_month_label }}</h2>
+        <p class="mf-sub">Records begin August 2026. Upcoming months are ready and fill in automatically.</p>
+    </div>
+    <form method="get" action="{{ url_for('admin_analytics') }}" class="month-filter-form">
+        <label for="analytics-month">Choose month</label>
+        <select id="analytics-month" name="month" onchange="this.form.submit()">
+            <option value="">All Time</option>
+            <optgroup label="Recorded months">
+            {% for m in month_choices if not m.future %}
+            <option value="{{ m.value }}" {% if selected_month == m.value %}selected{% endif %}>{{ m.label }}</option>
+            {% endfor %}
+            </optgroup>
+            <optgroup label="Upcoming months">
+            {% for m in month_choices if m.future %}
+            <option value="{{ m.value }}" {% if selected_month == m.value %}selected{% endif %}>{{ m.label }}</option>
+            {% endfor %}
+            </optgroup>
+        </select>
+        {% if selected_month %}<a href="{{ url_for('admin_analytics') }}" class="clear-month">Clear</a>{% endif %}
+    </form>
+</section>
+
+<!-- =================================================
+     HEADLINE NUMBERS
+================================================== -->
+
+<section class="kpi-grid">
+
+    <div class="kpi">
+        <span class="kpi-label">Total Donations</span>
+        <span class="kpi-value">{{ total_donations }}</span>
+        <span class="kpi-foot">{{ pending }} awaiting action</span>
+    </div>
+
+    <div class="kpi kpi-good">
+        <span class="kpi-label">Completed</span>
+        <span class="kpi-value">{{ completed }}</span>
+        <span class="kpi-foot">{{ completion_rate }}% completion rate</span>
+    </div>
+
+    <div class="kpi">
+        <span class="kpi-label">Food Rescued</span>
+        <span class="kpi-value">{{ food_rescued }}</span>
+        <span class="kpi-foot">units from completed donations</span>
+    </div>
+
+    <div class="kpi">
+        <span class="kpi-label">People Served</span>
+        <span class="kpi-value">{{ people_served }}</span>
+        <span class="kpi-foot">reported by NGO distributions</span>
+    </div>
+
+    <div class="kpi">
+        <span class="kpi-label">Active NGOs</span>
+        <span class="kpi-value">{{ active_ngos }}</span>
+        <span class="kpi-foot">{{ total_ngos }} registered in total</span>
+    </div>
+
+    <div class="kpi">
+        <span class="kpi-label">Registered Donors</span>
+        <span class="kpi-value">{{ total_donors }}</span>
+        <span class="kpi-foot">
+            {% if avg_rating %}
+                avg donor rating {{ avg_rating }} / 5
+            {% else %}
+                no ratings yet
+            {% endif %}
+        </span>
+    </div>
+
+</section>
+
+
+<!-- =================================================
+     ATTENTION STRIP
+================================================== -->
+
+{% if open_reports or pending_applications %}
+
+<section class="attention">
+
+    {% if pending_applications %}
+    <a class="attention-item" href="{{ url_for('ngo_applications') }}">
+        <strong>{{ pending_applications }}</strong>
+        NGO application{{ '' if pending_applications == 1 else 's' }}
+        waiting for review
+    </a>
+    {% endif %}
+
+    {% if open_reports %}
+    <a class="attention-item warn" href="{{ url_for('admin_reports') }}">
+        <strong>{{ open_reports }}</strong>
+        unresolved issue report{{ '' if open_reports == 1 else 's' }}
+    </a>
+    {% endif %}
+
+</section>
+
+{% endif %}
+
+
+<!-- =================================================
+     PIPELINE + FOOD TYPE
+================================================== -->
+
+<section class="chart-row">
+
+
+<!-- DONATION PIPELINE -->
+
+<div class="card">
+
+<h2>Donation Pipeline</h2>
+
+{% if status_rows %}
+
+    {% set status_max = status_rows|map(attribute='total')|max %}
+
+    <ul class="bar-list">
+
+    {% for row in status_rows %}
+
+        <li>
+
+            <span class="bar-label">{{ row.status or 'Unknown' }}</span>
+
+            <span class="bar-track">
+                <span class="bar-fill status-{{ (row.status or 'unknown')|lower|replace(' ', '-') }}"
+                      style="width: {{ (row.total / status_max * 100)|round(1) }}%;"></span>
+            </span>
+
+            <span class="bar-value">{{ row.total }}</span>
+
+        </li>
+
+    {% endfor %}
+
+    </ul>
+
+{% else %}
+
+    <p class="empty">No donations recorded yet.</p>
+
+{% endif %}
+
+</div>
+
+
+<!-- FOOD TYPE DONUT -->
+
+<div class="card">
+
+<h2>Food Type Split</h2>
+
+{% if food_rows %}
+
+    {% set food_total = food_rows|sum(attribute='total') %}
+    {% set palette = ['#2E7D32', '#4CAF50', '#A9D96D', '#1565C0', '#B26A00', '#8AA396'] %}
+
+    <div class="donut-wrap">
+
+        <svg viewBox="0 0 42 42" class="donut" role="img"
+             aria-label="Donations by food type">
+
+            <circle class="donut-hole" cx="21" cy="21" r="15.9"></circle>
+
+            {% set ns = namespace(offset=25) %}
+
+            {% for row in food_rows %}
+
+                {% set pct = (row.total / food_total * 100) %}
+
+                <circle cx="21" cy="21" r="15.9"
+                        fill="transparent"
+                        stroke="{{ palette[loop.index0 % palette|length] }}"
+                        stroke-width="6"
+                        stroke-dasharray="{{ pct|round(2) }} {{ (100 - pct)|round(2) }}"
+                        stroke-dashoffset="{{ ns.offset }}">
+                    <title>{{ row.food_type }}: {{ row.total }}</title>
+                </circle>
+
+                {% set ns.offset = ns.offset - pct %}
+
+            {% endfor %}
+
+        </svg>
+
+        <div class="donut-centre">
+            <strong>{{ food_total }}</strong>
+            <span>donations</span>
+        </div>
+
+    </div>
+
+    <ul class="legend">
+
+    {% for row in food_rows %}
+
+        <li>
+            <span class="swatch"
+                  style="background: {{ palette[loop.index0 % palette|length] }};"></span>
+            <span class="legend-name">{{ row.food_type }}</span>
+            <span class="legend-value">
+                {{ row.total }}
+                ({{ (row.total / food_total * 100)|round }}%)
+            </span>
+        </li>
+
+    {% endfor %}
+
+    </ul>
+
+{% else %}
+
+    <p class="empty">No donations recorded yet.</p>
+
+{% endif %}
+
+</div>
+
+
+</section>
+
+
+<!-- =================================================
+     MONTHLY TREND
+================================================== -->
+
+<section class="card wide trend-card">
+
+<div class="trend-head">
+    <div>
+        <h2>Monthly Donations</h2>
+        <p class="trend-sub">August 2026 onwards, including upcoming months</p>
+    </div>
+    <ul class="legend inline">
+        <li><span class="swatch sw-total"></span> Received</li>
+        <li><span class="swatch sw-done"></span> Completed</li>
+        <li><span class="swatch sw-future"></span> Upcoming</li>
+    </ul>
+</div>
+
+{% set month_max = [monthly_rows|map(attribute='total')|max, 1]|max %}
+
+<div class="trend2-scroll" tabindex="0" aria-label="Monthly donations chart">
+<div class="trend2">
+
+{% for row in monthly_rows %}
+    <a class="t2-col {% if row.future %}is-future{% endif %} {% if row.current %}is-current{% endif %} {% if selected_month == row.ym %}is-selected{% endif %}"
+       href="{{ url_for('admin_analytics', month=row.ym) }}"
+       title="{{ row.label }} {{ row.year }}: {{ row.total }} received, {{ row.completed }} completed">
+
+        <span class="t2-count">{{ row.total if row.total or not row.future else '' }}</span>
+
+        <div class="t2-track">
+            <div class="t2-total" style="height: {{ (row.total / month_max * 100)|round(1) }}%;">
+                <div class="t2-done" style="height: {{ (row.completed / row.total * 100)|round(1) if row.total else 0 }}%;"></div>
+            </div>
+        </div>
+
+        <span class="t2-label">{{ row.label }}</span>
+        <span class="t2-year">{{ row.year }}</span>
+        {% if row.current %}<span class="t2-now">Now</span>{% endif %}
+    </a>
+{% endfor %}
+
+</div>
+</div>
+
+</section>
+
+
+<!-- =================================================
+     LEADERBOARDS
+================================================== -->
+
+<section class="chart-row three">
+
+
+<div class="card">
+
+<h2>Top NGOs</h2>
+
+{% if top_ngos %}
+
+    <table class="rank">
+
+    <thead>
+    <tr>
+        <th>NGO</th>
+        <th>Handled</th>
+        <th>Completed</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    {% for row in top_ngos %}
+    <tr>
+        <td>{{ row.ngo_name }}</td>
+        <td>{{ row.handled }}</td>
+        <td><strong>{{ row.completed }}</strong></td>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+
+    </table>
+
+{% else %}
+
+    <p class="empty">No NGO has been assigned a donation yet.</p>
+
+{% endif %}
+
+</div>
+
+
+<div class="card">
+
+<h2>Top Donors</h2>
+
+{% if top_donors %}
+
+    <table class="rank">
+
+    <thead>
+    <tr>
+        <th>Donor</th>
+        <th>Donations</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    {% for row in top_donors %}
+    <tr>
+        <td>{{ row.name }}</td>
+        <td><strong>{{ row.donations }}</strong></td>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+
+    </table>
+
+{% else %}
+
+    <p class="empty">No donations recorded yet.</p>
+
+{% endif %}
+
+</div>
+
+
+<div class="card">
+
+<h2>Most Active Cities</h2>
+
+{% if top_cities %}
+
+    {% set city_max = top_cities|map(attribute='total')|max %}
+
+    <ul class="bar-list compact">
+
+    {% for row in top_cities %}
+
+        <li>
+            <span class="bar-label">{{ row.city }}</span>
+            <span class="bar-track">
+                <span class="bar-fill"
+                      style="width: {{ (row.total / city_max * 100)|round(1) }}%;"></span>
+            </span>
+            <span class="bar-value">{{ row.total }}</span>
+        </li>
+
+    {% endfor %}
+
+    </ul>
+
+{% else %}
+
+    <p class="empty">No donations recorded yet.</p>
+
+{% endif %}
+
+</div>
+
+
+</section>
+
+
+</main>
+
+
+</body>
+
+</html>

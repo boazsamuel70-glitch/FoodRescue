@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>NGO Registration - FoodResQ</title>
+
+
+    <!-- COMMON CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+
+    <!-- NGO CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='ngo_registration.css') }}">
+
+
+    <!-- LEAFLET CSS -->
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- FoodResQ website alert system -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+
+    {% with _frq = get_flashed_messages(with_categories=true) %}
+        {% if _frq %}
+            <script>
+                window.FOODRESQ_FLASH = {{ _frq|tojson }};
+            </script>
+        {% endif %}
+    {% endwith %}
+
+<script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header>
+
+    <div class="logo">
+
+        <img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+        <div>
+
+            <h2>Food<span>ResQ</span></h2>
+
+            <p class="tagline">
+                Turning <span>Surplus</span> into <span>Sustenance</span>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="/">Home</a>
+
+        <a href="/about">About</a>
+
+
+        {% if session.get("role") == "donor" %}
+
+            <a href="/donate">Donate Food</a>
+
+            <a href="/my_donations">My Donations</a>
+
+            <span class="welcome">
+                Welcome, {{ session["user_name"] }}
+            </span>
+
+            <a href="/logout" class="nav-btn">
+                Logout
+            </a>
+
+
+        {% elif session.get("role") == "ngo" %}
+
+            <a href="/ngo_home">Dashboard</a>
+
+            <span class="welcome">
+                {{ session["ngo_name"] }}
+            </span>
+
+            <a href="/logout" class="nav-btn">
+                Logout
+            </a>
+
+
+        {% elif session.get("role") == "admin" %}
+
+            <a href="/admin_dashboard">
+                Admin Dashboard
+            </a>
+
+            <a href="/logout" class="nav-btn">
+                Logout
+            </a>
+
+
+        {% else %}
+
+            <!-- REGISTER -->
+
+            <div class="dropdown">
+
+                <button class="dropbtn">
+                    Register ▼
+                </button>
+
+                <div class="dropdown-content">
+
+                    <a href="/user_registration">
+                        Donor Registration
+                    </a>
+
+                    <a href="/ngo_registration">
+                        NGO Registration
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- LOGIN -->
+
+            <div class="dropdown">
+
+                <button class="dropbtn">
+                    Login ▼
+                </button>
+
+                <div class="dropdown-content">
+
+                    <a href="/user_login">
+                        Donor Login
+                    </a>
+
+                    <a href="/ngo_login">
+                        NGO Login
+                    </a>
+
+                    <a href="/FRSq_adm_log">
+                        Admin Login
+                    </a>
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+    </nav>
+
+</header>
+
+
+
+<!-- =========================================================
+     MAIN TWO-COLUMN LAYOUT
+========================================================= -->
+
+<main class="ngo-registration-page">
+
+
+<!-- =====================================================
+     LEFT - REGISTRATION FORM
+====================================================== -->
+
+<section class="ngo-form-container">
+
+
+    <div class="ngo-form-header">
+
+        <h1>
+            NGO Registration
+        </h1>
+
+        <p>
+            Register your organization with FoodResQ
+            and help rescue surplus food.
+        </p>
+
+    </div>
+
+
+
+    <!-- =================================================
+         SITE ERROR MESSAGE
+    ================================================== -->
+
+    {% if error %}
+
+        <div class="registration-error">
+
+            <span class="error-icon">
+                ⚠
+            </span>
+
+            <span>
+                {{ error }}
+            </span>
+
+        </div>
+
+    {% endif %}
+
+
+
+    <form id="ngoRegistrationForm"
+          action="{{ url_for('register_ngo') }}"
+          method="POST"
+          enctype="multipart/form-data">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+
+        <!-- =================================================
+             ORGANIZATION DETAILS
+        ================================================== -->
+
+        <div class="form-section-title">
+            Organization Details
+        </div>
+
+
+        <div class="form-row">
+
+
+            <div class="form-group">
+
+                <label for="ngo_name">
+                    NGO / Organization Name *
+                </label>
+
+                <input type="text"
+                       id="ngo_name"
+                       name="ngo_name"
+                       required
+                       placeholder="Enter NGO name">
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label for="organization_type">
+                    Organization Type *
+                </label>
+
+                <select id="organization_type"
+                        name="organization_type"
+                        required>
+
+                    <option value="">
+                        Select organization type
+                    </option>
+
+                    <option value="NGO">
+                        NGO
+                    </option>
+
+                    <option value="Trust">
+                        Trust
+                    </option>
+
+                    <option value="Foundation">
+                        Foundation
+                    </option>
+
+                    <option value="Society">
+                        Society
+                    </option>
+
+                    <option value="Charitable Organization">
+                        Charitable Organization
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="form-row">
+
+
+            <div class="form-group">
+
+                <label for="registration_number">
+                    Registration Number *
+                </label>
+
+                <input type="text"
+                       id="registration_number"
+                       name="registration_number"
+                       required
+                       placeholder="Registration number">
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label for="darpan_id">
+                    NGO Darpan ID
+                </label>
+
+                <input type="text"
+                       id="darpan_id"
+                       name="darpan_id"
+                       placeholder="Optional">
+
+            </div>
+
+        </div>
+
+
+
+        <div class="form-row">
+
+
+            <div class="form-group">
+
+                <label for="year_established">
+                    Year Established
+                </label>
+
+                <input type="number"
+                       id="year_established"
+                       name="year_established"
+                       min="1800"
+                       max="2026"
+                       step="1"
+                       inputmode="numeric"
+                       placeholder="e.g. 2015">
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label for="service_area">
+                    Service Area *
+                </label>
+
+                <input type="text"
+                       id="service_area"
+                       name="service_area"
+                       required
+                       placeholder="e.g. Ambernath, Kalyan">
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             AUTHORIZED PERSON
+        ================================================== -->
+
+        <div class="form-section-title">
+            Authorized Person Details
+        </div>
+
+
+
+        <div class="form-row">
+
+
+            <div class="form-group">
+
+                <label for="person_name">
+                    Authorized Person Name *
+                </label>
+
+                <input type="text"
+                       id="person_name"
+                       name="person_name"
+                       required
+                       placeholder="Full name"
+                       oninput="this.value=this.value.replace(/[^A-Za-z\s.'-]/g,'')">
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label for="designation">
+                    Designation *
+                </label>
+
+                <input type="text"
+                       id="designation"
+                       name="designation"
+                       required
+                       placeholder="Director / Trustee">
+
+            </div>
+
+        </div>
+
+
+
+        <div class="form-row">
+
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email *
+                </label>
+
+                <input type="email"
+                       id="email"
+                       name="email"
+                       required
+                       placeholder="ngo@example.com">
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PHONE NUMBER
+            ================================================== -->
+
+            <div class="form-group">
+
+                <label for="phone">
+                    Phone *
+                </label>
+
+                <input type="tel"
+                       id="phone"
+                       name="phone"
+                       maxlength="10"
+                       inputmode="numeric"
+                       pattern="[6-9][0-9]{9}"
+                       required
+                       placeholder="10 digit mobile number"
+                       oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)">
+
+                <small class="field-help">
+                    Enter a valid 10-digit Indian mobile number beginning with 6, 7, 8 or 9.
+                </small>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             PASSWORD
+        ================================================== -->
+
+        <div class="form-row">
+
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password *
+                </label>
+
+                <div class="password-wrapper">
+
+                    <input type="password"
+                           id="password"
+                           name="password"
+                           minlength="6"
+                           required
+                           placeholder="Enter password">
+
+                    <button type="button"
+                            class="password-toggle"
+                            onclick="togglePassword('password', this)"
+                            aria-label="Show password">
+
+                        <i class="fa-solid fa-eye"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label for="confirm_password">
+                    Confirm Password *
+                </label>
+
+                <div class="password-wrapper">
+
+                    <input type="password"
+                           id="confirm_password"
+                           name="confirm_password"
+                           minlength="6"
+                           required
+                           placeholder="Re-enter password">
+
+                    <button type="button"
+                            class="password-toggle"
+                            onclick="togglePassword('confirm_password', this)"
+                            aria-label="Show password">
+
+                        <i class="fa-solid fa-eye"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             FULL ADDRESS
+        ================================================== -->
+
+        <div class="form-section-title">
+            NGO Address
+        </div>
+
+
+
+        <div class="address-info">
+
+            <strong>
+                📍 Full NGO Address
+            </strong>
+
+            <p>
+                Enter your complete office / organization
+                address manually.
+            </p>
+
+            <p>
+                <b>
+                    This address is stored exactly as you type it.
+                    The map will NOT change this address.
+                </b>
+            </p>
+
+        </div>
+
+
+
+        <div class="form-group">
+
+            <label for="ngo-address">
+                Complete NGO Address *
+            </label>
+
+            <textarea id="ngo-address"
+                      name="address"
+                      rows="5"
+                      required
+                      placeholder="Office No. 203, ABC Building, XYZ Society, Station Road, Ambernath East, Thane, Maharashtra - 421501"></textarea>
+
+        </div>
+
+
+
+        <div class="form-row">
+
+
+            <!-- =================================================
+                 PIN CODE
+            ================================================== -->
+
+            <div class="form-group">
+
+                <label for="pincode">
+                    PIN Code *
+                </label>
+
+                <input type="text"
+                       id="pincode"
+                       name="pincode"
+                       maxlength="6"
+                       inputmode="numeric"
+                       pattern="[1-9][0-9]{5}"
+                       required
+                       placeholder="421501"
+                       oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,6)">
+
+                <small class="field-help">
+                    Enter a valid 6-digit Indian PIN code.
+                </small>
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label>
+                    Country
+                </label>
+
+                <input type="text"
+                       value="India"
+                       readonly>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             SERVICE LOCATION
+        ================================================== -->
+
+        <div class="form-section-title">
+            NGO Service Location
+        </div>
+
+
+
+        <div class="service-location-info">
+
+            <strong>
+                🗺️ Select Where Your NGO Provides Services
+            </strong>
+
+            <p>
+                This location is used by FoodResQ to find
+                nearby NGOs for donations.
+            </p>
+
+            <p>
+                It does <b>NOT</b> replace your full NGO address.
+            </p>
+
+        </div>
+
+
+
+        <!-- MAP SEARCH -->
+
+        <div class="form-group">
+
+            <label for="map-search">
+                Search Service Area
+            </label>
+
+
+            <div class="map-search-row">
+
+                <input type="text"
+                       id="map-search"
+                       placeholder="Search city or area, e.g. Ambernath East">
+
+
+                <button type="button"
+                        onclick="searchServiceLocation()"
+                        class="map-search-btn">
+
+                    🔎 Find Area
+
+                </button>
+
+            </div>
+
+
+            <small class="field-help">
+
+                Search for a city, town, locality or area.
+                Example: Ambernath East, Kalyan West, Thane.
+
+            </small>
+
+        </div>
+
+
+
+        <!-- MAP -->
+
+        <div class="map-wrapper">
+
+            <div class="map-title">
+
+                <h3>
+                    Select Service Location
+                </h3>
+
+                <p>
+                    Search for your area, then click on the map
+                    to place the service-location marker.
+                </p>
+
+            </div>
+
+
+            <div id="ngo-map"></div>
+
+
+            <div id="map-status"
+                 class="map-status waiting">
+
+                📍 No service location selected yet.
+
+            </div>
+
+
+            <!-- HIDDEN COORDINATES -->
+
+            <input type="hidden"
+                   id="latitude"
+                   name="latitude">
+
+
+            <input type="hidden"
+                   id="longitude"
+                   name="longitude">
+
+
+            <button type="button"
+                    id="confirm-location-btn"
+                    class="confirm-location-btn"
+                    onclick="confirmServiceLocation()">
+
+                ✓ Confirm Service Location
+
+            </button>
+
+        </div>
+
+
+
+        <!-- =================================================
+             DOCUMENTS
+        ================================================== -->
+
+        <div class="form-section-title">
+            Verification Documents
+        </div>
+
+
+
+        <div class="form-row">
+
+
+            <div class="form-group">
+
+                <label for="registration_document">
+                    Registration Document *
+                </label>
+
+                <input type="file"
+                       id="registration_document"
+                       name="registration_document"
+                       accept=".pdf,.jpg,.jpeg,.png"
+                       required>
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label for="authorized_person_document">
+                    Authorized Person Document *
+                </label>
+
+                <input type="file"
+                       id="authorized_person_document"
+                       name="authorized_person_document"
+                       accept=".pdf,.jpg,.jpeg,.png"
+                       required>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             AGREEMENT
+        ================================================== -->
+
+        <div class="ngo-agreement">
+
+            <input type="checkbox"
+                   id="agreement"
+                   name="agreement"
+                   value="1"
+                   required>
+
+
+            <label for="agreement">
+
+                I confirm that the information provided
+                is accurate and genuine.
+
+            </label>
+
+        </div>
+
+
+
+        <button type="submit"
+                class="ngo-register-btn">
+
+            Register NGO
+
+        </button>
+
+
+
+        <p class="application-note">
+
+            Your NGO registration will remain
+            <strong>Pending</strong>
+            until it is verified by the administrator.
+
+        </p>
+
+
+    </form>
+
+</section>
+
+
+
+<!-- =====================================================
+     RIGHT - SIDE GUIDELINES
+===================================================== -->
+
+<aside class="ngo-guidelines">
+
+    <h2>
+        How It Works
+    </h2>
+
+
+    <div class="guideline-item">
+
+        <span>1</span>
+
+        <div>
+
+            <h4>
+                Enter Full Address
+            </h4>
+
+            <p>
+                Type your complete NGO address manually.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="guideline-item">
+
+        <span>2</span>
+
+        <div>
+
+            <h4>
+                Select Service Area
+            </h4>
+
+            <p>
+                Search the area where your NGO provides
+                food-rescue services.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="guideline-item">
+
+        <span>3</span>
+
+        <div>
+
+            <h4>
+                Place Marker
+            </h4>
+
+            <p>
+                Click the map to select your approximate
+                service location.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="guideline-item">
+
+        <span>4</span>
+
+        <div>
+
+            <h4>
+                Confirm Location
+            </h4>
+
+            <p>
+                Confirm the marker so FoodResQ can use
+                the coordinates for nearby NGO matching.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="verification-note">
+
+        <strong>
+            🔐 Admin Verification
+        </strong>
+
+        <p>
+            Your NGO account will be reviewed by the
+            FoodResQ administrator before activation.
+        </p>
+
+    </div>
+
+</aside>
+
+
+</main>
+
+
+
+<!-- =========================================================
+     LEAFLET JS
+========================================================= -->
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+
+<script>
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let map = null;
+
+let serviceMarker = null;
+
+let serviceLocationConfirmed = false;
+
+
+
+/* =========================================================
+   PASSWORD SHOW / HIDE
+========================================================= */
+
+function togglePassword(inputId, button) {
+
+    const input =
+        document.getElementById(inputId);
+
+    const icon =
+        button.querySelector("i");
+
+
+    if (input.type === "password") {
+
+        input.type = "text";
+
+        icon.classList.remove("fa-eye");
+
+        icon.classList.add("fa-eye-slash");
+
+        button.setAttribute(
+            "aria-label",
+            "Hide password"
+        );
+
+    }
+
+    else {
+
+        input.type = "password";
+
+        icon.classList.remove("fa-eye-slash");
+
+        icon.classList.add("fa-eye");
+
+        button.setAttribute(
+            "aria-label",
+            "Show password"
+        );
+
+    }
+
+}
+
+
+
+/* =========================================================
+   PHONE NUMBER VALIDATION
+========================================================= */
+
+function validatePhone(phone) {
+
+    return /^[6-9][0-9]{9}$/.test(phone);
+
+}
+
+
+
+/* =========================================================
+   PIN CODE VALIDATION
+========================================================= */
+
+function validatePincode(pincode) {
+
+    return /^[1-9][0-9]{5}$/.test(pincode);
+
+}
+
+
+
+/* =========================================================
+   INITIALIZE MAP
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        map = L.map(
+            "ngo-map"
+        ).setView(
+            [
+                19.0760,
+                72.8777
+            ],
+            11
+        );
+
+
+        L.tileLayer(
+            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            {
+                maxZoom: 19,
+
+                attribution:
+                    "&copy; OpenStreetMap contributors"
+            }
+        ).addTo(map);
+
+
+
+        /*
+         * Clicking anywhere on the map
+         * places the service-location marker.
+         */
+
+        map.on(
+            "click",
+            function (event) {
+
+                placeServiceMarker(
+                    event.latlng.lat,
+                    event.latlng.lng
+                );
+
+            }
+        );
+
+
+
+        /*
+         * Enter key in map search.
+         */
+
+        document
+            .getElementById(
+                "map-search"
+            )
+            .addEventListener(
+                "keydown",
+                function (event) {
+
+                    if (event.key === "Enter") {
+
+                        event.preventDefault();
+
+                        searchServiceLocation();
+
+                    }
+
+                }
+            );
+
+
+
+        /*
+         * Fix Leaflet rendering after page load.
+         */
+
+        setTimeout(
+            function () {
+
+                map.invalidateSize();
+
+            },
+            500
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   SEARCH SERVICE AREA
+========================================================= */
+
+async function searchServiceLocation() {
+
+    const searchBox =
+        document.getElementById(
+            "map-search"
+        );
+
+
+    const query =
+        searchBox.value.trim();
+
+
+    if (!query) {
+
+        setMapStatus(
+            "error",
+            "⚠ Please enter a city or service area."
+        );
+
+        return;
+
+    }
+
+
+    setMapStatus(
+        "searching",
+        "🔎 Finding service area..."
+    );
+
+
+    try {
+
+        const searchQuery =
+            query +
+            ", Maharashtra, India";
+
+
+        const url =
+            "https://nominatim.openstreetmap.org/search" +
+            "?format=json" +
+            "&limit=5" +
+            "&countrycodes=in" +
+            "&q=" +
+            encodeURIComponent(
+                searchQuery
+            );
+
+
+        const response =
+            await fetch(
+                url,
+                {
+                    headers: {
+                        "Accept":
+                            "application/json"
+                    }
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Location search failed"
+            );
+
+        }
+
+
+        const results =
+            await response.json();
+
+
+        if (!results.length) {
+
+            setMapStatus(
+                "error",
+                "❌ Area not found. Try another city or locality."
+            );
+
+            return;
+
+        }
+
+
+        const result =
+            results[0];
+
+
+        const latitude =
+            parseFloat(
+                result.lat
+            );
+
+
+        const longitude =
+            parseFloat(
+                result.lon
+            );
+
+
+        map.setView(
+            [
+                latitude,
+                longitude
+            ],
+            14
+        );
+
+
+        placeServiceMarker(
+            latitude,
+            longitude
+        );
+
+
+        setMapStatus(
+            "waiting",
+            "📍 Area found. Click anywhere on the map to adjust the service location, then confirm."
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "MAP SEARCH ERROR:",
+            error
+        );
+
+
+        setMapStatus(
+            "error",
+            "❌ Unable to search for this area."
+        );
+
+    }
+
+}
+
+
+
+/* =========================================================
+   PLACE SERVICE MARKER
+========================================================= */
+
+function placeServiceMarker(
+    latitude,
+    longitude
+) {
+
+    if (serviceMarker === null) {
+
+        serviceMarker =
+            L.marker(
+                [
+                    latitude,
+                    longitude
+                ],
+                {
+                    draggable: true
+                }
+            ).addTo(map);
+
+
+
+        /*
+         * When NGO drags marker.
+         */
+
+        serviceMarker.on(
+            "dragend",
+            function () {
+
+                const position =
+                    serviceMarker.getLatLng();
+
+
+                saveCoordinates(
+                    position.lat,
+                    position.lng
+                );
+
+
+                serviceLocationConfirmed =
+                    false;
+
+
+                resetConfirmButton();
+
+
+                setMapStatus(
+                    "waiting",
+                    "📍 Marker moved. Confirm the new service location."
+                );
+
+            }
+        );
+
+    }
+
+    else {
+
+        serviceMarker.setLatLng(
+            [
+                latitude,
+                longitude
+            ]
+        );
+
+    }
+
+
+    saveCoordinates(
+        latitude,
+        longitude
+    );
+
+
+    serviceLocationConfirmed =
+        false;
+
+
+    resetConfirmButton();
+
+
+    map.panTo(
+        [
+            latitude,
+            longitude
+        ]
+    );
+
+}
+
+
+
+/* =========================================================
+   SAVE COORDINATES
+========================================================= */
+
+function saveCoordinates(
+    latitude,
+    longitude
+) {
+
+    document
+        .getElementById(
+            "latitude"
+        )
+        .value =
+        Number(latitude)
+            .toFixed(8);
+
+
+    document
+        .getElementById(
+            "longitude"
+        )
+        .value =
+        Number(longitude)
+            .toFixed(8);
+
+}
+
+
+
+/* =========================================================
+   CONFIRM SERVICE LOCATION
+========================================================= */
+
+function confirmServiceLocation() {
+
+    const latitude =
+        document
+            .getElementById(
+                "latitude"
+            )
+            .value;
+
+
+    const longitude =
+        document
+            .getElementById(
+                "longitude"
+            )
+            .value;
+
+
+    if (!latitude || !longitude) {
+
+        setMapStatus(
+            "error",
+            "⚠ Please search for a service area or click on the map."
+        );
+
+        return;
+
+    }
+
+
+    serviceLocationConfirmed =
+        true;
+
+
+    const button =
+        document.getElementById(
+            "confirm-location-btn"
+        );
+
+
+    button.classList.add(
+        "confirmed"
+    );
+
+
+    button.innerHTML =
+        "✓ Service Location Confirmed";
+
+
+    setMapStatus(
+        "success",
+        "✓ Service location confirmed successfully."
+    );
+
+}
+
+
+
+/* =========================================================
+   RESET CONFIRM BUTTON
+========================================================= */
+
+function resetConfirmButton() {
+
+    const button =
+        document.getElementById(
+            "confirm-location-btn"
+        );
+
+
+    button.classList.remove(
+        "confirmed"
+    );
+
+
+    button.innerHTML =
+        "✓ Confirm Service Location";
+
+}
+
+
+
+/* =========================================================
+   MAP STATUS
+========================================================= */
+
+function setMapStatus(
+    type,
+    message
+) {
+
+    const status =
+        document.getElementById(
+            "map-status"
+        );
+
+
+    status.className =
+        "map-status " + type;
+
+
+    status.innerHTML =
+        message;
+
+}
+
+
+
+/* =========================================================
+   FORM VALIDATION
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const form =
+            document.getElementById(
+                "ngoRegistrationForm"
+            );
+
+
+        const phoneInput =
+            document.getElementById(
+                "phone"
+            );
+
+
+        const pincodeInput =
+            document.getElementById(
+                "pincode"
+            );
+
+
+        const yearInput =
+            document.getElementById(
+                "year_established"
+            );
+
+
+
+        /* ---------------------------------------------
+           PHONE - NUMBERS ONLY
+        --------------------------------------------- */
+
+        phoneInput.addEventListener(
+            "input",
+            function () {
+
+                this.value =
+                    this.value
+                        .replace(/[^0-9]/g, "")
+                        .slice(0, 10);
+
+            }
+        );
+
+
+
+        /* ---------------------------------------------
+           PIN CODE - NUMBERS ONLY
+        --------------------------------------------- */
+
+        pincodeInput.addEventListener(
+            "input",
+            function () {
+
+                this.value =
+                    this.value
+                        .replace(/[^0-9]/g, "")
+                        .slice(0, 6);
+
+            }
+        );
+
+
+
+        /* ---------------------------------------------
+           YEAR - WHOLE NUMBER ONLY
+        --------------------------------------------- */
+
+        yearInput.addEventListener(
+            "input",
+            function () {
+
+                this.value =
+                    this.value
+                        .replace(/[^0-9]/g, "")
+                        .slice(0, 4);
+
+            }
+        );
+
+
+
+        /* ---------------------------------------------
+           FORM SUBMISSION
+        --------------------------------------------- */
+
+        form.addEventListener(
+            "submit",
+            function (event) {
+
+                const latitude =
+                    document
+                        .getElementById(
+                            "latitude"
+                        )
+                        .value;
+
+
+                const longitude =
+                    document
+                        .getElementById(
+                            "longitude"
+                        )
+                        .value;
+
+
+                const address =
+                    document
+                        .getElementById(
+                            "ngo-address"
+                        )
+                        .value
+                        .trim();
+
+
+                const phone =
+                    phoneInput.value.trim();
+
+
+                const pincode =
+                    pincodeInput.value.trim();
+
+
+                const year =
+                    yearInput.value.trim();
+
+
+                const password =
+                    document
+                        .getElementById(
+                            "password"
+                        )
+                        .value;
+
+
+                const confirmPassword =
+                    document
+                        .getElementById(
+                            "confirm_password"
+                        )
+                        .value;
+
+
+
+                /* -----------------------------------------
+                   ADDRESS
+                ----------------------------------------- */
+
+                if (!address) {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Please enter the complete NGO address."
+                    );
+
+                    return;
+
+                }
+
+
+
+                /* -----------------------------------------
+                   PHONE
+                ----------------------------------------- */
+
+                if (!validatePhone(phone)) {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Please enter a valid 10-digit Indian mobile number beginning with 6, 7, 8 or 9."
+                    );
+
+                    phoneInput.focus();
+
+                    return;
+
+                }
+
+
+
+                /* -----------------------------------------
+                   PIN CODE
+                ----------------------------------------- */
+
+                if (!validatePincode(pincode)) {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Please enter a valid 6-digit PIN code."
+                    );
+
+                    pincodeInput.focus();
+
+                    return;
+
+                }
+
+
+
+                /* -----------------------------------------
+                   YEAR
+                ----------------------------------------- */
+
+                if (year) {
+
+                    const yearNumber =
+                        parseInt(
+                            year,
+                            10
+                        );
+
+
+                    if (
+                        !Number.isInteger(yearNumber) ||
+                        yearNumber < 1800 ||
+                        yearNumber > 2026
+                    ) {
+
+                        event.preventDefault();
+
+                        alert(
+                            "Please enter a valid establishment year between 1800 and 2026."
+                        );
+
+                        yearInput.focus();
+
+                        return;
+
+                    }
+
+                }
+
+
+
+                /* -----------------------------------------
+                   PASSWORD MATCH
+                ----------------------------------------- */
+
+                if (
+                    password !==
+                    confirmPassword
+                ) {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Passwords do not match."
+                    );
+
+                    return;
+
+                }
+
+
+
+                /* -----------------------------------------
+                   MAP COORDINATES
+                ----------------------------------------- */
+
+                if (
+                    !latitude ||
+                    !longitude
+                ) {
+
+                    event.preventDefault();
+
+                    setMapStatus(
+                        "error",
+                        "⚠ Please select the NGO service location on the map."
+                    );
+
+                    return;
+
+                }
+
+
+
+                /* -----------------------------------------
+                   MAP CONFIRMATION
+                ----------------------------------------- */
+
+                if (
+                    !serviceLocationConfirmed
+                ) {
+
+                    event.preventDefault();
+
+                    setMapStatus(
+                        "error",
+                        "⚠ Please click 'Confirm Service Location'."
+                    );
+
+                    return;
+
+                }
+
+            }
+        );
+
+    }
+);
+
+</script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Donor Reports | FoodResQ</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='admin_reports_list.css') }}">
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+
+        <img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+        <div>
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p>
+                Rescue. Reuse. Restore.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="{{ url_for('admin_dashboard') }}">
+            Dashboard
+        </a>
+
+
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<main class="reports-list-page">
+
+
+    <a href="{{ url_for('admin_reports') }}"
+       class="back-link">
+
+        ← Back to Reports
+
+    </a>
+
+
+    <section class="list-heading">
+
+        <span>
+            DONOR REPORTS
+        </span>
+
+        <h1>
+            Donor Issues
+        </h1>
+
+        <p>
+            Review problems reported by donors.
+        </p>
+
+    </section>
+
+
+
+    {% if reports %}
+
+    <section class="reports-table-card">
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Report
+                        </th>
+
+                        <th>
+                            Donation
+                        </th>
+
+                        <th>
+                            Reason
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Reported On
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                {% for report in reports %}
+
+                    <tr>
+
+                        <td>
+                            #{{ report.report_id }}
+                        </td>
+
+                        <td>
+                            #{{ report.donation_id }}
+                        </td>
+
+                        <td>
+                            {{ report.reason }}
+                        </td>
+
+                        <td>
+
+                            <span class="status pending">
+                                {{ report.status }}
+                            </span>
+
+                        </td>
+
+                        <td>
+                            {{ report.reported_on }}
+                        </td>
+
+                        <td>
+
+                            <a href="{{ url_for(
+                                'admin_view_report',
+                                report_id=report.report_id
+                            ) }}"
+                               class="view-button">
+
+                                View
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+    {% else %}
+
+    <section class="empty-reports">
+
+        <div>
+            ✓
+        </div>
+
+        <h2>
+            No Donor Reports
+        </h2>
+
+        <p>
+            There are currently no pending donor reports.
+        </p>
+
+    </section>
+
+    {% endif %}
+
+
+</main>
+
+</body>
+
+</html>

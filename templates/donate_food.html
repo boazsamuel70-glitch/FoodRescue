@@ -1,0 +1,2218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Donate Food | FoodResQ</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='donation.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- LEAFLET -->
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- FoodResQ website alert system -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+
+    {% with _frq = get_flashed_messages(with_categories=true) %}
+        {% if _frq %}
+            <script>
+                window.FOODRESQ_FLASH = {{ _frq|tojson }};
+            </script>
+        {% endif %}
+    {% endwith %}
+
+    <script src="{{ url_for('static', filename='input-guard.js') }}"
+            defer></script>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='responsive.css') }}">
+
+    <script src="{{ url_for('static', filename='nav-toggle.js') }}"
+            defer></script>
+
+</head>
+
+
+<body>
+
+
+<!-- ===================================================== -->
+<!-- HEADER -->
+<!-- ===================================================== -->
+
+<header>
+
+    <div class="logo">
+
+        <img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+        <div>
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p class="tagline">
+                Turning <span>Surplus</span> into <span>Sustenance</span>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="/user_dashboard">
+            Dashboard
+        </a>
+
+        <a href="/my_donations">
+            Track Donation
+        </a>
+
+        <a href="/logout" class="logout">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- ===================================================== -->
+<!-- PAGE -->
+<!-- ===================================================== -->
+
+<section class="donation-page">
+
+
+    <!-- ================================================= -->
+    <!-- LEFT INFORMATION -->
+    <!-- ================================================= -->
+
+    <div class="donation-left">
+
+        <span class="badge">
+            🍱 Food Donation
+        </span>
+
+
+        <h1>
+            Share Food.
+            <br>
+            Share Smiles.
+        </h1>
+
+
+        <p>
+
+            Every meal you donate can brighten someone's day.
+
+            FoodResQ connects your surplus food with trusted NGOs
+            who distribute it safely to people in need.
+
+        </p>
+
+
+        <!-- GUIDELINES -->
+
+        <div class="tips">
+
+            <h3>
+                Donation Guidelines
+            </h3>
+
+            <ul>
+
+                <li>
+                    ✔ Donate fresh and hygienically prepared food.
+                </li>
+
+                <li>
+                    ✔ Enter the actual quantity available.
+                </li>
+
+                <li>
+                    ✔ Select the exact pickup location.
+                </li>
+
+                <li>
+                    ✔ Ensure someone is available during pickup.
+                </li>
+
+                <li>
+                    ✔ Pack the food properly.
+                </li>
+
+                <li>
+                    ✔ Mention allergens or special ingredients.
+                </li>
+
+                <li>
+                    ✔ Provide accurate best-before information.
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="pic">
+
+            <img src="{{ url_for(
+                'static',
+                filename='images/donate_form_pic.jpg'
+            ) }}">
+
+        </div>
+
+
+        <div class="quote">
+
+            <h2>
+                “What may be leftover for you can be
+                <br>
+                a lifeline for someone else.”
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- RIGHT SIDE -->
+    <!-- ================================================= -->
+
+    <div class="donation-form">
+
+        <h2>
+            Donate Food
+        </h2>
+
+        <p class="form-subtitle">
+
+            Please provide accurate information about your
+            donation so our partner NGOs can collect it safely.
+
+        </p>
+
+
+        <!-- ================================================= -->
+        <!-- ONE FORM -->
+        <!-- ================================================= -->
+
+        <form action="/submit_donation"
+              method="POST">
+
+            <input type="hidden"
+                   name="csrf_token"
+                   value="{{ csrf_token() }}">
+
+
+            <!-- ================================================= -->
+            <!-- SECTION 1 : FOOD DETAILS -->
+            <!-- ================================================= -->
+
+            <div class="form-section">
+
+                <div class="section-heading">
+
+                    <div class="section-icon">
+                        🍱
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Food Details
+                        </h3>
+
+                        <p>
+                            Tell us what you are donating.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <label>
+                    Food Name
+                </label>
+
+                <input
+                    type="text"
+                    name="food_name"
+                    placeholder="Example: Veg Biryani"
+                    required>
+
+
+                <label>
+                    Food Category
+                </label>
+
+                <select
+                    name="food_type"
+                    required>
+
+                    <option value="">
+                        Select Category
+                    </option>
+
+                    <option value="Vegetarian">
+                        Vegetarian
+                    </option>
+
+                    <option value="Non-Vegetarian">
+                        Non-Vegetarian
+                    </option>
+
+                    <option value="Vegan">
+                        Vegan
+                    </option>
+
+                    <option value="Bakery">
+                        Bakery
+                    </option>
+
+                    <option value="Beverages">
+                        Beverages
+                    </option>
+
+                    <option value="Desserts">
+                        Desserts
+                    </option>
+
+                </select>
+
+
+                <div class="row">
+
+                    <div>
+
+                        <label>
+                            Quantity
+                        </label>
+
+                        <input
+                            type="number"
+                            name="quantity"
+                            min="1"
+                            placeholder="10"
+                            required>
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Unit
+                        </label>
+
+                        <select
+                            name="quantity_unit"
+                            required>
+
+                            <option value="Plates">
+                                Plates
+                            </option>
+
+                            <option value="Kg">
+                                Kg
+                            </option>
+
+                            <option value="Packets">
+                                Packets
+                            </option>
+
+                            <option value="Boxes">
+                                Boxes
+                            </option>
+
+                            <option value="Litres">
+                                Litres
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <label>
+                    Food Description
+                </label>
+
+                <textarea
+                    name="food_description"
+                    rows="3"
+                    placeholder="Briefly describe the food, for example: freshly prepared vegetable biryani with raita."></textarea>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- SECTION 2 : FOOD SAFETY -->
+            <!-- ================================================= -->
+
+            <div class="form-section">
+
+                <div class="section-heading">
+
+                    <div class="section-icon">
+                        🛡️
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Food Safety & Freshness
+                        </h3>
+
+                        <p>
+                            Help NGOs determine how the food should be handled.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- PREPARED DATE + TIME -->
+                <!-- ================================================= -->
+
+                <div class="row">
+
+                    <div>
+
+                        <label for="prepared_date">
+                            Prepared Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="prepared_date"
+                            name="prepared_date"
+                            min="{{ prepared_min_date }}"
+                            max="{{ prepared_max_date }}"
+                            required>
+
+                        <small class="pickup-help">
+                            Food can be prepared today or up to 3 days ago.
+                        </small>
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="prepared_time">
+                            Prepared Time
+                        </label>
+
+                        <input
+                            type="time"
+                            id="prepared_time"
+                            name="prepared_time"
+                            required>
+
+                        <small class="pickup-help">
+                            If prepared today, future times are not allowed.
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- BEST BEFORE DATE + TIME -->
+                <!-- ================================================= -->
+
+                <div class="row">
+
+                    <div>
+
+                        <label for="best_before_date">
+                            Best Before Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="best_before_date"
+                            name="best_before_date"
+                            required>
+
+                        <small class="pickup-help">
+                            Must be after preparation and before pickup.
+                        </small>
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="best_before_time">
+                            Best Before Time
+                        </label>
+
+                        <input
+                            type="time"
+                            id="best_before_time"
+                            name="best_before_time"
+                            required>
+
+                        <small class="pickup-help">
+                            Food must remain within its safe freshness period.
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STORAGE -->
+
+                <label>
+                    Storage Condition
+                </label>
+
+                <select
+                    name="storage_condition"
+                    required>
+
+                    <option value="">
+                        Select Storage Condition
+                    </option>
+
+                    <option value="Room Temperature">
+                        Room Temperature
+                    </option>
+
+                    <option value="Refrigerated">
+                        Refrigerated
+                    </option>
+
+                    <option value="Frozen">
+                        Frozen
+                    </option>
+
+                    <option value="Keep Warm">
+                        Keep Warm
+                    </option>
+
+                </select>
+
+
+                <!-- ALLERGEN STATUS -->
+
+                <label>
+                    Contains Allergens?
+                </label>
+
+                <select
+                    name="allergen_status"
+                    required>
+
+                    <option value="">
+                        Select
+                    </option>
+
+                    <option value="No Known Allergens">
+                        No Known Allergens
+                    </option>
+
+                    <option value="Contains Allergens">
+                        Contains Allergens
+                    </option>
+
+                </select>
+
+
+                <!-- ALLERGEN DETAILS -->
+
+                <label>
+                    Allergens / Ingredients
+                </label>
+
+                <textarea
+                    name="allergens"
+                    rows="3"
+                    placeholder="Example: Contains milk, nuts, gluten."></textarea>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- SECTION 3 : LOCATION -->
+            <!-- ================================================= -->
+
+            <div class="form-section">
+
+                <div class="section-heading">
+
+                    <div class="section-icon">
+                        📍
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Pickup Location
+                        </h3>
+
+                        <p>
+                            Enter your exact address and use the map
+                            to help locate the pickup point.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FULL ADDRESS -->
+
+                <label>
+                    Full Pickup Address
+                </label>
+
+                <textarea
+                    id="address"
+                    name="address"
+                    rows="4"
+                    required
+                    placeholder="Enter your complete address including flat/house number, building, society, street, area and PIN code"></textarea>
+
+
+                <!-- LANDMARK -->
+
+                <label>
+                    Nearby Landmark
+                </label>
+
+                <input
+                    type="text"
+                    id="landmark"
+                    name="landmark"
+                    placeholder="Example: Near D-Mart, Kalyan West">
+
+
+                <!-- MAP SEARCH -->
+
+                <label>
+                    Locate Pickup Point on Map
+                </label>
+
+
+                <div class="location-box">
+
+                    <input
+                        type="text"
+                        id="searchLocation"
+                        placeholder="Search area, landmark or nearby location">
+
+
+                    <button
+                        type="button"
+                        id="searchBtn"
+                        class="search-btn">
+
+                        🔍 Search
+
+                    </button>
+
+                </div>
+
+
+                <!-- CURRENT LOCATION -->
+
+                <button
+                    type="button"
+                    id="currentLocationBtn"
+                    class="current-location-btn">
+
+                    📍 Use My Current Location
+
+                </button>
+
+
+                <p class="map-note">
+
+                    🗺️ The map is only used to help locate your pickup
+                    point. If your exact building or address is not
+                    available on the map, select a nearby landmark
+                    or location. Your typed address will remain unchanged.
+
+                </p>
+
+
+                <!-- MAP -->
+
+                <div id="map"></div>
+
+
+                <!-- MAP VALUES -->
+
+                <input
+                    type="hidden"
+                    id="latitude"
+                    name="latitude">
+
+                <input
+                    type="hidden"
+                    id="longitude"
+                    name="longitude">
+
+                <input
+                    type="hidden"
+                    id="city"
+                    name="city">
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- SECTION 4 : PICKUP DETAILS -->
+            <!-- ================================================= -->
+
+            <div class="form-section">
+
+                <div class="section-heading">
+
+                    <div class="section-icon">
+                        🚚
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Pickup Details
+                        </h3>
+
+                        <p>
+                            Tell us when and how the donation can be collected.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <!-- PICKUP DATE -->
+
+                    <div>
+
+                        <label for="pickup_date">
+                            Pickup Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="pickup_date"
+                            name="pickup_date"
+                            min="{{ pickup_min_date }}"
+                            max="{{ pickup_max_date }}"
+                            required>
+
+                        <small class="pickup-help">
+                            Pickup can be scheduled from today
+                            up to 7 days ahead.
+                        </small>
+
+                    </div>
+
+
+                    <!-- PICKUP TIME -->
+
+                    <div>
+
+                        <label for="pickup_time">
+                            Pickup Time
+                        </label>
+
+                        <input
+                            type="time"
+                            id="pickup_time"
+                            name="pickup_time"
+                            min="08:00"
+                            max="20:00"
+                            step="900"
+                            required>
+
+                        <small class="pickup-help">
+                            Pickup hours: 8:00 AM – 8:00 PM.
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CONTACT -->
+
+                <label>
+                    Contact Number
+                </label>
+
+                <input
+                    type="tel"
+                    name="contact"
+                    placeholder="Enter 10-digit contact number"
+                    maxlength="10"
+                    pattern="[0-9]{10}"
+                    inputmode="numeric"
+                    required>
+
+
+                <!-- PICKUP INSTRUCTIONS -->
+
+                <label>
+                    Pickup Instructions
+                </label>
+
+                <textarea
+                    name="pickup_instructions"
+                    rows="3"
+                    placeholder="Example: Please call before arriving. Security gate is on the main road."></textarea>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- SECTION 5 : ADDITIONAL INFORMATION -->
+            <!-- ================================================= -->
+
+            <div class="form-section">
+
+                <div class="section-heading">
+
+                    <div class="section-icon">
+                        📝
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Additional Information
+                        </h3>
+
+                        <p>
+                            Add anything else the NGO should know.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PACKAGING -->
+
+                <label>
+                    Packaging Information
+                </label>
+
+                <select
+                    name="packaging_type">
+
+                    <option value="">
+                        Select Packaging
+                    </option>
+
+                    <option value="Food Containers">
+                        Food Containers
+                    </option>
+
+                    <option value="Aluminium Trays">
+                        Aluminium Trays
+                    </option>
+
+                    <option value="Plastic Containers">
+                        Plastic Containers
+                    </option>
+
+                    <option value="Packets">
+                        Packets
+                    </option>
+
+                    <option value="Boxes">
+                        Boxes
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+
+                <!-- DETAILS -->
+
+                <label>
+                    Additional Details
+                </label>
+
+                <textarea
+                    name="details"
+                    rows="4"
+                    placeholder="Any additional information about the donation..."></textarea>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- SUBMIT -->
+            <!-- ================================================= -->
+
+            <div class="submit-area">
+
+                <p>
+                    Please check all information before submitting.
+                </p>
+
+
+                <button
+                    type="submit"
+                    class="donate-btn">
+
+                    🍱 Donate Food
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- MAP JS -->
+<!-- ===================================================== -->
+
+<script src="{{ url_for(
+    'static',
+    filename='donation_map.js'
+) }}"></script>
+
+
+<!-- ===================================================== -->
+<!-- FOOD DATE/TIME VALIDATION -->
+<!-- ===================================================== -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const preparedDate =
+        document.getElementById("prepared_date");
+
+    const preparedTime =
+        document.getElementById("prepared_time");
+
+    const bestBeforeDate =
+        document.getElementById("best_before_date");
+
+    const bestBeforeTime =
+        document.getElementById("best_before_time");
+
+    const pickupDate =
+        document.getElementById("pickup_date");
+
+    const pickupTime =
+        document.getElementById("pickup_time");
+
+    const form =
+        pickupDate ? pickupDate.closest("form") : null;
+
+
+    if (
+        !preparedDate ||
+        !preparedTime ||
+        !bestBeforeDate ||
+        !bestBeforeTime ||
+        !pickupDate ||
+        !pickupTime ||
+        !form
+    ) {
+        return;
+    }
+
+
+    /* =====================================================
+       DATE HELPERS
+    ===================================================== */
+
+    function formatDate(date) {
+
+        const year = date.getFullYear();
+
+        const month =
+            String(date.getMonth() + 1)
+                .padStart(2, "0");
+
+        const day =
+            String(date.getDate())
+                .padStart(2, "0");
+
+        return `${year}-${month}-${day}`;
+    }
+
+
+    function getToday() {
+
+        return formatDate(new Date());
+
+    }
+
+
+    function getDateDaysAgo(days) {
+
+        const date = new Date();
+
+        date.setHours(0, 0, 0, 0);
+
+        date.setDate(
+            date.getDate() - days
+        );
+
+        return formatDate(date);
+
+    }
+
+
+    function getDateDaysAhead(days) {
+
+        const date = new Date();
+
+        date.setHours(0, 0, 0, 0);
+
+        date.setDate(
+            date.getDate() + days
+        );
+
+        return formatDate(date);
+
+    }
+
+
+    function getCurrentTime() {
+
+        const now = new Date();
+
+        return (
+            String(now.getHours()).padStart(2, "0")
+            +
+            ":"
+            +
+            String(now.getMinutes()).padStart(2, "0")
+        );
+
+    }
+
+
+    function getDateTime(date, time) {
+
+        return new Date(
+            `${date}T${time}:00`
+        );
+
+    }
+
+
+    /* =====================================================
+       PREPARED DATE
+       TODAY -> 3 DAYS AGO ONLY
+       ===================================================== */
+
+    function updatePreparedDateLimits() {
+
+        const today =
+            getToday();
+
+        const minimumPreparedDate =
+            getDateDaysAgo(3);
+
+
+        preparedDate.min =
+            minimumPreparedDate;
+
+        preparedDate.max =
+            today;
+
+
+        /*
+         * If an invalid old/future date
+         * somehow exists, remove it.
+         */
+
+        if (
+            preparedDate.value &&
+            (
+                preparedDate.value <
+                minimumPreparedDate
+                ||
+                preparedDate.value >
+                today
+            )
+        ) {
+
+            preparedDate.value = "";
+
+            preparedTime.value = "";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       PREPARED TIME
+       ===================================================== */
+
+    function updatePreparedTimeLimits() {
+
+        const today =
+            getToday();
+
+
+        /*
+         * Every previous date:
+         * any time is allowed.
+         */
+
+        preparedTime.min =
+            "00:00";
+
+        preparedTime.max =
+            "23:59";
+
+
+        /*
+         * Today:
+         * future time is not allowed.
+         */
+
+        if (
+            preparedDate.value === today
+        ) {
+
+            preparedTime.max =
+                getCurrentTime();
+
+        }
+
+
+        /*
+         * Clear invalid future time.
+         */
+
+        if (
+            preparedTime.value &&
+            preparedTime.value >
+            preparedTime.max
+        ) {
+
+            preparedTime.value = "";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       BEST-BEFORE DATE
+       ===================================================== */
+
+    function updateBestBeforeDateLimits() {
+
+        const today =
+            getToday();
+
+        const maximumPickupDate =
+            getDateDaysAhead(7);
+
+
+        /*
+         * Best-before cannot be before
+         * preparation date.
+         */
+
+        if (
+            preparedDate.value
+        ) {
+
+            bestBeforeDate.min =
+                preparedDate.value;
+
+        }
+
+        else {
+
+            bestBeforeDate.min =
+                today;
+
+        }
+
+
+        /*
+         * Best-before cannot go beyond
+         * pickup date when pickup has
+         * already been selected.
+         */
+
+        if (
+            pickupDate.value
+        ) {
+
+            bestBeforeDate.max =
+                pickupDate.value;
+
+        }
+
+        else {
+
+            bestBeforeDate.max =
+                maximumPickupDate;
+
+        }
+
+
+        /*
+         * Remove invalid date.
+         */
+
+        if (
+            bestBeforeDate.value &&
+            (
+                bestBeforeDate.value <
+                bestBeforeDate.min
+                ||
+                bestBeforeDate.value >
+                bestBeforeDate.max
+            )
+        ) {
+
+            bestBeforeDate.value = "";
+
+            bestBeforeTime.value = "";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       BEST-BEFORE TIME
+       ===================================================== */
+
+    function updateBestBeforeTimeLimits() {
+
+        const today =
+            getToday();
+
+        let minimumTime =
+            "00:00";
+
+        let maximumTime =
+            "23:59";
+
+
+        /*
+         * Best-before cannot be in the past.
+         *
+         * Therefore, if best-before date
+         * is today, minimum is current time.
+         */
+
+        if (
+            bestBeforeDate.value === today
+        ) {
+
+            minimumTime =
+                getCurrentTime();
+
+        }
+
+
+        /*
+         * If best-before is on the same
+         * date as preparation, it must
+         * be AFTER preparation time.
+         */
+
+        if (
+            preparedDate.value &&
+            preparedTime.value &&
+            bestBeforeDate.value ===
+            preparedDate.value
+        ) {
+
+            /*
+             * Add one minute because
+             * equal time is not allowed.
+             */
+
+            const preparationDateTime =
+                getDateTime(
+                    preparedDate.value,
+                    preparedTime.value
+                );
+
+            preparationDateTime.setMinutes(
+                preparationDateTime.getMinutes() + 1
+            );
+
+
+            const preparationMinimum =
+                String(
+                    preparationDateTime.getHours()
+                ).padStart(2, "0")
+                +
+                ":"
+                +
+                String(
+                    preparationDateTime.getMinutes()
+                ).padStart(2, "0");
+
+
+            if (
+                preparationMinimum >
+                minimumTime
+            ) {
+
+                minimumTime =
+                    preparationMinimum;
+
+            }
+
+        }
+
+
+        /*
+         * If best-before is on the same
+         * date as pickup, it cannot be
+         * after pickup time.
+         */
+
+        if (
+            pickupDate.value &&
+            pickupTime.value &&
+            bestBeforeDate.value ===
+            pickupDate.value
+        ) {
+
+            maximumTime =
+                pickupTime.value;
+
+        }
+
+
+        bestBeforeTime.min =
+            minimumTime;
+
+        bestBeforeTime.max =
+            maximumTime;
+
+
+        /*
+         * If minimum has gone beyond
+         * maximum, clear the time.
+         */
+
+        if (
+            minimumTime >
+            maximumTime
+        ) {
+
+            bestBeforeTime.value = "";
+
+            return;
+
+        }
+
+
+        /*
+         * Clear invalid time.
+         */
+
+        if (
+            bestBeforeTime.value &&
+            (
+                bestBeforeTime.value <
+                minimumTime
+                ||
+                bestBeforeTime.value >
+                maximumTime
+            )
+        ) {
+
+            bestBeforeTime.value = "";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       PICKUP DATE
+       TODAY -> 7 DAYS AHEAD
+       ===================================================== */
+
+    function updatePickupDateLimits() {
+
+        const today =
+            getToday();
+
+        const maximumPickupDate =
+            getDateDaysAhead(7);
+
+
+        pickupDate.min =
+            today;
+
+        pickupDate.max =
+            maximumPickupDate;
+
+
+        /*
+         * Remove invalid pickup date.
+         */
+
+        if (
+            pickupDate.value &&
+            (
+                pickupDate.value <
+                today
+                ||
+                pickupDate.value >
+                maximumPickupDate
+            )
+        ) {
+
+            pickupDate.value = "";
+
+            pickupTime.value = "";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       PICKUP TIME
+       ===================================================== */
+
+    function updatePickupTimeLimits() {
+
+        const today =
+            getToday();
+
+        const selectedDate =
+            pickupDate.value;
+
+
+        /*
+         * Normal pickup window.
+         */
+
+        let minimumTime =
+            "08:00";
+
+        const maximumTime =
+            "20:00";
+
+
+        /*
+         * Same-day pickup must be at
+         * least 30 minutes from now.
+         */
+
+        if (
+            selectedDate === today
+        ) {
+
+            const now =
+                new Date();
+
+            const earliest =
+                new Date(
+                    now.getTime()
+                    +
+                    30 * 60 * 1000
+                );
+
+
+            /*
+             * Round UP to the next
+             * 15-minute interval.
+             *
+             * Example:
+             * 4:07 + 30 min = 4:37
+             * becomes 4:45.
+             */
+
+            let hours =
+                earliest.getHours();
+
+            let minutes =
+                earliest.getMinutes();
+
+
+            minutes =
+                Math.ceil(
+                    minutes / 15
+                ) * 15;
+
+
+            if (
+                minutes >= 60
+            ) {
+
+                hours += 1;
+
+                minutes = 0;
+
+            }
+
+
+            const earliestTime =
+                String(hours).padStart(2, "0")
+                +
+                ":"
+                +
+                String(minutes).padStart(2, "0");
+
+
+            if (
+                earliestTime >
+                minimumTime
+            ) {
+
+                minimumTime =
+                    earliestTime;
+
+            }
+
+        }
+
+
+        pickupTime.min =
+            minimumTime;
+
+        pickupTime.max =
+            maximumTime;
+
+
+        /*
+         * If the minimum pickup time has
+         * passed 8 PM today, today is no
+         * longer available.
+         */
+
+        if (
+            selectedDate === today &&
+            minimumTime >
+            maximumTime
+        ) {
+
+            pickupDate.value = "";
+
+            pickupTime.value = "";
+
+            updateBestBeforeDateLimits();
+            updateBestBeforeTimeLimits();
+
+            return;
+
+        }
+
+
+        /*
+         * Clear invalid pickup time.
+         */
+
+        if (
+            pickupTime.value &&
+            (
+                pickupTime.value <
+                pickupTime.min
+                ||
+                pickupTime.value >
+                pickupTime.max
+            )
+        ) {
+
+            pickupTime.value = "";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       UPDATE EVERYTHING
+       ===================================================== */
+
+    function updateAllLimits() {
+
+        updatePreparedDateLimits();
+
+        updatePreparedTimeLimits();
+
+        updatePickupDateLimits();
+
+        updatePickupTimeLimits();
+
+        updateBestBeforeDateLimits();
+
+        updateBestBeforeTimeLimits();
+
+    }
+
+
+    /* =====================================================
+       PREPARED DATE CHANGE
+       ===================================================== */
+
+    preparedDate.addEventListener(
+        "change",
+        function () {
+
+            updatePreparedDateLimits();
+
+            updatePreparedTimeLimits();
+
+            updateBestBeforeDateLimits();
+
+            updateBestBeforeTimeLimits();
+
+        }
+    );
+
+
+    /* =====================================================
+       PREPARED TIME CHANGE
+       ===================================================== */
+
+    preparedTime.addEventListener(
+        "change",
+        function () {
+
+            updatePreparedTimeLimits();
+
+            updateBestBeforeDateLimits();
+
+            updateBestBeforeTimeLimits();
+
+        }
+    );
+
+
+    /* =====================================================
+       BEST BEFORE DATE CHANGE
+       ===================================================== */
+
+    bestBeforeDate.addEventListener(
+        "change",
+        function () {
+
+            updateBestBeforeDateLimits();
+
+            updateBestBeforeTimeLimits();
+
+        }
+    );
+
+
+    /* =====================================================
+       BEST BEFORE TIME CHANGE
+       ===================================================== */
+
+    bestBeforeTime.addEventListener(
+        "change",
+        function () {
+
+            updateBestBeforeTimeLimits();
+
+        }
+    );
+
+
+    /* =====================================================
+       PICKUP DATE CHANGE
+       ===================================================== */
+
+    pickupDate.addEventListener(
+        "change",
+        function () {
+
+            updatePickupDateLimits();
+
+            updatePickupTimeLimits();
+
+            updateBestBeforeDateLimits();
+
+            updateBestBeforeTimeLimits();
+
+        }
+    );
+
+
+    /* =====================================================
+       PICKUP TIME CHANGE
+       ===================================================== */
+
+    pickupTime.addEventListener(
+        "change",
+        function () {
+
+            updatePickupTimeLimits();
+
+            updateBestBeforeDateLimits();
+
+            updateBestBeforeTimeLimits();
+
+        }
+    );
+
+
+    /* =====================================================
+       FORM SUBMISSION
+       ===================================================== */
+
+    form.addEventListener(
+        "submit",
+        function (event) {
+
+            /*
+             * Refresh all limits immediately
+             * before validation.
+             */
+
+            updateAllLimits();
+
+
+            const today =
+                getToday();
+
+            const minimumPreparedDate =
+                getDateDaysAgo(3);
+
+            const maximumPickupDate =
+                getDateDaysAhead(7);
+
+            const currentTime =
+                getCurrentTime();
+
+
+            /* =================================================
+               PREPARED DATE
+               ================================================= */
+
+            if (
+                !preparedDate.value
+            ) {
+
+                event.preventDefault();
+
+                preparedDate.setCustomValidity(
+                    "Please select the prepared date."
+                );
+
+                preparedDate.reportValidity();
+
+                return;
+
+            }
+
+
+            if (
+                preparedDate.value <
+                minimumPreparedDate
+            ) {
+
+                event.preventDefault();
+
+                preparedDate.setCustomValidity(
+                    "Food can only be prepared today or within the previous 3 days."
+                );
+
+                preparedDate.reportValidity();
+
+                return;
+
+            }
+
+
+            if (
+                preparedDate.value >
+                today
+            ) {
+
+                event.preventDefault();
+
+                preparedDate.setCustomValidity(
+                    "Prepared date cannot be in the future."
+                );
+
+                preparedDate.reportValidity();
+
+                return;
+
+            }
+
+
+            preparedDate.setCustomValidity("");
+
+
+            /* =================================================
+               PREPARED TIME
+               ================================================= */
+
+            if (
+                !preparedTime.value
+            ) {
+
+                event.preventDefault();
+
+                preparedTime.setCustomValidity(
+                    "Please select the prepared time."
+                );
+
+                preparedTime.reportValidity();
+
+                return;
+
+            }
+
+
+            if (
+                preparedDate.value ===
+                today &&
+                preparedTime.value >
+                currentTime
+            ) {
+
+                event.preventDefault();
+
+                preparedTime.setCustomValidity(
+                    "Prepared time cannot be in the future."
+                );
+
+                preparedTime.reportValidity();
+
+                return;
+
+            }
+
+
+            preparedTime.setCustomValidity("");
+
+
+            /* =================================================
+               BEST-BEFORE DATE
+               ================================================= */
+
+            if (
+                !bestBeforeDate.value
+            ) {
+
+                event.preventDefault();
+
+                bestBeforeDate.setCustomValidity(
+                    "Please select the best-before date."
+                );
+
+                bestBeforeDate.reportValidity();
+
+                return;
+
+            }
+
+
+            if (
+                bestBeforeDate.value <
+                preparedDate.value
+            ) {
+
+                event.preventDefault();
+
+                bestBeforeDate.setCustomValidity(
+                    "Best-before date cannot be before the prepared date."
+                );
+
+                bestBeforeDate.reportValidity();
+
+                return;
+
+            }
+
+
+            if (
+                bestBeforeDate.value <
+                today
+            ) {
+
+                event.preventDefault();
+
+                bestBeforeDate.setCustomValidity(
+                    "Best-before date cannot be in the past."
+                );
+
+                bestBeforeDate.reportValidity();
+
+                return;
+
+            }
+
+
+            if (
+                bestBeforeDate.value >
+                maximumPickupDate
+            ) {
+
+                event.preventDefault();
+
+                bestBeforeDate.setCustomValidity(
+                    "Best-before date is outside the allowed date range."
+                );
+
+                bestBeforeDate.reportValidity();
+
+                return;
+
+            }
+
+
+            bestBeforeDate.setCustomValidity("");
+
+
+            /* =================================================
+               BEST-BEFORE TIME
+               ================================================= */
+
+            if (
+                !bestBeforeTime.value
+            ) {
+
+                event.preventDefault();
+
+                bestBeforeTime.setCustomValidity(
+                    "Please select the best-before time."
+                );
+
+                bestBeforeTime.reportValidity();
+
+                return;
+
+            }
+
+
+            /*
+             * Best-before must be strictly
+             * after preparation when both
+             * are on the same date.
+             */
+
+            if (
+                bestBeforeDate.value ===
+                preparedDate.value &&
+                bestBeforeTime.value <=
+                preparedTime.value
+            ) {
+
+                event.preventDefault();
+
+                bestBeforeTime.setCustomValidity(
+                    "Best-before time must be after the prepared time."
+                );
+
+                bestBeforeTime.reportValidity();
+
+                return;
+
+            }
+
+
+            /*
+             * Best-before cannot be in the past.
+             */
+
+            const finalBestBefore =
+                getDateTime(
+                    bestBeforeDate.value,
+                    bestBeforeTime.value
+                );
+
+            const now =
+                new Date();
+
+
+            if (
+                finalBestBefore <
+                now
+            ) {
+
+                event.preventDefault();
+
+                bestBeforeTime.setCustomValidity(
+                    "Best-before date and time cannot be in the past."
+                );
+
+                bestBeforeTime.reportValidity();
+
+                return;
+
+            }
+
+
+            bestBeforeTime.setCustomValidity("");
+
+
+            /* =================================================
+               PICKUP DATE
+               ================================================= */
+
+            if (
+                !pickupDate.value
+            ) {
+
+                event.preventDefault();
+
+                pickupDate.setCustomValidity(
+                    "Please select a pickup date."
+                );
+
+                pickupDate.reportValidity();
+
+                return;
+
+            }
+
+
+            if (
+                pickupDate.value <
+                today
+            ) {
+
+                event.preventDefault();
+
+                pickupDate.setCustomValidity(
+                    "Past pickup dates are not allowed."
+                );
+
+                pickupDate.reportValidity();
+
+                return;
+
+            }
+
+
+            if (
+                pickupDate.value >
+                maximumPickupDate
+            ) {
+
+                event.preventDefault();
+
+                pickupDate.setCustomValidity(
+                    "Pickup can only be scheduled up to 7 days in advance."
+                );
+
+                pickupDate.reportValidity();
+
+                return;
+
+            }
+
+
+            pickupDate.setCustomValidity("");
+
+
+            /* =================================================
+               PICKUP TIME
+               ================================================= */
+
+            if (
+                !pickupTime.value
+            ) {
+
+                event.preventDefault();
+
+                pickupTime.setCustomValidity(
+                    "Please select a pickup time."
+                );
+
+                pickupTime.reportValidity();
+
+                return;
+
+            }
+
+
+            if (
+                pickupTime.value <
+                pickupTime.min
+            ) {
+
+                event.preventDefault();
+
+                pickupTime.setCustomValidity(
+                    "Pickup must be scheduled at least 30 minutes from now."
+                );
+
+                pickupTime.reportValidity();
+
+                return;
+
+            }
+
+
+            if (
+                pickupTime.value >
+                "20:00"
+            ) {
+
+                event.preventDefault();
+
+                pickupTime.setCustomValidity(
+                    "Pickup time must be between 8:00 AM and 8:00 PM."
+                );
+
+                pickupTime.reportValidity();
+
+                return;
+
+            }
+
+
+            pickupTime.setCustomValidity("");
+
+
+            /* =================================================
+               BEST-BEFORE VS PICKUP
+               ================================================= */
+
+            const finalPickup =
+                getDateTime(
+                    pickupDate.value,
+                    pickupTime.value
+                );
+
+
+            if (
+                finalBestBefore >
+                finalPickup
+            ) {
+
+                event.preventDefault();
+
+                bestBeforeTime.setCustomValidity(
+                    "Best-before must be before or equal to the pickup date and time."
+                );
+
+                bestBeforeTime.reportValidity();
+
+                return;
+
+            }
+
+
+            /* =================================================
+               PICKUP MUST BE 30 MINUTES AHEAD
+               ================================================= */
+
+            const minimumPickup =
+                new Date(
+                    Date.now()
+                    +
+                    30 * 60 * 1000
+                );
+
+
+            if (
+                finalPickup <
+                minimumPickup
+            ) {
+
+                event.preventDefault();
+
+                pickupTime.setCustomValidity(
+                    "Pickup must be scheduled at least 30 minutes from now."
+                );
+
+                pickupTime.reportValidity();
+
+                return;
+
+            }
+
+
+            pickupTime.setCustomValidity("");
+
+        }
+    );
+
+
+    /* =====================================================
+       INITIAL SETUP
+       ===================================================== */
+
+    updateAllLimits();
+
+
+    /* =====================================================
+       KEEP SAME-DAY TIME LIMITS FRESH
+       ===================================================== */
+
+    setInterval(
+        function () {
+
+            /*
+             * This keeps the "today" limits
+             * updated if the user leaves the
+             * donation page open for a while.
+             */
+
+            updatePreparedTimeLimits();
+
+            updatePickupTimeLimits();
+
+            updateBestBeforeTimeLimits();
+
+        },
+        60000
+    );
+
+});
+
+</script>
+
+
+</body>
+
+</html>

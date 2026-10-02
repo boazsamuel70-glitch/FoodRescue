@@ -1,0 +1,291 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Poppins", Arial, sans-serif;
+    background: #f5f8f6;
+    color: #183b2b;
+}
+
+.distribution-page {
+    width: min(900px, 92%);
+    margin: 55px auto 80px;
+}
+
+.page-heading {
+    margin-bottom: 35px;
+}
+
+.page-heading > span {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #2e7d32;
+}
+
+.page-heading h1 {
+    margin: 8px 0;
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.page-heading p {
+    margin: 0;
+    color: #68756e;
+    font-size: 15px;
+}
+
+
+.messages {
+    margin-bottom: 25px;
+}
+
+.message {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.message.success {
+    background: #e8f5e9;
+    color: #216b27;
+}
+
+.message.error {
+    background: #ffebee;
+    color: #b42318;
+}
+
+.message.info {
+    background: #e8f1ff;
+    color: #2456a6;
+}
+
+
+.donation-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid #dce5df;
+    border-bottom: 1px solid #dce5df;
+    margin-bottom: 30px;
+}
+
+.donation-summary div {
+    padding: 20px 15px;
+    border-right: 1px solid #dce5df;
+}
+
+.donation-summary div:last-child {
+    border-right: none;
+}
+
+.donation-summary span {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #7b8881;
+    margin-bottom: 7px;
+}
+
+.donation-summary strong {
+    font-size: 14px;
+    color: #183b2b;
+}
+
+
+.distribution-form {
+    background: white;
+    border: 1px solid #e1e9e4;
+    border-radius: 14px;
+    padding: 35px;
+}
+
+.form-title,
+.proof-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 28px;
+}
+
+.form-title > span,
+.proof-title > span {
+    font-size: 13px;
+    font-weight: 700;
+    color: #2e7d32;
+}
+
+.form-title small,
+.proof-title small {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #7b8881;
+}
+
+.form-title h2,
+.proof-title h2 {
+    margin: 3px 0 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #30463a;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #d4ded8;
+    border-radius: 8px;
+    outline: none;
+    font-family: inherit;
+    font-size: 14px;
+    margin-bottom: 22px;
+}
+
+input:focus {
+    border-color: #2e7d32;
+}
+
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.form-row small {
+    display: block;
+    margin-top: -15px;
+    margin-bottom: 20px;
+    color: #89958f;
+    font-size: 11px;
+}
+
+
+.proof-section {
+    border-top: 1px solid #e5ebe7;
+    margin-top: 5px;
+    padding-top: 30px;
+}
+
+.proof-section > p {
+    color: #68756e;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+
+.upload-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px;
+    border: 1.5px dashed #aebdb4;
+    border-radius: 10px;
+    background: #fafcfb;
+    cursor: pointer;
+    text-align: center;
+}
+
+.upload-area:hover {
+    border-color: #2e7d32;
+    background: #f5faf6;
+}
+
+.upload-area input {
+    display: none;
+}
+
+.upload-area strong {
+    color: #2e7d32;
+    font-size: 15px;
+}
+
+.upload-area span {
+    margin-top: 5px;
+    font-size: 11px;
+    color: #89958f;
+}
+
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.form-actions a {
+    color: #65736b;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.form-actions button {
+    border: none;
+    background: #2e7d32;
+    color: white;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.form-actions button:hover {
+    background: #246528;
+}
+
+
+@media (max-width: 700px) {
+
+    .distribution-page {
+        margin-top: 30px;
+    }
+
+    .page-heading h1 {
+        font-size: 29px;
+    }
+
+    .donation-summary {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .donation-summary div {
+        border-bottom: 1px solid #dce5df;
+    }
+
+    .donation-summary div:nth-child(2) {
+        border-right: none;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .distribution-form {
+        padding: 25px 20px;
+    }
+
+    .form-actions {
+        justify-content: space-between;
+    }
+}

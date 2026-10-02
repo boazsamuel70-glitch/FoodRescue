@@ -1,0 +1,600 @@
+/* =========================================================
+   MY DONATIONS PAGE
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.main-content {
+    flex: 1;
+    padding: 40px;
+    min-width: 0;
+}
+
+.main-content h1 {
+    margin: 0 0 8px;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.subtitle {
+    margin: 0 0 30px;
+    color: #666;
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   PICKUP INFORMATION BOX
+========================================================= */
+
+.pickup-info-box {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    background: #fff9e6;
+
+    border: 1px solid #f0d36a;
+    border-left: 5px solid #e7bd2f;
+
+    border-radius: 12px;
+
+    padding: 20px 24px;
+
+    margin-bottom: 28px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.pickup-info-icon {
+    width: 52px;
+    height: 52px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f5d45a;
+
+    border-radius: 50%;
+
+    font-size: 25px;
+}
+
+.pickup-info-text h3 {
+    margin: 0 0 7px;
+
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.pickup-info-text p {
+    margin: 4px 0;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    color: #555;
+}
+
+
+/* =========================================================
+   TABLE CONTAINER
+========================================================= */
+
+.table-container {
+    width: 100%;
+
+    background: #ffffff;
+
+    border-radius: 14px;
+
+    overflow-x: auto;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+
+    border: 1px solid #eeeeee;
+}
+
+
+/* =========================================================
+   DONATION TABLE
+========================================================= */
+
+.donation-table {
+    width: 100%;
+
+    min-width: 950px;
+
+    border-collapse: collapse;
+}
+
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+.donation-table thead {
+    background: #222;
+}
+
+.donation-table th {
+    padding: 17px 16px;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    text-align: left;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   TABLE BODY
+========================================================= */
+
+.donation-table td {
+    padding: 17px 16px;
+
+    border-bottom: 1px solid #eeeeee;
+
+    font-size: 14px;
+
+    vertical-align: middle;
+}
+
+.donation-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.donation-table tbody tr:hover {
+    background: #fafafa;
+}
+
+.donation-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+/* Pending */
+
+.status.pending {
+    background: #fff1c7;
+    color: #8a6500;
+}
+
+
+/* Admin verified */
+
+.status.verified {
+    background: #e5f3ff;
+    color: #1769aa;
+}
+
+
+/* Assigned */
+
+.status.assigned {
+    background: #eee8ff;
+    color: #6542a5;
+}
+
+
+/* NGO accepted */
+
+.status.accepted {
+    background: #e3f7e8;
+    color: #227a3b;
+}
+
+
+/* At donor */
+
+.status.at-donor {
+    background: #e6f4ff;
+    color: #1769aa;
+}
+
+
+/* Awaiting */
+
+.status.awaiting {
+    background: #fff0d5;
+    color: #a15b00;
+}
+
+
+/* Confirmed */
+
+.status.confirmed {
+    background: #dff6e5;
+    color: #217a3b;
+}
+
+
+/* On the way */
+
+.status.on-way {
+    background: #e4f0ff;
+    color: #2864a7;
+}
+
+
+/* Reached */
+
+.status.reached {
+    background: #e9e1ff;
+    color: #63449b;
+}
+
+
+/* Distributed */
+
+.status.distributed {
+    background: #dff7f1;
+    color: #13795b;
+}
+
+
+/* Proof */
+
+.status.proof {
+    background: #e8e8ff;
+    color: #5552a4;
+}
+
+
+/* Completed */
+
+.status.completed {
+    background: #d9f4df;
+    color: #176b2f;
+}
+
+
+/* Rejected */
+
+.status.rejected {
+    background: #ffe1e1;
+    color: #b42318;
+}
+
+
+/* =========================================================
+   PICKUP CODE COLUMN
+========================================================= */
+
+.pickup-code-available {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 7px 12px;
+
+    border-radius: 8px;
+
+    background: #fff3c4;
+
+    color: #765900;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.pickup-code-note {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #888;
+
+    font-size: 11px;
+}
+
+
+.pickup-code-used {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 7px 12px;
+
+    border-radius: 8px;
+
+    background: #e1f4e6;
+
+    color: #21763a;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+.pickup-code-none {
+    color: #aaa;
+
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   VIEW BUTTON
+========================================================= */
+
+.view-link {
+    text-decoration: none;
+}
+
+.view-btn {
+    border: none;
+
+    background: #f3c63d;
+
+    color: #222;
+
+    padding: 9px 17px;
+
+    border-radius: 7px;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.view-btn:hover {
+    background: #dfb42d;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   EMPTY DONATIONS
+========================================================= */
+
+.no-donations {
+    text-align: center;
+
+    padding: 70px 30px !important;
+}
+
+.empty-icon {
+    font-size: 50px;
+
+    margin-bottom: 12px;
+}
+
+.no-donations h3 {
+    margin: 0 0 8px;
+
+    font-size: 20px;
+}
+
+.no-donations p {
+    margin: 0 0 22px;
+
+    color: #777;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   DONATE NOW BUTTON
+========================================================= */
+
+.donate-now-btn {
+    display: inline-block;
+
+    padding: 11px 22px;
+
+    background: #f3c63d;
+
+    color: #222;
+
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    transition: 0.2s ease;
+}
+
+.donate-now-btn:hover {
+    background: #dfb42d;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    margin-top: 40px;
+
+    background: #1f1f1f;
+
+    color: white;
+
+    padding: 35px 40px 20px;
+}
+
+.footer-container {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 50px;
+
+    max-width: 1300px;
+
+    margin: auto;
+}
+
+.footer-about {
+    max-width: 500px;
+}
+
+.footer-about h2 {
+    margin: 0 0 10px;
+
+    font-size: 24px;
+}
+
+.footer-about h2 span {
+    color: #f3c63d;
+}
+
+.footer-about p {
+    color: #cccccc;
+
+    line-height: 1.6;
+
+    font-size: 14px;
+}
+
+.footer-links {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.footer-links h3 {
+    margin: 0 0 8px;
+}
+
+.footer-links a {
+    color: #cccccc;
+
+    text-decoration: none;
+
+    font-size: 14px;
+}
+
+.footer-links a:hover {
+    color: #f3c63d;
+}
+
+footer hr {
+    border: none;
+
+    border-top: 1px solid #444;
+
+    margin: 25px 0 15px;
+}
+
+.copyright {
+    text-align: center;
+
+    margin: 0;
+
+    color: #999;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .main-content {
+        padding: 25px;
+    }
+
+    .pickup-info-box {
+        align-items: flex-start;
+    }
+
+    .footer-container {
+        flex-direction: column;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .main-content {
+        padding: 18px;
+    }
+
+    .main-content h1 {
+        font-size: 26px;
+    }
+
+    .pickup-info-box {
+        flex-direction: column;
+
+        text-align: center;
+
+        align-items: center;
+    }
+
+    .pickup-info-text {
+        width: 100%;
+    }
+
+    footer {
+        padding: 30px 20px 20px;
+    }
+
+}

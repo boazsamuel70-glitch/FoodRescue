@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>NGO Assignments | FoodResQ Admin</title>
+
+
+    <!-- Existing FoodResQ Theme -->
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='admin_dashboard.css') }}">
+
+
+    <!-- Assignment Page CSS -->
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='admin_assignments.css') }}">
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+    <div class="logo">
+
+        <img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+        <div>
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p class="tagline">
+                Turning <span>Surplus</span> into <span>Sustenance</span>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="/admin_dashboard">
+            Dashboard
+        </a>
+
+        
+        <a href="/logout"
+           class="logout">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN CONTAINER
+===================================================== -->
+
+<div class="container">
+
+
+    <!-- PAGE TITLE -->
+
+    <div class="page-title">
+
+        <h1>
+            🤝 NGO Assignments
+        </h1>
+
+        <p>
+            Verify donations, assign nearby NGOs and monitor donation progress.
+        </p>
+
+    </div>
+
+
+
+    <!-- =================================================
+         TABS
+    ================================================== -->
+
+    <div class="assignment-tabs">
+
+        <a
+            href="{{ url_for('admin_assignments',
+                             tab='pending',
+                             search=search) }}"
+
+            class="{% if tab == 'pending' %}
+                        active-tab
+                   {% endif %}">
+
+            🟡 Pending / To Assign
+
+        </a>
+
+
+        <a
+            href="{{ url_for('admin_assignments',
+                             tab='active',
+                             search=search) }}"
+
+            class="{% if tab == 'active' %}
+                        active-tab
+                   {% endif %}">
+
+            🚚 Active Assignments
+
+        </a>
+
+
+        <a
+            href="{{ url_for('admin_assignments',
+                             tab='completed',
+                             search=search) }}"
+
+            class="{% if tab == 'completed' %}
+                        active-tab
+                   {% endif %}">
+
+            ✅ Completed
+
+        </a>
+
+    </div>
+
+
+
+    <!-- =================================================
+         SEARCH
+    ================================================== -->
+
+    <div class="search-card">
+
+        <form
+            method="GET"
+            action="{{ url_for('admin_assignments') }}">
+
+
+            <input
+                type="hidden"
+                name="tab"
+                value="{{ tab }}">
+
+
+            <input
+                type="text"
+                name="search"
+
+                placeholder="Search donor, food or city..."
+
+                value="{{ search }}">
+
+
+            <button type="submit">
+                🔍 Search
+            </button>
+
+
+            {% if search %}
+
+            <a
+                href="{{ url_for(
+                    'admin_assignments',
+                    tab=tab
+                ) }}"
+                class="clear-search">
+
+                Clear
+
+            </a>
+
+            {% endif %}
+
+
+        </form>
+
+    </div>
+
+
+
+    <!-- =================================================
+         PENDING / TO ASSIGN
+    ================================================== -->
+
+    {% if tab == "pending" %}
+
+    <div class="table-card">
+
+
+        <div class="table-heading">
+
+            <div>
+
+                <h2>
+                    🟡 Pending Donations
+                </h2>
+
+                <p>
+                    Review and verify donations before assigning an NGO.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Donation ID
+                        </th>
+
+                        <th>
+                            Food
+                        </th>
+
+                        <th>
+                            Donor
+                        </th>
+
+                        <th>
+                            Quantity
+                        </th>
+
+                        <th>
+                            City
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                {% if pending %}
+
+
+                    {% for donation in pending %}
+
+
+                    <tr>
+
+
+                        <!-- ID -->
+
+                        <td>
+
+                            <strong>
+                                #{{ donation.donation_id }}
+                            </strong>
+
+                        </td>
+
+
+
+                        <!-- FOOD -->
+
+                        <td>
+
+                            <strong>
+                                {{ donation.food_name }}
+                            </strong>
+
+                        </td>
+
+
+
+                        <!-- DONOR -->
+
+                        <td>
+
+                            {{ donation.donor_name }}
+
+                        </td>
+
+
+
+                        <!-- QUANTITY -->
+
+                        <td>
+
+                            {{ donation.quantity }}
+
+                            {{ donation.quantity_unit }}
+
+                        </td>
+
+
+
+                        <!-- CITY -->
+
+                        <td>
+
+                            📍 {{ donation.city }}
+
+                        </td>
+
+
+
+                        <!-- STATUS -->
+
+                        <td>
+
+
+                            {% if donation.status == "Pending" %}
+
+                                <span class="status pending">
+                                    Pending Verification
+                                </span>
+
+
+                            {% elif donation.status == "Admin Verified" %}
+
+                                <span class="status verified">
+                                    Admin Verified
+                                </span>
+
+
+                            {% else %}
+
+                                <span class="status">
+                                    {{ donation.status }}
+                                </span>
+
+                            {% endif %}
+
+
+                        </td>
+
+
+
+                        <!-- ACTION -->
+
+                        <td>
+
+
+                            <!-- VIEW DETAILS -->
+
+                            <a
+                                href="{{ url_for(
+                                    'admin_donation',
+                                    donation_id=donation.donation_id
+                                ) }}"
+
+                                class="view-btn">
+
+                                👁 View Details
+
+                            </a>
+
+
+
+                        </td>
+
+
+                    </tr>
+
+
+                    {% endfor %}
+
+
+                {% else %}
+
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            class="empty">
+
+                            <div class="empty-icon">
+                                📦
+                            </div>
+
+                            <h3>
+                                No Pending Donations
+                            </h3>
+
+                            <p>
+                                There are currently no donations waiting for verification or NGO assignment.
+                            </p>
+
+                        </td>
+
+                    </tr>
+
+
+                {% endif %}
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+
+    <!-- =================================================
+         ACTIVE ASSIGNMENTS
+    ================================================== -->
+
+    {% if tab == "active" %}
+
+    <div class="table-card">
+
+
+        <div class="table-heading">
+
+            <div>
+
+                <h2>
+                    🚚 Active Assignments
+                </h2>
+
+                <p>
+                    Monitor donations that are currently assigned to NGOs.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Donation ID
+                        </th>
+
+                        <th>
+                            Food
+                        </th>
+
+                        <th>
+                            Donor
+                        </th>
+
+                        <th>
+                            NGO
+                        </th>
+
+                        <th>
+                            Partner ID
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                {% if active %}
+
+
+                    {% for donation in active %}
+
+
+                    <tr>
+
+
+                        <td>
+
+                            <strong>
+                                #{{ donation.donation_id }}
+                            </strong>
+
+                        </td>
+
+
+                        <td>
+
+                            {{ donation.food_name }}
+
+                        </td>
+
+
+                        <td>
+
+                            {{ donation.donor_name }}
+
+                        </td>
+
+
+                        <td>
+
+                            <strong>
+                                {{ donation.ngo_name }}
+                            </strong>
+
+                        </td>
+
+
+                        <td>
+
+                            {{ donation.partner_id }}
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="status active-status">
+
+                                {{ donation.status }}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <a
+                                href="{{ url_for(
+                                    'admin_donation',
+                                    donation_id=donation.donation_id
+                                ) }}"
+
+                                class="view-btn">
+
+                                👁 View
+
+                            </a>
+
+                        </td>
+
+
+                    </tr>
+
+
+                    {% endfor %}
+
+
+                {% else %}
+
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            class="empty">
+
+                            <div class="empty-icon">
+                                🚚
+                            </div>
+
+                            <h3>
+                                No Active Assignments
+                            </h3>
+
+                            <p>
+                                No donations are currently assigned to an NGO.
+                            </p>
+
+                        </td>
+
+                    </tr>
+
+
+                {% endif %}
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+
+    <!-- =================================================
+         COMPLETED
+    ================================================== -->
+
+    {% if tab == "completed" %}
+
+    <div class="table-card">
+
+
+        <div class="table-heading">
+
+            <div>
+
+                <h2>
+                    ✅ Completed Assignments
+                </h2>
+
+                <p>
+                    View successfully completed food donations.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Donation ID
+                        </th>
+
+                        <th>
+                            Food
+                        </th>
+
+                        <th>
+                            Donor
+                        </th>
+
+                        <th>
+                            NGO
+                        </th>
+
+                        <th>
+                            Partner ID
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                {% if completed %}
+
+
+                    {% for donation in completed %}
+
+
+                    <tr>
+
+
+                        <td>
+
+                            <strong>
+                                #{{ donation.donation_id }}
+                            </strong>
+
+                        </td>
+
+
+                        <td>
+
+                            {{ donation.food_name }}
+
+                        </td>
+
+
+                        <td>
+
+                            {{ donation.donor_name }}
+
+                        </td>
+
+
+                        <td>
+
+                            <strong>
+                                {{ donation.ngo_name }}
+                            </strong>
+
+                        </td>
+
+
+                        <td>
+
+                            {{ donation.partner_id }}
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="status completed">
+
+                                Completed
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <a
+                                href="{{ url_for(
+                                    'admin_donation',
+                                    donation_id=donation.donation_id
+                                ) }}"
+
+                                class="view-btn">
+
+                                👁 View
+
+                            </a>
+
+                        </td>
+
+
+                    </tr>
+
+
+                    {% endfor %}
+
+
+                {% else %}
+
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            class="empty">
+
+                            <div class="empty-icon">
+                                ✅
+                            </div>
+
+                            <h3>
+                                No Completed Assignments
+                            </h3>
+
+                            <p>
+                                Completed donations will appear here.
+                            </p>
+
+                        </td>
+
+                    </tr>
+
+
+                {% endif %}
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <p>
+        FoodResQ Admin Panel © 2026
+    </p>
+
+</footer>
+
+
+
+</body>
+
+</html>

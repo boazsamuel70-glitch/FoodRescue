@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nearby Donations | FoodResQ</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='ngo.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+          
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+<body>
+
+    <header>
+
+<div class="logo">
+
+<img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+<div>
+
+<h2>Food<span>ResQ</span></h2>
+
+<p class="tagline">Turning <span>Surplus</span> into <span>Sustenance</span></p>
+
+</div>
+
+</div>
+
+<nav>
+
+<a href="/ngo_home">Home</a>
+
+
+ <a href="/logout" class="logout">
+            Logout
+        </a>
+
+</nav>
+
+</header>
+
+<div class="nearby-page">
+
+    <div class="nearby-header">
+
+        <div>
+            <h1>Nearby Donations</h1>
+
+            <p>
+                Find food donations available near your NGO
+                and request them directly.
+            </p>
+        </div>
+
+        <div class="nearby-location">
+            📍 <strong>Donations near your location</strong>
+        </div>
+
+    </div>
+
+
+    <div class="nearby-summary">
+
+        <div class="nearby-summary-card">
+            <span>Available Donations</span>
+            <strong>{{ donations|length }}</strong>
+        </div>
+
+        <div class="nearby-summary-card">
+            <span>Search Radius</span>
+            <strong>20 KM</strong>
+        </div>
+
+    </div>
+
+
+    {% if donations %}
+
+    <div class="nearby-donation-grid">
+
+        {% for donation in donations %}
+
+        <div class="nearby-donation-card">
+
+            <div class="nearby-card-header">
+
+                <div>
+
+                    <h2>
+                        {{ donation.food_name }}
+                    </h2>
+
+                    {% if donation.food_type %}
+                    <span class="nearby-food-type">
+                        {{ donation.food_type }}
+                    </span>
+                    {% endif %}
+
+                </div>
+
+
+                {% if donation.distance is not none %}
+
+                <div class="nearby-distance">
+                    📍 {{ "%.1f"|format(donation.distance) }} km
+                </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="nearby-info">
+
+                <div class="nearby-info-icon">
+                    🍱
+                </div>
+
+                <div class="nearby-info-content">
+
+                    <span class="nearby-info-label">
+                        Quantity
+                    </span>
+
+                    <span class="nearby-info-value">
+                        {{ donation.quantity }}
+                        {{ donation.quantity_unit }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="nearby-info">
+
+                <div class="nearby-info-icon">
+                    📍
+                </div>
+
+                <div class="nearby-info-content">
+
+                    <span class="nearby-info-label">
+                        Pickup Location
+                    </span>
+
+                    <span class="nearby-info-value">
+                        {{ donation.address }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="nearby-info">
+
+                <div class="nearby-info-icon">
+                    🏙️
+                </div>
+
+                <div class="nearby-info-content">
+
+                    <span class="nearby-info-label">
+                        City
+                    </span>
+
+                    <span class="nearby-info-value">
+                        {{ donation.city }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="nearby-pickup-box">
+
+                <div class="nearby-pickup-title">
+                    Pickup Schedule
+                </div>
+
+                <div class="nearby-pickup-details">
+
+                    <div>
+
+                        <span>Date</span>
+
+                        <strong>
+                            {{ donation.pickup_date }}
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>Time</span>
+
+                        <strong>
+                            {{ donation.pickup_time }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <form action="{{ url_for('ngo_request_donation',
+                                      donation_id=donation.donation_id) }}"
+                  method="POST">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <button type="submit"
+                        class="nearby-request-btn">
+
+                    Request Pickup
+
+                </button>
+
+            </form>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    {% else %}
+
+    <div class="nearby-empty">
+
+        <div class="nearby-empty-icon">
+            🍽️
+        </div>
+
+        <h2>No Nearby Donations</h2>
+
+        <p>
+            There are currently no available food donations
+            within your service area.
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+
+</body>
+</html>

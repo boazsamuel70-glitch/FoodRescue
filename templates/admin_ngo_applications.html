@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NGO Applications - FoodResQ</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='admin_ngo_applications.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+
+<body>
+    <header>
+
+<div class="logo">
+
+<img src="{{ url_for('static', filename='images/homepgs.png') }}">
+
+<div>
+
+<h2>Food<span>ResQ</span></h2>
+
+<p class="tagline">Turning <span>Surplus</span> into <span>Sustenance</span></p>
+
+</div>
+
+</div>
+ <nav>
+
+       <a href="/admin_dashboard">
+Dashboard
+</a>
+
+
+
+ <a href="/logout" class="logout">
+            Logout
+        </a>
+
+        
+    </nav>
+
+</header>
+
+<div class="applications-container">
+
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-header">
+
+        <div>
+            <h1>NGO Applications</h1>
+
+            <p>
+                Review and approve NGO partnership applications.
+            </p>
+        </div>
+
+        <div class="application-count">
+
+            {{ ngos|length }}
+
+            <span>
+                Pending
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    {% if ngos %}
+
+
+        {% for ngo in ngos %}
+
+
+        <!-- =====================================
+             NGO CARD
+        ====================================== -->
+
+        <div class="ngo-card">
+
+
+            <!-- =====================================
+                 COLLAPSED SUMMARY
+            ====================================== -->
+
+            <div class="ngo-summary">
+
+
+                <div class="ngo-main-info">
+
+                    <div class="ngo-icon">
+                        {{ ngo.ngo_name[0]|upper }}
+                    </div>
+
+
+                    <div class="ngo-name">
+
+                        <h2>
+                            {{ ngo.ngo_name }}
+                        </h2>
+
+                        <p>
+                            Application #{{ ngo.ngo_id }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="summary-details">
+
+
+                    <div class="summary-item">
+
+                        <span>
+                            Organization
+                        </span>
+
+                        <strong>
+                            {{ ngo.organization_type }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-item">
+
+                        <span>
+                            Registration No.
+                        </span>
+
+                        <strong>
+                            {{ ngo.registration_number }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-item">
+
+                        <span>
+                            Contact Person
+                        </span>
+
+                        <strong>
+                            {{ ngo.person_name }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-item">
+
+                        <span>
+                            Email
+                        </span>
+
+                        <strong>
+                            {{ ngo.email }}
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="summary-right">
+
+
+                    <span class="status pending">
+                        Pending
+                    </span>
+
+
+                    <button
+                        type="button"
+                        class="view-btn"
+                        onclick="toggleDetails('{{ ngo.ngo_id }}', this)">
+
+                        View Details
+
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =====================================
+                 EXPANDED DETAILS
+            ====================================== -->
+
+            <div
+                class="ngo-details"
+                id="details-{{ ngo.ngo_id }}">
+
+
+                <!-- ORGANIZATION -->
+
+                <div class="details-section">
+
+                    <h3>
+                        Organization Details
+                    </h3>
+
+
+                    <div class="details-grid">
+
+
+                        <div class="detail-box">
+
+                            <span>
+                                NGO Name
+                            </span>
+
+                            <strong>
+                                {{ ngo.ngo_name }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-box">
+
+                            <span>
+                                Partner ID
+                            </span>
+
+                            <strong>
+
+                                {% if ngo.partner_id %}
+
+                                    {{ ngo.partner_id }}
+
+                                {% else %}
+
+                                    Not Generated
+
+                                {% endif %}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-box">
+
+                            <span>
+                                Organization Type
+                            </span>
+
+                            <strong>
+                                {{ ngo.organization_type }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-box">
+
+                            <span>
+                                Registration Number
+                            </span>
+
+                            <strong>
+                                {{ ngo.registration_number }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-box">
+
+                            <span>
+                                DARPAN ID
+                            </span>
+
+                            <strong>
+
+                                {% if ngo.darpan_id %}
+
+                                    {{ ngo.darpan_id }}
+
+                                {% else %}
+
+                                    Not Provided
+
+                                {% endif %}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-box">
+
+                            <span>
+                                Year Established
+                            </span>
+
+                            <strong>
+                                {{ ngo.year_established }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-box">
+
+                            <span>
+                                Registered On
+                            </span>
+
+                            <strong>
+                                {{ ngo.registered_on }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- AUTHORIZED PERSON -->
+
+                <div class="details-section">
+
+                    <h3>
+                        Authorized Person
+                    </h3>
+
+
+                    <div class="details-grid">
+
+
+                        <div class="detail-box">
+
+                            <span>
+                                Full Name
+                            </span>
+
+                            <strong>
+                                {{ ngo.person_name }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-box">
+
+                            <span>
+                                Designation
+                            </span>
+
+                            <strong>
+                                {{ ngo.designation }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-box">
+
+                            <span>
+                                Email
+                            </span>
+
+                            <strong>
+                                {{ ngo.email }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-box">
+
+                            <span>
+                                Phone
+                            </span>
+
+                            <strong>
+                                {{ ngo.phone }}
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- LOCATION -->
+
+                <div class="details-section">
+
+                    <h3>
+                        Location & Service Area
+                    </h3>
+
+
+                    <div class="details-grid">
+
+
+                        <div class="detail-box wide">
+
+                            <span>
+                                Address
+                            </span>
+
+                            <strong>
+                                {{ ngo.address }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-box">
+
+                            <span>
+                                Pincode
+                            </span>
+
+                            <strong>
+                                {{ ngo.pincode }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-box">
+
+                            <span>
+                                Service Area
+                            </span>
+
+                            <strong>
+                                {{ ngo.service_area }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-box">
+
+                            <span>
+                                Latitude
+                            </span>
+
+                            <strong>
+                                {{ ngo.latitude }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-box">
+
+                            <span>
+                                Longitude
+                            </span>
+
+                            <strong>
+                                {{ ngo.longitude }}
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- VERIFICATION -->
+
+                <div class="details-section">
+
+                    <h3>
+                        Verification Information
+                    </h3>
+
+
+                    <div class="details-grid">
+
+
+                        <div class="detail-box">
+
+                            <span>
+                                Account Status
+                            </span>
+
+                            <strong>
+                                {{ ngo.status }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-box">
+
+                            <span>
+                                Verification Status
+                            </span>
+
+                            <strong>
+                                {{ ngo.verification_status }}
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- DOCUMENTS -->
+
+<div class="details-section">
+
+    <h3>
+        Submitted Documents
+    </h3>
+
+    <div class="documents">
+
+        <!-- NGO REGISTRATION CERTIFICATE -->
+
+        <div class="document">
+
+            <div class="document-info">
+
+                <span>
+                    NGO Registration Certificate
+                </span>
+
+                <strong>
+
+                    {% if ngo.registration_document %}
+                        {{ ngo.registration_document }}
+                    {% else %}
+                        Not Provided
+                    {% endif %}
+
+                </strong>
+
+            </div>
+
+
+            {% if ngo.registration_document %}
+
+            <a
+                href="{{ url_for('admin_ngo_document', filename=ngo.registration_document) }}"
+                target="_blank"
+                class="document-btn">
+
+                View
+
+            </a>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- AUTHORIZED PERSON ID -->
+
+        <div class="document">
+
+            <div class="document-info">
+
+                <span>
+                    Authorized Person ID
+                </span>
+
+                <strong>
+
+                    {% if ngo.authorized_person_document %}
+                        {{ ngo.authorized_person_document }}
+                    {% else %}
+                        Not Provided
+                    {% endif %}
+
+                </strong>
+
+            </div>
+
+
+            {% if ngo.authorized_person_document %}
+
+            <a
+                href="{{ url_for('admin_ngo_document', filename=ngo.authorized_person_document) }}"
+                target="_blank"
+                class="document-btn">
+
+                View
+
+            </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="actions">
+
+
+                    <form
+                        action="{{ url_for('reject_ngo', ngo_id=ngo.ngo_id) }}"
+                        method="POST"
+                        onsubmit="return confirm('Are you sure you want to reject this NGO application?');">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+
+                        <button
+                            type="submit"
+                            class="reject-btn">
+
+                            Reject Application
+
+                        </button>
+
+
+                    </form>
+
+
+
+                    <form
+                        action="{{ url_for('approve_ngo', ngo_id=ngo.ngo_id) }}"
+                        method="POST"
+                        onsubmit="return confirm('Are you sure you want to approve this NGO application?');">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+
+                        <button
+                            type="submit"
+                            class="approve-btn">
+
+                            Approve Application
+
+                        </button>
+
+
+                    </form>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        {% endfor %}
+
+
+    {% else %}
+
+
+        <div class="empty-box">
+
+            <h2>
+                No Pending Applications
+            </h2>
+
+            <p>
+                There are currently no NGO applications waiting for approval.
+            </p>
+
+        </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+
+<script>
+
+function toggleDetails(id, button) {
+
+    const details =
+        document.getElementById("details-" + id);
+
+
+    if (details.classList.contains("show")) {
+
+        details.classList.remove("show");
+
+        button.innerHTML = "View Details";
+
+    }
+
+    else {
+
+        details.classList.add("show");
+
+        button.innerHTML = "Hide Details";
+
+    }
+
+}
+
+</script>
+
+
+</body>
+
+</html>

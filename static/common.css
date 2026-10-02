@@ -1,0 +1,899 @@
+/* =========================================================
+   FOODRESQ - COMMON CSS
+   Header / Logo / Navbar / Dropdown
+   ========================================================= */
+
+*,
+*::before,
+*::after{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+}
+
+body{
+    background:#F8FFF7;
+    font-family:'Poppins',sans-serif;
+    color:#333;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header {
+    width: 100%;
+    min-height: 82px;
+
+    padding: 10px 2%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background:
+        linear-gradient(
+            120deg,
+            #1B4B36 0%,
+            #255943 48%,
+            #2B684A 100%
+        );
+
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+
+    overflow: visible;
+
+    border-bottom: 1px solid rgba(255,255,255,0.10);
+
+    box-shadow:
+        0 8px 25px rgba(19, 57, 40, 0.25);
+}
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    min-width: max-content;
+}
+
+.logo img {
+    width: 66px;
+    height: 60px;
+
+    object-fit: contain;
+
+    border-radius: 50%;
+
+    background: #FFFFFF;
+
+    padding: 2px;
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,0.17);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.logo img:hover {
+    transform: scale(1.05) rotate(1deg);
+
+    box-shadow:
+        0 6px 17px rgba(0,0,0,0.24);
+}
+
+
+/* =========================================================
+   FOODRESQ NAME
+   ========================================================= */
+
+.logo h2 {
+    color: #FFFFFF;
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    letter-spacing: -0.7px;
+
+    line-height: 1.05;
+
+    margin: 0;
+}
+
+.logo h2 span {
+    color: #A9D96D;
+}
+
+
+/* =========================================================
+   TAGLINE
+   ========================================================= */
+
+.logo p {
+    color: #D8E7DE;
+
+    font-size: 11px;
+
+    font-weight: 400;
+
+    letter-spacing: 0.15px;
+
+    margin-top: 5px;
+
+    line-height: 1.2;
+}
+
+.logo p span {
+    color: #B7E878;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+nav {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+
+/* Normal links */
+
+nav > a {
+    position: relative;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 12px;
+
+    color: #F5FAF7;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    border-radius: 9px;
+
+    transition:
+        color 0.25s ease,
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+nav > a:hover {
+    color: #B8E97A;
+
+    background: rgba(255,255,255,0.07);
+
+    transform: translateY(-1px);
+}
+
+
+/* Animated underline */
+
+nav > a:not(.logout)::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    bottom: 4px;
+
+    width: 0;
+    height: 2px;
+
+    border-radius: 10px;
+
+    background: #A9D96D;
+
+    transform: translateX(-50%);
+
+    transition: width 0.25s ease;
+}
+
+nav > a:not(.logout):hover::after {
+    width: 45%;
+}
+
+
+/* =========================================================
+   DROPDOWN
+   ========================================================= */
+
+.dropdown {
+    position: relative;
+
+    display: inline-block;
+
+    padding-bottom: 10px;
+
+    margin-bottom: -10px;
+}
+
+
+/*
+   IMPORTANT FIX:
+
+   The dropdown has an invisible hover bridge.
+   This prevents the menu from disappearing when
+   moving the mouse from Register to the menu.
+*/
+
+.dropdown::after {
+    content: "";
+
+    position: absolute;
+
+    left: -5px;
+    right: -5px;
+
+    top: 100%;
+
+    height: 14px;
+
+    background: transparent;
+}
+
+
+/* =========================================================
+   DROPDOWN BUTTON
+   ========================================================= */
+
+.dropbtn {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 10px 18px;
+
+    border-radius: 10px;
+
+    border: 1px solid rgba(255,255,255,0.12);
+
+    background:
+        linear-gradient(
+            135deg,
+            #2E713F,
+            #367E46
+        );
+
+    color: #FFFFFF;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,0.13);
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.dropbtn:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #3B8749,
+            #469A54
+        );
+
+    color: #FFFFFF;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 7px 17px rgba(0,0,0,0.20);
+}
+
+
+/* =========================================================
+   DROPDOWN ARROW
+   ========================================================= */
+
+.dropbtn::after {
+    content: "⌄";
+
+    font-size: 15px;
+
+    line-height: 1;
+
+    margin-top: -2px;
+
+    transition:
+        transform 0.25s ease;
+}
+
+.dropdown:hover .dropbtn::after {
+    transform: rotate(180deg);
+}
+
+
+/* =========================================================
+   DROPDOWN CONTENT
+   ========================================================= */
+
+.dropdown-content {
+    display: block;
+
+    visibility: hidden;
+
+    opacity: 0;
+
+    position: absolute;
+
+    top: calc(100% + 3px);
+
+    left: 0;
+
+    min-width: 235px;
+
+    padding: 7px;
+
+    background: #FFFFFF;
+
+    border: 1px solid #DDE9E1;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 18px 40px rgba(19, 57, 40, 0.18);
+
+    z-index: 99999;
+
+    transform:
+        translateY(-7px)
+        scale(0.98);
+
+    transform-origin: top left;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.20s ease,
+        transform 0.20s ease,
+        visibility 0.20s ease;
+}
+
+
+/* Green accent at top */
+
+.dropdown-content::before {
+    content: "";
+
+    display: block;
+
+    width: 100%;
+    height: 4px;
+
+    margin-bottom: 5px;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #72B23E,
+            #A9D96D,
+            #72B23E
+        );
+}
+
+
+/* =========================================================
+   SHOW DROPDOWN
+   ========================================================= */
+
+.dropdown:hover .dropdown-content,
+.dropdown:focus-within .dropdown-content {
+    visibility: visible;
+
+    opacity: 1;
+
+    transform:
+        translateY(0)
+        scale(1);
+
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   DROPDOWN LINKS
+   ========================================================= */
+
+.dropdown-content a {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    min-height: 46px;
+
+    padding: 11px 14px;
+
+    margin: 2px 0;
+
+    border-radius: 9px;
+
+    color: #30483C;
+
+    background: transparent;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    transition:
+        background 0.20s ease,
+        color 0.20s ease,
+        padding-left 0.20s ease;
+}
+
+.dropdown-content a:hover {
+    background: #F0F8EE;
+
+    color: #2E713F;
+
+    padding-left: 19px;
+}
+
+
+/* Small green indicator */
+
+.dropdown-content a::before {
+    content: "";
+
+    width: 0;
+
+    height: 5px;
+
+    margin-right: 0;
+
+    border-radius: 5px;
+
+    background: #8BC34A;
+
+    transition:
+        width 0.20s ease,
+        margin-right 0.20s ease;
+}
+
+.dropdown-content a:hover::before {
+    width: 5px;
+
+    margin-right: 9px;
+}
+
+
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+
+nav a.logout {
+    color: #FFFFFF;
+
+    background:
+        rgba(255,255,255,0.07);
+
+    border: 1px solid rgba(255,255,255,0.13);
+
+    padding: 9px 15px;
+
+    border-radius: 9px;
+
+    font-weight: 500;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+nav a.logout:hover {
+    color: #1F5038;
+
+    background: #A9D96D;
+
+    border-color: #A9D96D;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 13px rgba(0,0,0,0.15);
+}
+
+nav a.logout::after {
+    display: none;
+}
+
+
+/* =========================================================
+   FOCUS
+   ========================================================= */
+
+button:focus,
+a:focus {
+    outline: 2px solid rgba(169,217,109,0.55);
+
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    header {
+        padding-left: 2.5%;
+        padding-right: 2.5%;
+    }
+
+    nav {
+        gap: 4px;
+    }
+
+    nav > a {
+        font-size: 13px;
+
+        padding: 9px 9px;
+    }
+
+    .dropbtn {
+        font-size: 13px;
+
+        padding: 9px 14px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    header {
+        flex-direction: column;
+
+        align-items: center;
+
+        gap: 12px;
+
+        padding: 13px 3%;
+    }
+
+    .logo {
+        width: 100%;
+
+        justify-content: center;
+    }
+
+    nav {
+        width: 100%;
+
+        justify-content: center;
+
+        flex-wrap: wrap;
+
+        gap: 6px;
+    }
+
+    nav > a {
+        font-size: 12px;
+    }
+
+    .dropbtn {
+        font-size: 12px;
+
+        padding: 8px 12px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 520px) {
+
+    .logo img {
+        width: 57px;
+        height: 52px;
+    }
+
+    .logo h2 {
+        font-size: 25px;
+    }
+
+    .logo p {
+        font-size: 9px;
+    }
+
+    nav {
+        gap: 4px;
+    }
+
+    nav > a {
+        font-size: 11px;
+
+        padding: 7px 8px;
+    }
+
+    .dropbtn {
+        font-size: 11px;
+
+        padding: 7px 10px;
+    }
+
+    .dropdown-content {
+        min-width: 205px;
+    }
+}
+
+/* =========================================================
+   FOODRESQ WEBSITE ALERT
+========================================================= */
+
+#foodresq-alert-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    z-index: 999999;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
+}
+
+
+#foodresq-alert-overlay.show {
+
+    opacity: 1;
+
+    visibility: visible;
+}
+
+
+.foodresq-alert-box {
+
+    width: min(500px, 100%);
+
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    padding: 28px;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 18px;
+
+    position: relative;
+
+    box-shadow:
+        0 15px 50px rgba(0, 0, 0, 0.20);
+
+    transform: translateY(-15px) scale(0.97);
+
+    transition:
+        transform 0.2s ease;
+}
+
+
+#foodresq-alert-overlay.show
+.foodresq-alert-box {
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+.foodresq-alert-icon {
+
+    width: 45px;
+
+    height: 45px;
+
+    min-width: 45px;
+
+    border-radius: 50%;
+
+    background: #e9f7ed;
+
+    color: #238636;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 21px;
+}
+
+
+.foodresq-alert-content {
+
+    flex: 1;
+
+    padding-right: 5px;
+}
+
+
+.foodresq-alert-content h3 {
+
+    margin: 0 0 7px 0;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+    color: #173b2a;
+}
+
+
+.foodresq-alert-content p {
+
+    margin: 0;
+
+    font-size: 16px;
+
+    line-height: 1.55;
+
+    color: #555555;
+}
+
+
+#foodresq-alert-ok {
+
+    position: absolute;
+
+    right: 22px;
+
+    bottom: 20px;
+
+    border: none;
+
+    background: #238636;
+
+    color: white;
+
+    padding: 9px 23px;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease;
+}
+
+
+#foodresq-alert-ok:hover {
+
+    background: #1b6e2c;
+
+    transform: translateY(-1px);
+}
+
+
+#foodresq-alert-ok:active {
+
+    transform: translateY(0);
+}
+
+
+body.foodresq-alert-open {
+
+    overflow: hidden;
+}
+
+
+@media (max-width: 600px) {
+
+    .foodresq-alert-box {
+
+        padding: 24px;
+
+        gap: 14px;
+
+        padding-bottom: 75px;
+    }
+
+
+    .foodresq-alert-icon {
+
+        width: 40px;
+
+        height: 40px;
+
+        min-width: 40px;
+
+        font-size: 18px;
+    }
+
+
+    .foodresq-alert-content h3 {
+
+        font-size: 18px;
+    }
+
+
+    .foodresq-alert-content p {
+
+        font-size: 15px;
+    }
+
+}

@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>NGO Login | FoodResQ</title>
+
+
+    <!-- COMMON CSS -->
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+
+    <!-- NGO CSS -->
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='ngo.css') }}">
+
+
+    <!-- GOOGLE FONT -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+
+    <style>
+
+        /* =================================================
+           NGO LOGIN WEBSITE MESSAGE
+        ================================================= */
+
+        .ngo-login-message {
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 13px;
+
+            padding: 15px 17px;
+
+            margin-bottom: 22px;
+
+            border-radius: 10px;
+
+            font-family: Poppins, sans-serif;
+
+            animation: messageAppear 0.25s ease;
+
+        }
+
+
+        .ngo-login-message.error {
+
+            background: #fff1f1;
+
+            border: 1px solid #f0b4b4;
+
+            border-left: 5px solid #d93030;
+
+            color: #9f1d1d;
+
+        }
+
+
+        .ngo-login-message.warning {
+
+            background: #fff9e8;
+
+            border: 1px solid #ead58a;
+
+            border-left: 5px solid #d39b00;
+
+            color: #795c00;
+
+        }
+
+
+        .ngo-login-message-icon {
+
+            width: 30px;
+
+            height: 30px;
+
+            min-width: 30px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+        }
+
+
+        .ngo-login-message.error
+        .ngo-login-message-icon {
+
+            background: #d93030;
+
+            color: white;
+
+        }
+
+
+        .ngo-login-message.warning
+        .ngo-login-message-icon {
+
+            background: #d39b00;
+
+            color: white;
+
+        }
+
+
+        .ngo-login-message-text {
+
+            flex: 1;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+            padding-top: 2px;
+
+        }
+
+
+        @keyframes messageAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateY(-6px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: translateY(0);
+
+            }
+
+        }
+
+
+        /* =================================================
+           LOGIN INPUT PRESERVATION
+        ================================================= */
+
+        .login-card input {
+
+            box-sizing: border-box;
+
+        }
+
+
+    </style>
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header>
+
+    <div class="logo">
+
+        <img
+            src="{{ url_for('static', filename='images/homepgs.png') }}"
+            alt="FoodResQ Logo"
+        >
+
+        <div>
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p class="tagline">
+
+                Turning
+                <span>Surplus</span>
+                into
+                <span>Sustenance</span>
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/about">
+            About
+        </a>
+
+        <a href="/ngo_registration">
+            Register NGO
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =========================================================
+     NGO LOGIN PAGE
+========================================================= -->
+
+<section class="ngo-page">
+
+
+    <section class="login-section">
+
+
+        <!-- =================================================
+             LEFT SIDE
+        ================================================== -->
+
+        <div class="login-left">
+
+            <span class="login-badge">
+                🤝 NGO Portal
+            </span>
+
+
+            <h1>
+
+                Welcome Back,
+
+                <br>
+
+                Partner NGO
+
+            </h1>
+
+
+            <p>
+
+                Sign in to manage your assigned food
+                donation requests, coordinate pickups,
+                and help deliver surplus food to
+                communities in need.
+
+            </p>
+
+
+            <div class="login-feature">
+
+                🍱 View newly assigned donations
+
+            </div>
+
+
+            <div class="login-feature">
+
+                🚚 Update pickup and delivery status
+
+            </div>
+
+
+            <div class="login-feature">
+
+                📊 Track your NGO's contribution
+
+            </div>
+
+
+            <div class="login-feature">
+
+                ❤️ Help reduce food waste across India
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             RIGHT LOGIN CARD
+        ================================================== -->
+
+        <div class="login-card">
+
+
+            <h1>
+
+                NGO Login
+
+            </h1>
+
+
+            <p>
+
+                Login to manage donation requests
+                assigned to your organisation.
+
+            </p>
+
+
+
+            <!-- =================================================
+                 WEBSITE MESSAGE
+            ================================================== -->
+
+            {% if error %}
+
+            <div
+                class="ngo-login-message {{ error_type or 'error' }}"
+                role="alert"
+            >
+
+                <div class="ngo-login-message-icon">
+
+                    {% if error_type == "warning" %}
+
+                        !
+
+                    {% else %}
+
+                        !
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="ngo-login-message-text">
+
+                    {{ error }}
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+
+            <!-- =================================================
+                 LOGIN FORM
+            ================================================== -->
+
+            <form
+                action="/ngo_login_verify"
+                method="POST"
+            >
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+
+                <label for="email">
+
+                    Email Address
+
+                </label>
+
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter NGO Email"
+                    value="{{ email or '' }}"
+                    required
+                >
+
+
+
+                <label for="password">
+
+                    Password
+
+                </label>
+
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter Password"
+                    required
+                >
+
+
+
+                <p class="forgot-password">
+
+                    <a href="/forgot_password">
+
+                        Forgot Password?
+
+                    </a>
+
+                </p>
+
+
+
+                <button type="submit">
+
+                    Login
+
+                </button>
+
+
+            </form>
+
+
+
+            <!-- =================================================
+                 REGISTER LINK
+            ================================================== -->
+
+            <div class="bottom-text">
+
+                Don't have an account?
+
+                <a href="/ngo_registration">
+
+                    Register NGO
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</section>
+
+
+</body>
+
+</html>

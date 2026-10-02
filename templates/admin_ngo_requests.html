@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>NGO Requests - FoodResQ</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='common.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='admin_ngo_requests.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- FoodResQ website alert system (replaces native browser dialogs) -->
+    <script src="{{ url_for('static', filename='website-alert.js') }}"></script>
+    {% with _frq = get_flashed_messages(with_categories=true) %}{% if _frq %}
+    <script>window.FOODRESQ_FLASH = {{ _frq|tojson }};</script>
+    {% endif %}{% endwith %}
+<script src="{{ url_for('static', filename='input-guard.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+<script src="{{ url_for('static', filename='nav-toggle.js') }}" defer></script>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+    <div class="logo">
+
+        <img src="{{ url_for('static',
+                             filename='images/homepgs.png') }}">
+
+        <div>
+
+            <h2>
+                Food<span>ResQ</span>
+            </h2>
+
+            <p class="tagline">
+                Turning <span>Surplus</span> into <span>Sustenance</span>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="/admin_dashboard">
+            Dashboard
+        </a>
+
+       
+        <a href="/logout"
+           class="logout">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="requests-page">
+
+
+    <!-- PAGE HEADING -->
+
+    <div class="page-heading">
+
+        <div>
+
+            <span class="page-label">
+                NGO MANAGEMENT
+            </span>
+
+            <h1>
+                NGO Pickup Requests
+            </h1>
+
+            <p>
+                Review donation pickup requests submitted by NGOs.
+            </p>
+
+        </div>
+
+
+        <div class="request-count">
+
+            <span>
+                {{ requests|length }}
+            </span>
+
+            Requests
+
+        </div>
+
+    </div>
+
+
+    {% if requests %}
+
+
+    <!-- =================================================
+         TABLE
+    ================================================== -->
+
+    <div class="requests-table-wrapper">
+
+        <table class="requests-table">
+
+
+            <!-- TABLE HEADER -->
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Donation
+                    </th>
+
+                    <th>
+                        Requesting NGO
+                    </th>
+
+                    <th>
+                        Location
+                    </th>
+
+                    <th>
+                        Pickup
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Details
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <!-- TABLE BODY -->
+
+            <tbody>
+
+
+            {% for req in requests %}
+
+
+                <!-- =================================================
+                     MAIN ROW
+                ================================================== -->
+
+                <tr class="main-row">
+
+
+                    <!-- DONATION -->
+
+                    <td>
+
+                        <div class="donation-cell">
+
+                            <div class="food-icon">
+                                🍱
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    {{ req.food_name }}
+                                </strong>
+
+                                <span>
+                                    Donation #{{ req.donation_id }}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- NGO -->
+
+                    <td>
+
+                        <div class="ngo-cell">
+
+                            <strong>
+                                {{ req.ngo_name }}
+                            </strong>
+
+                            <span>
+                                {{ req.partner_id }}
+                            </span>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- LOCATION -->
+
+                    <td>
+
+                        <div class="location-cell">
+
+                            📍 {{ req.city }}
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- PICKUP -->
+
+                    <td>
+
+                        <div class="pickup-cell">
+
+                            <strong>
+                                {{ req.pickup_date }}
+                            </strong>
+
+                            <span>
+                                {{ req.pickup_time }}
+                            </span>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        <span class="status-badge
+                        {% if req.request_status == 'Pending' %}
+                            pending
+                        {% elif req.request_status == 'Approved' %}
+                            approved
+                        {% elif req.request_status == 'Rejected' %}
+                            rejected
+                        {% else %}
+                            other
+                        {% endif %}">
+
+                            <span class="status-dot"></span>
+
+                            {{ req.request_status }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- DETAILS BUTTON -->
+
+                    <td>
+
+                        <button
+                            type="button"
+                            class="details-btn"
+                            onclick="toggleDetails('details-{{ req.request_id }}', this)">
+
+                            <span>
+                                View
+                            </span>
+
+                            <span class="arrow">
+                                ▼
+                            </span>
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+
+                <!-- =================================================
+                     EXPANDED DETAILS ROW
+                ================================================== -->
+
+                <tr
+                    id="details-{{ req.request_id }}"
+                    class="details-row">
+
+                    <td colspan="6">
+
+
+                        <div class="details-container">
+
+
+                            <!-- DONATION DETAILS -->
+
+                            <div class="detail-section">
+
+                                <h3>
+                                    🍱 Donation Details
+                                </h3>
+
+
+                                <div class="detail-grid">
+
+
+                                    <div class="detail-item">
+
+                                        <span>
+                                            Food
+                                        </span>
+
+                                        <strong>
+                                            {{ req.food_name }}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="detail-item">
+
+                                        <span>
+                                            Food Type
+                                        </span>
+
+                                        <strong>
+                                            {{ req.food_type }}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="detail-item">
+
+                                        <span>
+                                            Quantity
+                                        </span>
+
+                                        <strong>
+                                            {{ req.quantity }}
+                                            {{ req.quantity_unit }}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="detail-item">
+
+                                        <span>
+                                            Donor
+                                        </span>
+
+                                        <strong>
+                                            {{ req.donor_name }}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="detail-item">
+
+                                        <span>
+                                            Location
+                                        </span>
+
+                                        <strong>
+                                            {{ req.city }}
+                                        </strong>
+
+                                    </div>
+                                    <div class="detail-item">
+                                        <span>Full Pickup Address</span>
+                                        <strong>{{ req.address or 'Not available' }}</strong>
+                                    </div>
+
+                                    <div class="detail-item">
+                                        <span>Nearby Landmark</span>
+                                        <strong>{{ req.landmark or 'Not specified' }}</strong>
+                                    </div>
+
+                                    <div class="detail-item">
+                                        <span>City</span>
+                                        <strong>{{ req.city or 'Not available' }}</strong>
+                                    </div>
+
+                                    <div class="detail-item">
+
+                                        <span>
+                                            Pickup
+                                        </span>
+
+                                        <strong>
+                                            {{ req.pickup_date }}
+                                            {{ req.pickup_time }}
+                                        </strong>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- NGO DETAILS -->
+
+                            <div class="detail-section">
+
+                                <h3>
+                                    🏢 Requesting NGO
+                                </h3>
+
+
+                                <div class="detail-grid">
+
+
+                                    <div class="detail-item">
+
+                                        <span>
+                                            NGO Name
+                                        </span>
+
+                                        <strong>
+                                            {{ req.ngo_name }}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="detail-item">
+
+                                        <span>
+                                            Partner ID
+                                        </span>
+
+                                        <strong>
+                                            {{ req.partner_id }}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="detail-item">
+
+                                        <span>
+                                            Phone
+                                        </span>
+
+                                        <strong>
+                                            {{ req.ngo_phone }}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="detail-item">
+
+                                        <span>
+                                            Address
+                                        </span>
+
+                                        <strong>
+                                            {{ req.ngo_address }}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="detail-item">
+
+                                        <span>
+                                            Requested On
+                                        </span>
+
+                                        <strong>
+                                            {{ req.requested_on }}
+                                        </strong>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- ACTIONS -->
+
+                            {% if req.request_status == 'Pending' %}
+
+                            <div class="request-actions">
+
+
+                                <form
+                                    action="{{ url_for(
+                                        'admin_approve_ngo_request',
+                                        request_id=req.request_id
+                                    ) }}"
+                                    method="POST"
+                                    onsubmit="return confirm(
+                                        'Assign this donation to this NGO?'
+                                    );">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                                    <button
+                                        type="submit"
+                                        class="approve-btn">
+
+                                        ✓ Approve & Assign
+
+                                    </button>
+
+                                </form>
+
+
+                                <form
+                                    action="{{ url_for(
+                                        'admin_reject_ngo_request',
+                                        request_id=req.request_id
+                                    ) }}"
+                                    method="POST"
+                                    onsubmit="return confirm(
+                                        'Reject this NGO request?'
+                                    );">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                                    <button
+                                        type="submit"
+                                        class="reject-btn">
+
+                                        ✕ Reject
+
+                                    </button>
+
+                                </form>
+
+
+                            </div>
+
+                            {% endif %}
+
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+
+            {% endfor %}
+
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    {% else %}
+
+
+    <!-- =================================================
+         EMPTY STATE
+    ================================================== -->
+
+    <div class="empty-state">
+
+        <div class="empty-icon">
+            📋
+        </div>
+
+        <h2>
+            No NGO Requests
+        </h2>
+
+        <p>
+            No NGOs have requested any donations yet.
+        </p>
+
+    </div>
+
+
+    {% endif %}
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <p>
+        FoodResQ Admin Panel © 2026
+    </p>
+
+</footer>
+
+
+
+<!-- =====================================================
+     ROW EXPANSION
+===================================================== -->
+
+<script>
+
+function toggleDetails(id, button) {
+
+    const row = document.getElementById(id);
+
+    const isOpen = row.classList.contains("show");
+
+
+    /*
+     * Close all other expanded rows
+     */
+
+    document.querySelectorAll(".details-row").forEach(function(item) {
+
+        item.classList.remove("show");
+
+    });
+
+
+    document.querySelectorAll(".details-btn").forEach(function(btn) {
+
+        btn.classList.remove("open");
+
+    });
+
+
+    /*
+     * Open selected row
+     */
+
+    if (!isOpen) {
+
+        row.classList.add("show");
+
+        button.classList.add("open");
+
+    }
+
+}
+
+</script>
+
+
+
+</body>
+
+</html>

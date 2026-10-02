@@ -1,0 +1,468 @@
+/* =========================================================
+   FOODRESQ - ADMIN NGO MANAGEMENT
+========================================================= */
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px 36px 60px;
+}
+
+
+/* ---------------- PAGE HEADER ---------------- */
+
+.page-header {
+    margin-bottom: 24px;
+}
+
+.page-header h1 {
+    font-size: 1.85rem;
+    color: #1B4332;
+    margin-bottom: 6px;
+}
+
+.page-header p {
+    color: #5A6B62;
+    font-size: .97rem;
+}
+
+
+/* ---------------- SEARCH ---------------- */
+
+.search-box {
+    margin-bottom: 26px;
+}
+
+.search-box form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 560px;
+}
+
+.search-box input {
+    flex: 1 1 260px;
+    padding: 12px 16px;
+    border: 1px solid #CFDAD3;
+    border-radius: 10px;
+    background: #FFFFFF;
+    font-family: inherit;
+    font-size: .95rem;
+    color: #263A31;
+}
+
+.search-box input::placeholder {
+    color: #9AAAA1;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: #2E7D32;
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, .15);
+}
+
+.search-box button {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 10px;
+    background: #2E7D32;
+    color: #FFFFFF;
+    font-family: inherit;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .15s ease, transform .1s ease;
+}
+
+.search-box button:hover {
+    background: #256A29;
+}
+
+.search-box button:active {
+    transform: translateY(1px);
+}
+
+.search-box .clear-search {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 18px;
+    border-radius: 10px;
+    border: 1px solid #CFDAD3;
+    background: #FFFFFF;
+    color: #5A6B62;
+    font-size: .92rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.search-box .clear-search:hover {
+    background: #F1F7F3;
+    border-color: #2E7D32;
+    color: #2E7D32;
+}
+
+
+/* ---------------- TABLE CARD ---------------- */
+
+.ngo-table {
+    background: #FFFFFF;
+    border: 1px solid #E4EBE6;
+    border-radius: 14px;
+    padding: 24px 26px 10px;
+    box-shadow: 0 2px 10px rgba(27, 67, 50, .05);
+}
+
+.ngo-table h2 {
+    font-size: 1.15rem;
+    color: #1B4332;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #EDF2EE;
+}
+
+/* The address column is long, so let the table scroll
+   sideways inside its own card instead of the page. */
+.table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.ngo-table table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+}
+
+.ngo-table th {
+    position: sticky;
+    top: 0;
+    text-align: left;
+    padding: 12px 14px;
+    background: #F4F8F5;
+    color: #46584E;
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .9px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border-bottom: 1px solid #E1EAE4;
+}
+
+.ngo-table th:first-child {
+    border-radius: 8px 0 0 0;
+}
+
+.ngo-table th:last-child {
+    border-radius: 0 8px 0 0;
+}
+
+.ngo-table td {
+    padding: 14px;
+    font-size: .9rem;
+    color: #3D4F46;
+    border-bottom: 1px solid #F1F5F2;
+    vertical-align: middle;
+}
+
+.ngo-table tbody tr:hover td {
+    background: #F8FBF9;
+}
+
+.ngo-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* keep the long address readable rather than sprawling */
+.ngo-table td.address {
+    max-width: 320px;
+    line-height: 1.5;
+}
+
+.ngo-table td.partner-id {
+    font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: .82rem;
+    color: #5A6B62;
+    white-space: nowrap;
+}
+
+.ngo-table td.ngo-name {
+    font-weight: 600;
+    color: #1B4332;
+}
+
+.ngo-table .muted {
+    color: #9AAAA1;
+    font-style: italic;
+}
+
+.ngo-table .empty-row td {
+    padding: 40px 14px;
+    text-align: center;
+    color: #8AA396;
+}
+
+
+/* ---------------- STATUS PILL ---------------- */
+
+.ngo-table .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 13px;
+    border-radius: 99px;
+    font-size: .78rem;
+    font-weight: 700;
+    white-space: nowrap;
+    background: #EDF2EE;
+    color: #5A6B62;
+}
+
+.ngo-table .status::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.ngo-table .status.active {
+    background: #E4F6E7;
+    color: #2E7D32;
+}
+
+.ngo-table .status.pending {
+    background: #FFF4E0;
+    color: #B26A00;
+}
+
+.ngo-table .status.rejected,
+.ngo-table .status.inactive {
+    background: #FDEAEA;
+    color: #C62828;
+}
+
+
+/* ---------------- VIEW BUTTON ---------------- */
+
+.view-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: #2E7D32;
+    color: #FFFFFF;
+    font-size: .84rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background .15s ease, transform .1s ease;
+}
+
+.view-btn:hover {
+    background: #256A29;
+}
+
+.view-btn:active {
+    transform: translateY(1px);
+}
+
+
+/* ---------------- RESPONSIVE ---------------- */
+
+@media (max-width: 720px) {
+
+    .container {
+        padding: 22px 16px 44px;
+    }
+
+    .ngo-table {
+        padding: 20px 16px 6px;
+    }
+
+    .page-header h1 {
+        font-size: 1.5rem;
+    }
+
+}
+
+/* =========================================================
+   SINGLE NGO PROFILE
+========================================================= */
+
+.ngo-profile-head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 18px;
+}
+
+.ngo-profile-head .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 15px;
+    border-radius: 99px;
+    font-size: .82rem;
+    font-weight: 700;
+    background: #EDF2EE;
+    color: #5A6B62;
+}
+
+.ngo-profile-head .status::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.ngo-profile-head .status.active {
+    background: #E4F6E7;
+    color: #2E7D32;
+}
+
+.ngo-profile-head .status.pending {
+    background: #FFF4E0;
+    color: #B26A00;
+}
+
+.ngo-profile-head .status.rejected,
+.ngo-profile-head .status.inactive {
+    background: #FDEAEA;
+    color: #C62828;
+}
+
+.ngo-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.ngo-stats .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 18px 22px;
+    background: #FFFFFF;
+    border: 1px solid #E4EBE6;
+    border-left: 4px solid #2E7D32;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(27, 67, 50, .05);
+}
+
+.ngo-stats .stat-label {
+    font-size: .76rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #8AA396;
+}
+
+.ngo-stats .stat-value {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #1B4332;
+    line-height: 1.1;
+}
+
+.ngo-table + .ngo-table {
+    margin-top: 22px;
+}
+
+.detail-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px 26px;
+    padding-bottom: 18px;
+}
+
+.detail-list .wide {
+    grid-column: 1 / -1;
+}
+
+.detail-list dt {
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .9px;
+    text-transform: uppercase;
+    color: #8AA396;
+    margin-bottom: 5px;
+}
+
+.detail-list dd {
+    font-size: .95rem;
+    color: #263A31;
+    line-height: 1.55;
+    word-break: break-word;
+}
+
+.ngo-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-bottom: 20px;
+}
+
+.danger-btn {
+    display: inline-block;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #C62828;
+    color: #FFFFFF;
+    font-family: inherit;
+    font-size: .88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .15s ease, transform .1s ease;
+}
+
+.danger-btn:hover {
+    background: #AD2222;
+}
+
+.danger-btn:active {
+    transform: translateY(1px);
+}
+
+.ngo-actions .view-btn {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: .88rem;
+    padding: 10px 18px;
+}
+
+/* donation status pills reused on the profile */
+.status.completed   { background: #E4F6E7; color: #2E7D32; }
+.status.cancelled,
+.status.pickup-failed { background: #FDEAEA; color: #C62828; }
+.status.assigned,
+.status.ngo-accepted { background: #E7F1FB; color: #1565C0; }
+.status.on-the-way,
+.status.picked-up    { background: #F1F8E9; color: #558B2F; }
+
+/* filter dropdowns on the donations list */
+.search-box select {
+    padding: 12px 14px;
+    border: 1px solid #CFDAD3;
+    border-radius: 10px;
+    background: #FFFFFF;
+    font-family: inherit;
+    font-size: .95rem;
+    color: #263A31;
+    cursor: pointer;
+}
+
+.search-box select:focus {
+    outline: none;
+    border-color: #2E7D32;
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, .15);
+}
+
+.search-box form {
+    max-width: none;
+    align-items: center;
+}
